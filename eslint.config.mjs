@@ -18,7 +18,6 @@ export default createConfigForNuxt({
   .append(
     {
       ignores: [
-        'toMigrate/**',
         'dist/**',
         '.nuxt/**',
         '.output/**',
