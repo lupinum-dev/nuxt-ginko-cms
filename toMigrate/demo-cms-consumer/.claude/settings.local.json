@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__ide__getDiagnostics",
+      "Bash(npx convex codegen)",
+      "Bash(npx tsc:*)",
+      "Bash(pnpm add:*)",
+      "Bash(pnpm build:*)",
+      "WebSearch",
+      "mcp__convex__status",
+      "mcp__convex__tables",
+      "mcp__convex__data"
+    ]
+  }
+}
