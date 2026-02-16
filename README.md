@@ -1,84 +1,96 @@
-<!--
-Get your module up and running quickly.
+# ginko-nuxt
 
-Find and replace all on all files (CMD+SHIFT+F):
-- Name: My Module
-- Package name: my-module
-- Description: My new Nuxt module
--->
+Nuxt module for consuming Convex CMS content with two runtime modes:
 
-# My Module
-
-[![npm version][npm-version-src]][npm-version-href]
-[![npm downloads][npm-downloads-src]][npm-downloads-href]
-[![License][license-src]][license-href]
-[![Nuxt][nuxt-src]][nuxt-href]
-
-My new Nuxt module for doing amazing things.
-
-- [✨ &nbsp;Release Notes](/CHANGELOG.md)
-<!-- - [🏀 Online playground](https://stackblitz.com/github/your-org/my-module?file=playground%2Fapp.vue) -->
-<!-- - [📖 &nbsp;Documentation](https://example.com) -->
+- Preview mode: live API access in development.
+- Static mode: build-time content caching + optional asset localization for production.
 
 ## Features
 
-<!-- Highlight some of the features your module provide here -->
-- ⛰ &nbsp;Foo
-- 🚠 &nbsp;Bar
-- 🌲 &nbsp;Baz
+- Auto-imported composables: `useCmsCollection`, `useCmsItem`, `useCmsRelatedItem`, `useCmsLocale`, `useCmsAssetUrl`, `useCmsSearchIndex`
+- Secure server proxy for CMS API requests (`/api/_cms/*`)
+- Build hooks for static content cache generation (`public/.cms-cache`)
+- Optional asset download and URL rewriting (`public/cms-assets`)
+- Locale-aware content + prerender route generation
+- Type generation CLI: `cms-nuxt generate-types`
+
+## Installation
+
+```bash
+pnpm add ginko-nuxt
+```
 
 ## Quick Setup
 
-Install the module to your Nuxt application with one command:
+```ts
+// nuxt.config.ts
+export default defineNuxtConfig({
+  modules: ['ginko-nuxt'],
 
-```bash
-npx nuxt module add my-module
+  cmsNuxt: {
+    apiUrl: process.env.NUXT_CMS_API_URL || '',
+    teamSlug: process.env.NUXT_CMS_TEAM_SLUG || '',
+    apiKeyPublic: process.env.NUXT_CMS_API_KEY_PUBLIC,
+    apiKeyPreview: process.env.NUXT_CMS_API_KEY_PREVIEW,
+    locales: ['en', 'de'],
+    defaultLocale: 'en',
+    collections: [
+      { slug: 'blogs', populate: ['author'], routePattern: '/blog/[slug]' },
+      { slug: 'authors' },
+      { slug: 'legal', routePattern: '/legal/[slug]' },
+    ],
+    cacheDir: '.cms-cache',
+    assetDir: 'cms-assets',
+    localizeAssets: false,
+  },
+})
 ```
 
-That's it! You can now use My Module in your Nuxt app ✨
+## Environment Variables
 
+```bash
+NUXT_CMS_API_URL=https://your-app.convex.site
+NUXT_CMS_TEAM_SLUG=your-team
+NUXT_CMS_API_KEY_PUBLIC=...
+NUXT_CMS_API_KEY_PREVIEW=...
+# Optional fallback/legacy key
+NUXT_CMS_API_KEY=...
+```
 
-## Contribution
+## Composable Example
 
-<details>
-  <summary>Local development</summary>
-  
-  ```bash
-  # Install dependencies
-  npm install
-  
-  # Generate type stubs
-  npm run dev:prepare
-  
-  # Develop with the playground
-  npm run dev
-  
-  # Build the playground
-  npm run dev:build
-  
-  # Run ESLint
-  npm run lint
-  
-  # Run Vitest
-  npm run test
-  npm run test:watch
-  
-  # Release new version
-  npm run release
-  ```
+```ts
+const { data, pending, error } = await useCmsCollection('blogs', {
+  populate: ['author'],
+  limit: 10,
+})
+```
 
-</details>
+## CLI
 
+Generate collection item TypeScript types from schema:
 
-<!-- Badges -->
-[npm-version-src]: https://img.shields.io/npm/v/my-module/latest.svg?style=flat&colorA=020420&colorB=00DC82
-[npm-version-href]: https://npmjs.com/package/my-module
+```bash
+npx cms-nuxt generate-types --output ./app/types/cms.generated.ts
+```
 
-[npm-downloads-src]: https://img.shields.io/npm/dm/my-module.svg?style=flat&colorA=020420&colorB=00DC82
-[npm-downloads-href]: https://npm.chart.dev/my-module
+## Local Development
 
-[license-src]: https://img.shields.io/npm/l/my-module.svg?style=flat&colorA=020420&colorB=00DC82
-[license-href]: https://npmjs.com/package/my-module
+```bash
+pnpm install
+pnpm run dev:prepare
+pnpm run dev
+pnpm run lint
+pnpm run test
+pnpm run test:types
+pnpm run prepack
+```
 
-[nuxt-src]: https://img.shields.io/badge/Nuxt-020420?logo=nuxt
-[nuxt-href]: https://nuxt.com
+## Documentation
+
+- Usage guide: `docs/USAGE.md`
+- Architecture details: `docs/ARCHITECTURE.md`
+
+## License
+
+MIT
