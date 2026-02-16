@@ -30,7 +30,10 @@ const avatarUrl = useCmsAssetUrl(author.avatar as string | undefined)
       <div class="font-medium text-gray-900">
         {{ author.name }}
       </div>
-      <div v-if="author.bio" class="text-sm text-gray-500 line-clamp-1">
+      <div
+        v-if="author.bio"
+        class="text-sm text-gray-500 line-clamp-1"
+      >
         {{ author.bio }}
       </div>
     </div>

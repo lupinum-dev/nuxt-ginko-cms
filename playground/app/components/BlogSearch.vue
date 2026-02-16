@@ -118,33 +118,55 @@ function clearSearch() {
         class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
         @click="clearSearch"
       >
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        <svg
+          class="w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"
+          />
         </svg>
       </button>
     </div>
 
     <!-- Loading State -->
-    <div v-if="pending" class="text-center py-8">
+    <div
+      v-if="pending"
+      class="text-center py-8"
+    >
       <div class="animate-pulse text-gray-500">
         {{ labels.loading }}
       </div>
     </div>
 
     <!-- Error State -->
-    <div v-else-if="error" class="text-center py-8 text-red-500">
+    <div
+      v-else-if="error"
+      class="text-center py-8 text-red-500"
+    >
       Failed to load posts: {{ error.message }}
     </div>
 
     <!-- No Results -->
-    <div v-else-if="isSearching && !hasResults" class="text-center py-8 text-gray-500">
+    <div
+      v-else-if="isSearching && !hasResults"
+      class="text-center py-8 text-gray-500"
+    >
       {{ labels.noResults }}
     </div>
 
     <!-- Results -->
     <template v-else>
       <!-- Results Count (when searching) -->
-      <p v-if="isSearching" class="text-sm text-gray-600">
+      <p
+        v-if="isSearching"
+        class="text-sm text-gray-600"
+      >
         {{ labels.resultsCount }}
       </p>
 

@@ -12,7 +12,8 @@ const localeLabels: Record<string, string> = {
     <button
       v-for="loc in locales"
       :key="loc"
-      class="px-3 py-1 rounded-md text-sm font-medium transition-colors" :class="[
+      class="px-3 py-1 rounded-md text-sm font-medium transition-colors"
+      :class="[
         locale === loc
           ? 'bg-blue-600 text-white'
           : 'bg-gray-100 text-gray-700 hover:bg-gray-200',

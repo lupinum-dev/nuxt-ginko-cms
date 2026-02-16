@@ -1,4 +1,5 @@
 <script setup lang="ts">
+/* eslint-disable vue/no-v-html */
 const route = useRoute()
 const { locale } = useCmsLocale()
 
@@ -30,33 +31,48 @@ const formattedDate = computed(() => {
 <template>
   <div>
     <!-- Loading State -->
-    <div v-if="pending" class="text-center py-12">
+    <div
+      v-if="pending"
+      class="text-center py-12"
+    >
       <div class="animate-pulse text-gray-500">
         Loading...
       </div>
     </div>
 
     <!-- Error State -->
-    <div v-else-if="error" class="text-center py-12 text-red-500">
+    <div
+      v-else-if="error"
+      class="text-center py-12 text-red-500"
+    >
       {{ error.message }}
     </div>
 
     <!-- Not Found -->
-    <div v-else-if="!doc" class="text-center py-12">
+    <div
+      v-else-if="!doc"
+      class="text-center py-12"
+    >
       <h1 class="text-2xl font-bold text-gray-900 mb-2">
         {{ labels.notFound }}
       </h1>
     </div>
 
     <!-- Document Content -->
-    <article v-else class="max-w-3xl mx-auto">
+    <article
+      v-else
+      class="max-w-3xl mx-auto"
+    >
       <!-- Header -->
       <header class="mb-8">
         <h1 class="text-4xl font-bold text-gray-900 mb-4">
           {{ doc.title }}
         </h1>
 
-        <p v-if="formattedDate" class="text-gray-600">
+        <p
+          v-if="formattedDate"
+          class="text-gray-600"
+        >
           {{ labels.lastUpdated }}: {{ formattedDate }}
         </p>
       </header>

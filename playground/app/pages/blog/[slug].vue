@@ -1,4 +1,5 @@
 <script setup lang="ts">
+/* eslint-disable vue/no-v-html */
 const route = useRoute()
 const { locale } = useCmsLocale()
 
@@ -59,26 +60,38 @@ const formattedDate = computed(() => {
     </NuxtLink>
 
     <!-- Loading State -->
-    <div v-if="pending" class="text-center py-12">
+    <div
+      v-if="pending"
+      class="text-center py-12"
+    >
       <div class="animate-pulse text-gray-500">
         Loading...
       </div>
     </div>
 
     <!-- Error State -->
-    <div v-else-if="error" class="text-center py-12 text-red-500">
+    <div
+      v-else-if="error"
+      class="text-center py-12 text-red-500"
+    >
       {{ error.message }}
     </div>
 
     <!-- Not Found -->
-    <div v-else-if="!post" class="text-center py-12">
+    <div
+      v-else-if="!post"
+      class="text-center py-12"
+    >
       <h1 class="text-2xl font-bold text-gray-900 mb-2">
         {{ labels.notFound }}
       </h1>
     </div>
 
     <!-- Post Content -->
-    <article v-else class="max-w-3xl mx-auto">
+    <article
+      v-else
+      class="max-w-3xl mx-auto"
+    >
       <!-- Featured Image -->
       <img
         v-if="featuredimageUrl"
@@ -107,7 +120,10 @@ const formattedDate = computed(() => {
         </div>
 
         <!-- Excerpt -->
-        <p v-if="post.excerpt" class="mt-4 text-xl text-gray-600">
+        <p
+          v-if="post.excerpt"
+          class="mt-4 text-xl text-gray-600"
+        >
           {{ post.excerpt }}
         </p>
       </header>

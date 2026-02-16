@@ -42,7 +42,10 @@ const labels = computed(() => ({
         </NuxtLink>
       </div>
 
-      <div v-if="pending" class="text-center py-8">
+      <div
+        v-if="pending"
+        class="text-center py-8"
+      >
         <div class="animate-pulse text-gray-500">
           Loading...
         </div>
@@ -59,7 +62,10 @@ const labels = computed(() => ({
         />
       </div>
 
-      <div v-else class="text-center py-8 text-gray-500">
+      <div
+        v-else
+        class="text-center py-8 text-gray-500"
+      >
         No blog posts found. Create some content in the CMS!
       </div>
     </section>

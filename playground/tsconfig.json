@@ -3,6 +3,7 @@
   "exclude": [
     "../toMigrate",
     "../../toMigrate",
-    "../../src/**/*.test.ts"
+    "../../src/**/*.test.ts",
+    "../dist/**/*.test.ts"
   ]
 }

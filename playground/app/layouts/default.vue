@@ -8,15 +8,24 @@ useCmsLocale()
     <header class="bg-white shadow-sm">
       <div class="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between">
-          <NuxtLink to="/" class="text-xl font-bold text-gray-900">
+          <NuxtLink
+            to="/"
+            class="text-xl font-bold text-gray-900"
+          >
             CMS Demo
           </NuxtLink>
 
           <nav class="flex items-center gap-6">
-            <NuxtLink to="/blog" class="text-gray-600 hover:text-gray-900">
+            <NuxtLink
+              to="/blog"
+              class="text-gray-600 hover:text-gray-900"
+            >
               Blog
             </NuxtLink>
-            <NuxtLink to="/legal/privacy-policy" class="text-gray-600 hover:text-gray-900">
+            <NuxtLink
+              to="/legal/privacy-policy"
+              class="text-gray-600 hover:text-gray-900"
+            >
               Privacy
             </NuxtLink>
 
