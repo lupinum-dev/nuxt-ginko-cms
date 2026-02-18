@@ -1,6 +1,6 @@
 {
   "name": "ginko-nuxt",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Nuxt module for consuming Convex CMS content with preview and static build modes",
   "repository": "lupinum-dev/ginko-nuxt",
   "license": "MIT",
