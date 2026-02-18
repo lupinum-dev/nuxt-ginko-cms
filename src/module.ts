@@ -21,12 +21,12 @@ import { resolveAccessLevel, resolvePreviewMode } from './internal/module-resolu
 export type { CmsModuleOptions, CollectionConfig } from './runtime/types'
 export type * from './runtime/types/api'
 
-const logger = useLogger('cms-nuxt')
+const logger = useLogger('cms-ginko')
 
 export default defineNuxtModule<CmsModuleOptions>({
   meta: {
     name: 'ginko-nuxt',
-    configKey: 'cmsNuxt',
+    configKey: 'cmsGinko',
     compatibility: {
       nuxt: '>=3.0.0',
     },
@@ -88,7 +88,7 @@ export default defineNuxtModule<CmsModuleOptions>({
     // Merge into Nuxt runtime config
     // Public config (available on client) - apiKey is NOT included here
     const publicConfig = defu(
-      nuxt.options.runtimeConfig.public.cmsNuxt as Partial<CmsRuntimeConfig> | undefined,
+      nuxt.options.runtimeConfig.public.cmsGinko as Partial<CmsRuntimeConfig> | undefined,
       {
         apiUrl: runtimeConfig.apiUrl,
         teamSlug: runtimeConfig.teamSlug,
@@ -103,10 +103,10 @@ export default defineNuxtModule<CmsModuleOptions>({
         localizeAssets: runtimeConfig.localizeAssets,
       },
     )
-    nuxt.options.runtimeConfig.public.cmsNuxt = publicConfig
+    nuxt.options.runtimeConfig.public.cmsGinko = publicConfig
 
     // Private config (server only) - include the resolved apiKey
-    nuxt.options.runtimeConfig.cmsNuxtApiKey = apiKey
+    nuxt.options.runtimeConfig.cmsGinkoApiKey = apiKey
 
     // Auto-import composables
     addImports([
@@ -144,7 +144,7 @@ export default defineNuxtModule<CmsModuleOptions>({
 
     // Add type augmentation template
     addTemplate({
-      filename: 'types/cms-nuxt.d.ts',
+      filename: 'types/cms-ginko.d.ts',
       getContents: () => `
 interface CollectionConfig {
   slug: string
@@ -168,10 +168,10 @@ interface CmsRuntimeConfig {
 
 declare module '@nuxt/schema' {
   interface PublicRuntimeConfig {
-    cmsNuxt: CmsRuntimeConfig
+    cmsGinko: CmsRuntimeConfig
   }
   interface RuntimeConfig {
-    cmsNuxtApiKey: string
+    cmsGinkoApiKey: string
   }
 }
 
@@ -189,7 +189,7 @@ export {}
     // Add types to tsconfig references
     nuxt.hook('prepare:types', (opts) => {
       opts.references.push({
-        path: resolver.resolve(nuxt.options.buildDir, 'types/cms-nuxt.d.ts'),
+        path: resolver.resolve(nuxt.options.buildDir, 'types/cms-ginko.d.ts'),
       })
     })
 

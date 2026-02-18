@@ -27,19 +27,19 @@ describe('CMS proxy handler', () => {
     })
     useRuntimeConfigMock.mockReturnValue({
       public: {
-        cmsNuxt: {
+        cmsGinko: {
           apiUrl: 'https://example.convex.site',
           teamSlug: 'my-team',
         },
       },
-      cmsNuxtApiKey: 'secret-preview-key',
+      cmsGinkoApiKey: 'secret-preview-key',
     })
   })
 
   it('throws 500 when api key is missing', async () => {
     useRuntimeConfigMock.mockReturnValue({
-      public: { cmsNuxt: { apiUrl: 'https://example.convex.site', teamSlug: 'my-team' } },
-      cmsNuxtApiKey: '',
+      public: { cmsGinko: { apiUrl: 'https://example.convex.site', teamSlug: 'my-team' } },
+      cmsGinkoApiKey: '',
     })
     const handler = (await import('./[...path]')).default
 

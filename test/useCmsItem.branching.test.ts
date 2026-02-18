@@ -24,7 +24,7 @@ describe('useCmsItem branching', () => {
     vi.clearAllMocks()
     useRuntimeConfigMock.mockReturnValue({
       public: {
-        cmsNuxt: {
+        cmsGinko: {
           preview: true,
           cacheDir: '.cms-cache',
         },
@@ -61,7 +61,7 @@ describe('useCmsItem branching', () => {
   it('uses static cache path when preview mode is disabled on client branch', async () => {
     useRuntimeConfigMock.mockReturnValue({
       public: {
-        cmsNuxt: {
+        cmsGinko: {
           preview: false,
           cacheDir: '.cms-cache',
         },

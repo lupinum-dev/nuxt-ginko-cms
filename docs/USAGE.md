@@ -15,7 +15,7 @@ pnpm add ginko-nuxt
 export default defineNuxtConfig({
   modules: ['ginko-nuxt'],
 
-  cmsNuxt: {
+  cmsGinko: {
     apiUrl: 'https://your-app.convex.site',
     apiKey: process.env.NUXT_CMS_API_KEY,
     teamSlug: 'your-team',
@@ -252,7 +252,7 @@ const { data, pending, error } = await useCmsCollection('blogs')
 Preview mode is enabled automatically in development. Force it in production with:
 
 ```typescript
-cmsNuxt: {
+cmsGinko: {
   preview: true,
 }
 ```

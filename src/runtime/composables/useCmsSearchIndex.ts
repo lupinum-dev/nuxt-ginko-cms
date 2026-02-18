@@ -47,7 +47,7 @@ export function useCmsSearchIndex(
   options: UseCmsSearchIndexOptions = {},
 ): AsyncData<CmsSearchIndexResult | null | undefined, NuxtError<unknown> | undefined> {
   const config = useRuntimeConfig()
-  const cmsConfig = config.public.cmsNuxt
+  const cmsConfig = config.public.cmsGinko
   const { locale: currentLocale } = useCmsLocale()
 
   const getLocale = () => options.locale || currentLocale.value
@@ -73,7 +73,7 @@ export function useCmsSearchIndex(
  */
 async function fetchSearchIndexFromCache(
   locale: string,
-  cmsConfig: typeof useRuntimeConfig extends () => { public: { cmsNuxt: infer T } } ? T : never,
+  cmsConfig: typeof useRuntimeConfig extends () => { public: { cmsGinko: infer T } } ? T : never,
 ): Promise<CmsSearchIndexResult | null> {
   // On server (including prerender): read from file system directly
   if (import.meta.server) {

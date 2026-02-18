@@ -34,7 +34,7 @@ export interface UseCmsLocaleReturn {
  */
 export function useCmsLocale(): UseCmsLocaleReturn {
   const config = useRuntimeConfig()
-  const cmsConfig = config.public.cmsNuxt
+  const cmsConfig = config.public.cmsGinko
 
   // Use Nuxt's useState for SSR-safe reactive state
   const locale = useState<string>('cms-locale', () => cmsConfig.defaultLocale)

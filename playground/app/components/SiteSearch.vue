@@ -14,7 +14,7 @@ interface SearchableItem {
 }
 
 const config = useRuntimeConfig()
-const isPreview = computed(() => config.public.cmsNuxt.preview)
+const isPreview = computed(() => config.public.cmsGinko.preview)
 const { locale } = useCmsLocale()
 
 // Search state

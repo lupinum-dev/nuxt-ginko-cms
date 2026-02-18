@@ -20,7 +20,7 @@ export default defineNuxtConfig({
     ],
   },
 
-  cmsNuxt: {
+  cmsGinko: {
     // API connection - uses env vars automatically via module defaults
     // Set in .env.local: NUXT_CMS_API_URL, NUXT_CMS_TEAM_SLUG
     // API keys: NUXT_CMS_API_KEY_PUBLIC, NUXT_CMS_API_KEY_PREVIEW

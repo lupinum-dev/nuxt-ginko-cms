@@ -52,7 +52,7 @@
 export default defineNuxtConfig({
   modules: ['ginko-nuxt'],
 
-  cmsNuxt: {
+  cmsGinko: {
     // Required
     apiUrl: 'https://xxx.convex.site', // Convex HTTP API URL
     apiKey: 'your-api-key', // CMS API key (kept server-side)
@@ -316,7 +316,7 @@ The API key is never exposed to the client:
 // Server route: /api/_cms/[...path].ts
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
-  const apiKey = config.cmsNuxtApiKey // Server-only
+  const apiKey = config.cmsGinkoApiKey // Server-only
 
   // Forward request to Convex with auth header
   return $fetch(convexUrl, {
@@ -405,7 +405,7 @@ const { locale, setLocale, locales } = useCmsLocale()
 
 **Solution:** Set `localePrefix` to match your `@nuxtjs/i18n` strategy:
 ```typescript
-cmsNuxt: {
+cmsGinko: {
   localePrefix: 'no_prefix', // or 'prefix_except_default' or 'prefix_all'
 }
 ```

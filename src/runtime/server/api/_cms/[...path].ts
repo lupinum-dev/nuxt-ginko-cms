@@ -15,8 +15,8 @@ import { buildProxyTargetUrl, getProxyErrorMessage, getProxyErrorStatus } from '
 
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
-  const cmsConfig = config.public.cmsNuxt
-  const apiKey = config.cmsNuxtApiKey
+  const cmsConfig = config.public.cmsGinko
+  const apiKey = config.cmsGinkoApiKey
 
   if (!apiKey) {
     throw createError({

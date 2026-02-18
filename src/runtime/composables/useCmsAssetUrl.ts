@@ -25,7 +25,7 @@ import { computed, useRuntimeConfig } from '#imports'
  */
 export function useCmsAssetUrl(urlOrId: string | undefined | null): ComputedRef<string> {
   const config = useRuntimeConfig()
-  const cmsConfig = config.public.cmsNuxt
+  const cmsConfig = config.public.cmsGinko
 
   return computed(() => {
     if (!urlOrId) {
@@ -64,7 +64,7 @@ export function useCmsAssetUrl(urlOrId: string | undefined | null): ComputedRef<
  */
 export function useCmsAssetUrls(assetIds: (string | undefined | null)[]): ComputedRef<string[]> {
   const config = useRuntimeConfig()
-  const cmsConfig = config.public.cmsNuxt
+  const cmsConfig = config.public.cmsGinko
 
   return computed(() => {
     return assetIds

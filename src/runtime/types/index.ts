@@ -92,9 +92,9 @@ export interface CmsRuntimeConfig {
 // Module augmentation for Nuxt
 declare module '@nuxt/schema' {
   interface PublicRuntimeConfig {
-    cmsNuxt: CmsRuntimeConfig
+    cmsGinko: CmsRuntimeConfig
   }
   interface RuntimeConfig {
-    cmsNuxtApiKey: string
+    cmsGinkoApiKey: string
   }
 }

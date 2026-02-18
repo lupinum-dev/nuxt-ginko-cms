@@ -40,7 +40,7 @@ export function useCmsRelatedItem(
   options: UseCmsRelatedItemOptions = {},
 ) {
   const config = useRuntimeConfig()
-  const cmsConfig = config.public.cmsNuxt
+  const cmsConfig = config.public.cmsGinko
   const { locale: currentLocale } = useCmsLocale()
 
   // Use a function to get current locale (reactive)
@@ -79,7 +79,7 @@ async function fetchFromApi(
   collectionSlug: string,
   itemId: string,
   locale: string,
-  _cmsConfig: typeof useRuntimeConfig extends () => { public: { cmsNuxt: infer T } } ? T : never,
+  _cmsConfig: typeof useRuntimeConfig extends () => { public: { cmsGinko: infer T } } ? T : never,
 ): Promise<CmsItem | null> {
   const params = new URLSearchParams()
   params.set('locale', locale)
@@ -109,7 +109,7 @@ async function fetchFromCache(
   collectionSlug: string,
   itemId: string,
   locale: string,
-  cmsConfig: typeof useRuntimeConfig extends () => { public: { cmsNuxt: infer T } } ? T : never,
+  cmsConfig: typeof useRuntimeConfig extends () => { public: { cmsGinko: infer T } } ? T : never,
 ): Promise<CmsItem | null> {
   // On server (including prerender): read from file system directly
   // This is necessary because during prerendering, there's no HTTP server

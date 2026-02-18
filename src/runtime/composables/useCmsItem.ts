@@ -54,7 +54,7 @@ export function useCmsItem(
   options: UseCmsItemOptions = {},
 ): AsyncData<CmsItemResult | null | undefined, NuxtError<unknown> | undefined> {
   const config = useRuntimeConfig()
-  const cmsConfig = config.public.cmsNuxt
+  const cmsConfig = config.public.cmsGinko
   const { locale: currentLocale } = useCmsLocale()
 
   // Use a function to get current locale (reactive)
@@ -88,7 +88,7 @@ async function fetchFromApi(
   itemSlug: string,
   locale: string,
   options: UseCmsItemOptions,
-  _cmsConfig: typeof useRuntimeConfig extends () => { public: { cmsNuxt: infer T } } ? T : never,
+  _cmsConfig: typeof useRuntimeConfig extends () => { public: { cmsGinko: infer T } } ? T : never,
 ): Promise<CmsItemResult | null> {
   const url = buildItemProxyUrl(collectionSlug, itemSlug, locale, options)
 
@@ -112,7 +112,7 @@ async function fetchFromCache(
   collectionSlug: string,
   itemSlug: string,
   locale: string,
-  cmsConfig: typeof useRuntimeConfig extends () => { public: { cmsNuxt: infer T } } ? T : never,
+  cmsConfig: typeof useRuntimeConfig extends () => { public: { cmsGinko: infer T } } ? T : never,
 ): Promise<CmsItemResult | null> {
   const source = resolveCmsDataSource(cmsConfig.preview, import.meta.server)
   if (source === 'cache-server') {

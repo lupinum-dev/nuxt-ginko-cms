@@ -27,7 +27,7 @@ pnpm add ginko-nuxt
 export default defineNuxtConfig({
   modules: ['ginko-nuxt'],
 
-  cmsNuxt: {
+  cmsGinko: {
     apiUrl: process.env.NUXT_CMS_API_URL || '',
     teamSlug: process.env.NUXT_CMS_TEAM_SLUG || '',
     apiKeyPublic: process.env.NUXT_CMS_API_KEY_PUBLIC,
