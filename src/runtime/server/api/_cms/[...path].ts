@@ -11,6 +11,7 @@
 
 import { useRuntimeConfig } from '#imports'
 import { createError, defineEventHandler, getRequestURL } from 'h3'
+import { buildProxyTargetUrl, getProxyErrorMessage, getProxyErrorStatus } from './proxy-internal'
 
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
@@ -30,7 +31,7 @@ export default defineEventHandler(async (event) => {
   const queryString = requestUrl.search
 
   // Build the target URL
-  const targetUrl = `${cmsConfig.apiUrl}/api/v1/cms/${cmsConfig.teamSlug}/${fullPath}${queryString}`
+  const targetUrl = buildProxyTargetUrl(cmsConfig.apiUrl, cmsConfig.teamSlug, fullPath, queryString)
 
   try {
     const response = await $fetch(targetUrl, {
@@ -44,12 +45,12 @@ export default defineEventHandler(async (event) => {
   }
   catch (error: unknown) {
     if (error && typeof error === 'object') {
-      const err = error as { status?: number, statusCode?: number, data?: unknown, message?: string }
-      const status = err.status || err.statusCode || 500
+      const status = getProxyErrorStatus(error)
+      const err = error as { data?: unknown, message?: string }
       console.error(`[CMS Proxy] ${status} error for ${fullPath}:`, err.data || err.message)
       throw createError({
         statusCode: status,
-        message: status === 404 ? 'Not found' : 'CMS API error',
+        message: getProxyErrorMessage(status),
       })
     }
     throw createError({

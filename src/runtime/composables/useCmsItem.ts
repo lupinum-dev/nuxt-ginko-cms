@@ -6,6 +6,7 @@ import type { AsyncData, NuxtError } from '#app'
 import type { CmsItem } from '../types/api'
 import process from 'node:process'
 import { useAsyncData, useRuntimeConfig } from '#imports'
+import { buildItemCachePath, buildItemProxyUrl, isNotFoundError, resolveCmsDataSource } from './internal/data-source'
 import { useCmsLocale } from './useCmsLocale'
 
 export interface UseCmsItemOptions {
@@ -89,13 +90,7 @@ async function fetchFromApi(
   options: UseCmsItemOptions,
   _cmsConfig: typeof useRuntimeConfig extends () => { public: { cmsNuxt: infer T } } ? T : never,
 ): Promise<CmsItemResult | null> {
-  const params = new URLSearchParams()
-  params.set('locale', locale)
-  if (options.populate?.length)
-    params.set('populate', options.populate.join(','))
-
-  // Use the local API proxy which adds authentication server-side
-  const url = `/api/_cms/${collectionSlug}/${itemSlug}?${params.toString()}`
+  const url = buildItemProxyUrl(collectionSlug, itemSlug, locale, options)
 
   try {
     const response = await $fetch<{ data: CmsItemResult }>(url)
@@ -103,7 +98,7 @@ async function fetchFromApi(
   }
   catch (error: unknown) {
     // Handle 404 gracefully
-    if (error && typeof error === 'object' && 'status' in error && error.status === 404) {
+    if (isNotFoundError(error)) {
       return null
     }
     throw error
@@ -119,9 +114,8 @@ async function fetchFromCache(
   locale: string,
   cmsConfig: typeof useRuntimeConfig extends () => { public: { cmsNuxt: infer T } } ? T : never,
 ): Promise<CmsItemResult | null> {
-  // On server (including prerender): read from file system directly
-  // This is necessary because during prerendering, there's no HTTP server
-  if (import.meta.server) {
+  const source = resolveCmsDataSource(cmsConfig.preview, import.meta.server)
+  if (source === 'cache-server') {
     try {
       const { readCachedItem } = await import('../server/utils/content-cache')
       const cacheOptions = {
@@ -137,8 +131,7 @@ async function fetchFromCache(
     }
   }
 
-  // On client: fetch from public directory (after build, files are served statically)
-  const cachePath = `/${cmsConfig.cacheDir}/${locale}/${collectionSlug}/${itemSlug}.json`
+  const cachePath = buildItemCachePath(cmsConfig.cacheDir, locale, collectionSlug, itemSlug)
 
   try {
     const item = await $fetch<CmsItemResult>(cachePath)

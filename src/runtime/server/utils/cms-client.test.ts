@@ -1,204 +1,112 @@
-import { describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-// Test the URL construction logic without mocking HTTP
-describe('cMS Client URL Construction', () => {
-  describe('listItems URL building', () => {
-    function buildListUrl(
-      collectionSlug: string,
-      options: {
-        locale?: string
-        limit?: number
-        offset?: number
-        populate?: string[]
-      } = {},
-    ): string {
-      const params = new URLSearchParams()
+const requestMock = vi.fn()
+const createMock = vi.fn(() => requestMock)
 
-      if (options.locale)
-        params.set('locale', options.locale)
-      if (options.limit)
-        params.set('limit', String(options.limit))
-      if (options.offset)
-        params.set('offset', String(options.offset))
-      if (options.populate?.length)
-        params.set('populate', options.populate.join(','))
+vi.mock('ofetch', () => ({
+  ofetch: {
+    create: createMock,
+  },
+}))
 
-      const queryString = params.toString()
-      return `/${collectionSlug}${queryString ? `?${queryString}` : ''}`
-    }
+describe('CmsClient', () => {
+  beforeEach(() => {
+    vi.clearAllMocks()
+  })
 
-    it('should build URL without parameters', () => {
-      const url = buildListUrl('blogs')
-      expect(url).toBe('/blogs')
+  it('configures ofetch with baseURL and auth headers', async () => {
+    const { CmsClient } = await import('./cms-client')
+
+    new CmsClient({
+      apiUrl: 'https://example.convex.site',
+      apiKey: 'secret-key',
+      teamSlug: 'my-team',
     })
 
-    it('should build URL with locale', () => {
-      const url = buildListUrl('blogs', { locale: 'de' })
-      expect(url).toBe('/blogs?locale=de')
+    expect(createMock).toHaveBeenCalledWith({
+      baseURL: 'https://example.convex.site/api/v1/cms/my-team',
+      headers: {
+        'Authorization': 'Bearer secret-key',
+        'Content-Type': 'application/json',
+      },
+    })
+  })
+
+  it('builds listItems URL with query params', async () => {
+    requestMock.mockResolvedValue({ data: [], meta: { total: 0, locale: 'en' } })
+    const { CmsClient } = await import('./cms-client')
+    const client = new CmsClient({
+      apiUrl: 'https://example.convex.site',
+      apiKey: 'secret-key',
+      teamSlug: 'my-team',
     })
 
-    it('should build URL with limit and offset', () => {
-      const url = buildListUrl('blogs', { limit: 10, offset: 20 })
-      expect(url).toContain('limit=10')
-      expect(url).toContain('offset=20')
+    await client.listItems('blogs', {
+      locale: 'en',
+      limit: 10,
+      offset: 20,
+      populate: ['author', 'category'],
     })
 
-    it('should build URL with populate', () => {
-      const url = buildListUrl('blogs', { populate: ['author', 'category'] })
-      expect(url).toContain('populate=author%2Ccategory')
+    expect(requestMock).toHaveBeenCalledWith('/blogs?locale=en&limit=10&offset=20&populate=author%2Ccategory')
+  })
+
+  it('builds getItem URL with query params', async () => {
+    requestMock.mockResolvedValue({ data: { id: '1' } })
+    const { CmsClient } = await import('./cms-client')
+    const client = new CmsClient({
+      apiUrl: 'https://example.convex.site',
+      apiKey: 'secret-key',
+      teamSlug: 'my-team',
     })
 
-    it('should build URL with all parameters', () => {
-      const url = buildListUrl('blogs', {
-        locale: 'en',
-        limit: 10,
-        offset: 5,
-        populate: ['author'],
+    await client.getItem('blogs', 'hello-world', {
+      locale: 'en',
+      populate: ['author'],
+    })
+
+    expect(requestMock).toHaveBeenCalledWith('/blogs/hello-world?locale=en&populate=author')
+  })
+
+  it('fetches all pages in fetchAllItems', async () => {
+    requestMock
+      .mockResolvedValueOnce({
+        data: [{ id: '1', slug: 'first' }],
+        meta: { total: 201, locale: 'en' },
       })
-      expect(url).toContain('/blogs?')
-      expect(url).toContain('locale=en')
-      expect(url).toContain('limit=10')
-      expect(url).toContain('offset=5')
-      expect(url).toContain('populate=author')
+      .mockResolvedValueOnce({
+        data: [{ id: '2', slug: 'second' }],
+        meta: { total: 201, locale: 'en' },
+      })
+      .mockResolvedValueOnce({
+        data: [{ id: '3', slug: 'third' }],
+        meta: { total: 201, locale: 'en' },
+      })
+
+    const { CmsClient } = await import('./cms-client')
+    const client = new CmsClient({
+      apiUrl: 'https://example.convex.site',
+      apiKey: 'secret-key',
+      teamSlug: 'my-team',
     })
 
-    it('should handle empty populate array', () => {
-      const url = buildListUrl('blogs', { locale: 'en', populate: [] })
-      expect(url).toBe('/blogs?locale=en')
-      expect(url).not.toContain('populate')
-    })
+    const items = await client.fetchAllItems('blogs', 'en', ['author'])
+
+    expect(requestMock).toHaveBeenNthCalledWith(1, '/blogs?locale=en&limit=100&populate=author')
+    expect(requestMock).toHaveBeenNthCalledWith(2, '/blogs?locale=en&limit=100&offset=100&populate=author')
+    expect(requestMock).toHaveBeenNthCalledWith(3, '/blogs?locale=en&limit=100&offset=200&populate=author')
+    expect(items).toHaveLength(3)
+    expect(items.map(item => item.slug)).toEqual(['first', 'second', 'third'])
   })
 
-  describe('getItem URL building', () => {
-    function buildGetUrl(
-      collectionSlug: string,
-      itemSlug: string,
-      options: {
-        locale?: string
-        populate?: string[]
-      } = {},
-    ): string {
-      const params = new URLSearchParams()
-
-      if (options.locale)
-        params.set('locale', options.locale)
-      if (options.populate?.length)
-        params.set('populate', options.populate.join(','))
-
-      const queryString = params.toString()
-      return `/${collectionSlug}/${itemSlug}${queryString ? `?${queryString}` : ''}`
-    }
-
-    it('should build URL without parameters', () => {
-      const url = buildGetUrl('blogs', 'my-post')
-      expect(url).toBe('/blogs/my-post')
+  it('builds storage URL from team slug', async () => {
+    const { CmsClient } = await import('./cms-client')
+    const client = new CmsClient({
+      apiUrl: 'https://example.convex.site',
+      apiKey: 'secret-key',
+      teamSlug: 'my-team',
     })
 
-    it('should build URL with locale', () => {
-      const url = buildGetUrl('blogs', 'my-post', { locale: 'de' })
-      expect(url).toBe('/blogs/my-post?locale=de')
-    })
-
-    it('should build URL with populate', () => {
-      const url = buildGetUrl('blogs', 'my-post', { populate: ['author'] })
-      expect(url).toBe('/blogs/my-post?populate=author')
-    })
-
-    it('should build URL with all parameters', () => {
-      const url = buildGetUrl('blogs', 'my-post', { locale: 'en', populate: ['author', 'tags'] })
-      expect(url).toContain('/blogs/my-post?')
-      expect(url).toContain('locale=en')
-      expect(url).toContain('populate=author')
-    })
-
-    it('should handle slugs with special characters', () => {
-      const url = buildGetUrl('blogs', 'my-awesome-post-2024')
-      expect(url).toBe('/blogs/my-awesome-post-2024')
-    })
-  })
-
-  describe('storage URL construction', () => {
-    function getStorageUrl(teamSlug: string, storageId: string): string {
-      return `https://${teamSlug}.convex.cloud/api/storage/${storageId}`
-    }
-
-    it('should construct correct storage URL', () => {
-      const url = getStorageUrl('my-team', 'abc123-def456')
-      expect(url).toBe('https://my-team.convex.cloud/api/storage/abc123-def456')
-    })
-
-    it('should handle UUID format storage IDs', () => {
-      const url = getStorageUrl('prod-app', 'd1557e65-04f8-4488-93ea-5c9d945add07')
-      expect(url).toBe('https://prod-app.convex.cloud/api/storage/d1557e65-04f8-4488-93ea-5c9d945add07')
-    })
-
-    it('should handle different team slugs', () => {
-      expect(getStorageUrl('shiny-condor-497', 'abc123')).toBe(
-        'https://shiny-condor-497.convex.cloud/api/storage/abc123',
-      )
-      expect(getStorageUrl('my-app-production', 'abc123')).toBe(
-        'https://my-app-production.convex.cloud/api/storage/abc123',
-      )
-    })
-  })
-
-  describe('base URL construction', () => {
-    function buildBaseUrl(apiUrl: string, teamSlug: string): string {
-      return `${apiUrl}/api/v1/cms/${teamSlug}`
-    }
-
-    it('should construct correct base URL', () => {
-      const baseUrl = buildBaseUrl('https://example.convex.site', 'my-team')
-      expect(baseUrl).toBe('https://example.convex.site/api/v1/cms/my-team')
-    })
-
-    it('should handle different API URLs', () => {
-      expect(buildBaseUrl('https://shiny-condor-497.convex.site', 'demo-team')).toBe(
-        'https://shiny-condor-497.convex.site/api/v1/cms/demo-team',
-      )
-    })
-  })
-})
-
-describe('pagination logic', () => {
-  function calculatePagination(
-    total: number,
-    limit: number,
-  ): { pages: number, offsets: number[] } {
-    const pages = Math.ceil(total / limit)
-    const offsets = Array.from({ length: pages }, (_, i) => i * limit)
-    return { pages, offsets }
-  }
-
-  it('should calculate pagination for small dataset', () => {
-    const { pages, offsets } = calculatePagination(50, 100)
-    expect(pages).toBe(1)
-    expect(offsets).toEqual([0])
-  })
-
-  it('should calculate pagination for exact multiple', () => {
-    const { pages, offsets } = calculatePagination(200, 100)
-    expect(pages).toBe(2)
-    expect(offsets).toEqual([0, 100])
-  })
-
-  it('should calculate pagination with remainder', () => {
-    const { pages, offsets } = calculatePagination(250, 100)
-    expect(pages).toBe(3)
-    expect(offsets).toEqual([0, 100, 200])
-  })
-
-  it('should calculate pagination for large dataset', () => {
-    const { pages, offsets } = calculatePagination(1000, 100)
-    expect(pages).toBe(10)
-    expect(offsets).toHaveLength(10)
-    expect(offsets[0]).toBe(0)
-    expect(offsets[9]).toBe(900)
-  })
-
-  it('should handle empty dataset', () => {
-    const { pages, offsets } = calculatePagination(0, 100)
-    expect(pages).toBe(0)
-    expect(offsets).toEqual([])
+    expect(client.getStorageUrl('abc-123')).toBe('https://my-team.convex.cloud/api/storage/abc-123')
   })
 })

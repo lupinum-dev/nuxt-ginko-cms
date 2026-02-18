@@ -6,6 +6,7 @@ import type { AsyncData, NuxtError } from '#app'
 import type { CmsCollectionResult, CmsItem } from '../types/api'
 import process from 'node:process'
 import { useAsyncData, useRuntimeConfig } from '#imports'
+import { buildCollectionCachePath, buildCollectionProxyUrl, resolveCmsDataSource } from './internal/data-source'
 import { useCmsLocale } from './useCmsLocale'
 
 export interface UseCmsCollectionOptions {
@@ -94,17 +95,7 @@ async function fetchFromApi(
   options: UseCmsCollectionOptions,
   _cmsConfig: typeof useRuntimeConfig extends () => { public: { cmsNuxt: infer T } } ? T : never,
 ): Promise<CmsCollectionResult> {
-  const params = new URLSearchParams()
-  params.set('locale', locale)
-  if (options.limit)
-    params.set('limit', String(options.limit))
-  if (options.offset)
-    params.set('offset', String(options.offset))
-  if (options.populate?.length)
-    params.set('populate', options.populate.join(','))
-
-  // Use the local API proxy which adds authentication server-side
-  const url = `/api/_cms/${collectionSlug}?${params.toString()}`
+  const url = buildCollectionProxyUrl(collectionSlug, locale, options)
 
   const response = await $fetch<{ data: CmsItem[], meta: { total: number, locale: string } }>(url)
 
@@ -123,9 +114,8 @@ async function fetchFromCache(
   locale: string,
   cmsConfig: typeof useRuntimeConfig extends () => { public: { cmsNuxt: infer T } } ? T : never,
 ): Promise<CmsCollectionResult> {
-  // On server (including prerender): read from file system directly
-  // This is necessary because during prerendering, there's no HTTP server
-  if (import.meta.server) {
+  const source = resolveCmsDataSource(cmsConfig.preview, import.meta.server)
+  if (source === 'cache-server') {
     try {
       const { readCachedCollectionIndex } = await import('../server/utils/content-cache')
       const cacheOptions = {
@@ -144,8 +134,7 @@ async function fetchFromCache(
     }
   }
 
-  // On client: fetch from public directory (after build, files are served statically)
-  const cachePath = `/${cmsConfig.cacheDir}/${locale}/${collectionSlug}/index.json`
+  const cachePath = buildCollectionCachePath(cmsConfig.cacheDir, locale, collectionSlug)
 
   try {
     const response = await $fetch<{ items: CmsItem[], total: number }>(cachePath)

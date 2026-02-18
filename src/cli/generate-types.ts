@@ -10,28 +10,10 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { dirname, join, resolve } from 'node:path'
 import process from 'node:process'
+import type { CollectionSchema } from './generate-types-core'
+import { generateTypesFile } from './generate-types-core'
 
-interface FieldSchema {
-  key: string
-  label: string
-  type: string
-  required: boolean
-  localized: boolean
-  config?: {
-    collectionId?: string
-    options?: Array<{ value: string, label: string }>
-    multiple?: boolean
-    [key: string]: unknown
-  }
-}
-
-interface CollectionSchema {
-  slug: string
-  name: string
-  fields: FieldSchema[]
-}
-
-interface GenerateTypesOptions {
+export interface GenerateTypesOptions {
   apiUrl: string
   apiKey: string
   teamSlug: string
@@ -39,163 +21,9 @@ interface GenerateTypesOptions {
 }
 
 /**
- * Convert collection slug to PascalCase type name
- */
-function slugToTypeName(slug: string): string {
-  return slug
-    .split(/[-_]/)
-    .map(part => part.charAt(0).toUpperCase() + part.slice(1))
-    .join('')
-}
-
-/**
- * Map CMS field type to TypeScript type
- */
-function mapFieldType(field: FieldSchema, allCollections: CollectionSchema[]): string {
-  const { type, config } = field
-
-  switch (type) {
-    case 'text':
-    case 'richtext':
-    case 'slug':
-      return 'string'
-
-    case 'number':
-      return 'number'
-
-    case 'boolean':
-      return 'boolean'
-
-    case 'date':
-    case 'datetime':
-      return 'number' // Unix timestamp
-
-    case 'image':
-      return 'string' // Asset URL or ID
-
-    case 'select': {
-      if (config?.options && Array.isArray(config.options)) {
-        const values = config.options.map(opt => `'${opt.value}'`).join(' | ')
-        return values || 'string'
-      }
-      return 'string'
-    }
-
-    case 'multiselect': {
-      if (config?.options && Array.isArray(config.options)) {
-        const values = config.options.map(opt => `'${opt.value}'`).join(' | ')
-        return `(${values || 'string'})[]`
-      }
-      return 'string[]'
-    }
-
-    case 'relation': {
-      // Find the target collection to get its type name
-      if (config?.collectionId) {
-        const targetCollection = allCollections.find(c =>
-          // Match by _id (from API) - the config stores the collection ID
-          c.slug === config.collectionId || String(config.collectionId).includes(c.slug),
-        )
-        if (targetCollection) {
-          const targetTypeName = slugToTypeName(targetCollection.slug)
-          // Relation can be ID (string) or populated object
-          if (config?.multiple) {
-            return `(string | ${targetTypeName})[]`
-          }
-          return `string | ${targetTypeName}`
-        }
-      }
-      // Fallback: unknown relation target
-      if (config?.multiple) {
-        return 'string[]'
-      }
-      return 'string'
-    }
-
-    case 'json':
-      return 'unknown'
-
-    case 'array':
-      return 'unknown[]'
-
-    default:
-      return 'unknown'
-  }
-}
-
-/**
- * Generate TypeScript interface for a collection
- */
-function generateCollectionInterface(
-  collection: CollectionSchema,
-  allCollections: CollectionSchema[],
-): string {
-  const typeName = slugToTypeName(collection.slug)
-  const lines: string[] = []
-
-  lines.push(`export interface ${typeName} extends CmsItem {`)
-
-  for (const field of collection.fields) {
-    // Skip system fields that are already in CmsItem base
-    if (['id', 'slug', 'status', 'publishedAt', 'createdAt', 'updatedAt', '_locale', '_fallback'].includes(field.key)) {
-      continue
-    }
-
-    const tsType = mapFieldType(field, allCollections)
-    const optional = !field.required ? '?' : ''
-
-    // Add JSDoc comment
-    if (field.label && field.label !== field.key) {
-      lines.push(`  /** ${field.label} */`)
-    }
-
-    lines.push(`  ${field.key}${optional}: ${tsType}`)
-  }
-
-  lines.push('}')
-
-  return lines.join('\n')
-}
-
-/**
- * Generate the full types file
- */
-function generateTypesFile(schemas: CollectionSchema[]): string {
-  const lines: string[] = []
-
-  // Header
-  lines.push('// Auto-generated from CMS schema - DO NOT EDIT')
-  lines.push(`// Generated at: ${new Date().toISOString()}`)
-  lines.push('')
-  lines.push('import type { CmsItem } from \'ginko-nuxt\'')
-  lines.push('')
-
-  // Generate interfaces for each collection
-  for (const collection of schemas) {
-    lines.push(generateCollectionInterface(collection, schemas))
-    lines.push('')
-  }
-
-  // Generate type map for collection slugs
-  lines.push('/**')
-  lines.push(' * Type map for collection slugs to their item types')
-  lines.push(' * Use with generic composables: useCmsCollection<CmsCollectionTypes[\'blogs\']>()')
-  lines.push(' */')
-  lines.push('export interface CmsCollectionTypes {')
-  for (const collection of schemas) {
-    const typeName = slugToTypeName(collection.slug)
-    lines.push(`  ${collection.slug}: ${typeName}`)
-  }
-  lines.push('}')
-  lines.push('')
-
-  return lines.join('\n')
-}
-
-/**
  * Fetch schemas from CMS API
  */
-async function fetchSchemas(options: GenerateTypesOptions): Promise<CollectionSchema[]> {
+export async function fetchSchemas(options: GenerateTypesOptions): Promise<CollectionSchema[]> {
   const url = `${options.apiUrl}/api/v1/cms/${options.teamSlug}/schema`
 
   const response = await fetch(url, {
@@ -217,7 +45,7 @@ async function fetchSchemas(options: GenerateTypesOptions): Promise<CollectionSc
 /**
  * Load config from nuxt.config.ts or environment
  */
-function loadConfig(): Partial<GenerateTypesOptions> {
+export function loadConfig(): Partial<GenerateTypesOptions> {
   const cwd = process.cwd()
 
   // Try to load from environment variables
@@ -255,7 +83,7 @@ function loadConfig(): Partial<GenerateTypesOptions> {
 /**
  * Parse command line arguments
  */
-function parseArgs(): { output?: string, help: boolean } {
+export function parseArgs(): { output?: string, help: boolean } {
   const args = process.argv.slice(2)
   let output: string | undefined
   let help = false
@@ -276,7 +104,7 @@ function parseArgs(): { output?: string, help: boolean } {
 /**
  * Main CLI function
  */
-async function main(): Promise<void> {
+export async function main(): Promise<void> {
   const { output, help } = parseArgs()
 
   if (help) {
