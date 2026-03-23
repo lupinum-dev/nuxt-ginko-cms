@@ -15,6 +15,7 @@ import {
 } from "../../shared/site.js";
 import { isPopulateSupportedOperation, normalizePopulateFields } from "../../shared/query-populate.js";
 import { fetchGinkoCmsJson } from "./ginko-cms.js";
+import { assertValidPublicItem } from "./public-item.js";
 import { sanitizeSearchSnippet } from "./search-snippet.js";
 function getHierarchyStore() {
   const globalScope = globalThis;
@@ -205,6 +206,9 @@ function mapNavigationEntry(entry, state) {
   return {
     title: entry.title,
     slug: entry.slug,
+    nodeKind: entry.nodeKind,
+    icon: entry.icon,
+    badge: entry.badge,
     path: getGinkoHierarchyEntryPath(state, entry),
     children: entry.children.map((child) => mapNavigationEntry(child, state))
   };
@@ -372,39 +376,13 @@ async function fetchHierarchyItemFromResolved(args) {
     }
   );
   if (getResponse.status === 200 && getResponse.body?.data) {
-    const candidate = toRecord(getResponse.body.data);
-    const candidateId = asString(candidate.id);
-    const candidateContentId = asString(candidate[args.collection.contentIdField || "colocationFolderId"]);
-    if (!args.resolved.itemId || candidateId === args.resolved.itemId || candidateContentId === args.resolved.contentId) {
-      return candidate;
-    }
+    return assertValidPublicItem(getResponse.body.data, {
+      collectionSource: args.collection.source,
+      op: "page",
+      includeBody: args.query.includeBody === true
+    });
   }
-  const listResponse = await fetchGinkoCmsJson(
-    args.event,
-    `/api/v2/cms/${args.collection.source}`,
-    {
-      ...args.query,
-      locale: args.collection.localized === false ? void 0 : args.locale,
-      limit: 200,
-      sortBy: "updatedAt",
-      sortDir: "desc"
-    }
-  );
-  const rows = Array.isArray(listResponse.body?.data) ? listResponse.body.data : [];
-  const match = rows.find((row) => {
-    const record = toRecord(row);
-    const rowId = asString(record.id);
-    const rowContentId = asString(record[args.collection.contentIdField || "colocationFolderId"]);
-    const rowSlug = asString(record.slug);
-    if (args.resolved.itemId && rowId === args.resolved.itemId) {
-      return true;
-    }
-    if (args.resolved.contentId && rowContentId === args.resolved.contentId) {
-      return true;
-    }
-    return Boolean(args.resolved.slug && rowSlug === args.resolved.slug);
-  });
-  return match ? toRecord(match) : null;
+  return null;
 }
 function collectionFromSource(site, source) {
   const matched = Object.entries(site.collections || {}).find(([, collection2]) => collection2.source === source);
@@ -435,7 +413,11 @@ async function fetchItemByResolvedPath(args) {
       return null;
     }
     return attachFlatPath({
-      item: toRecord(upstream.body.data),
+      item: assertValidPublicItem(upstream.body.data, {
+        collectionSource: collection.source,
+        op: "page",
+        includeBody: query.includeBody === true
+      }),
       collection,
       locale,
       defaultLocale,
@@ -596,7 +578,11 @@ export async function executeGinkoQuery(event, payload) {
       `/api/v2/cms/${collection.source}`,
       effectiveQuery
     );
-    const rows = Array.isArray(upstream.body?.data) ? upstream.body.data.map((row) => toRecord(row)) : [];
+    const rows = Array.isArray(upstream.body?.data) ? upstream.body.data.map((row) => assertValidPublicItem(row, {
+      collectionSource: collection.source,
+      op: payload.op,
+      includeBody: payload.includeBody === true
+    })) : [];
     if (isFlatCollection(collection)) {
       const mapped2 = rows.map((row) => attachFlatPath({
         item: row,

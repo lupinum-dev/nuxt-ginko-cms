@@ -6,6 +6,9 @@ import { resolveGinkoLocale } from './_ginkoUtils.js'
 export interface NavigationItem {
   title?: string
   slug?: string
+  nodeKind?: 'page' | 'folder' | 'group'
+  icon?: string
+  badge?: string
   path?: string
   children: NavigationItem[]
 }

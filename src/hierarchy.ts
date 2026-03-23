@@ -26,6 +26,16 @@ function asChildren(value) {
 function toIsoOrder(raw, content, contentOrderField) {
   return asNumber(content[contentOrderField]) ?? asNumber(raw.order) ?? Number.MAX_SAFE_INTEGER;
 }
+function getNodeKind(raw) {
+  const explicit = asString(raw.nodeKind);
+  if (explicit === "page" || explicit === "folder" || explicit === "group") {
+    return explicit;
+  }
+  return asBoolean(raw.isFolder) ? "folder" : "page";
+}
+function getAdornment(raw, content, key) {
+  return asString(content[key]) || asString(raw[key]);
+}
 function sortRawNodes(nodes, contentOrderField, contentTitleField) {
   return [...nodes].sort((a, b) => {
     const contentA = asRecord(a.content);
@@ -134,7 +144,7 @@ function buildGinkoHierarchyState(rawNodes, options) {
     state.flat.push(entry);
     if (entry.isFolder) {
       state.folders.push(entry);
-    } else {
+    } else if (entry.nodeKind === "page") {
       state.pages.push(entry);
     }
     if (entry.path) {
@@ -161,15 +171,17 @@ function buildGinkoHierarchyState(rawNodes, options) {
     const sorted = sortRawNodes(nodes, contentOrderField, contentTitleField);
     for (const raw of sorted) {
       const content = asRecord(raw.content);
-      const isFolder = asBoolean(raw.isFolder);
+      const nodeKind = getNodeKind(raw);
+      const isFolder = nodeKind === "folder";
+      const isGroup = nodeKind === "group";
       const itemId = asString(raw.id);
-      const rawSlug = normalizeSlugSegment(content[contentSlugField]) || normalizeSlugSegment(raw.slug);
+      const rawSlug = isGroup ? void 0 : normalizeSlugSegment(content[contentSlugField]) || normalizeSlugSegment(raw.slug);
       const title = asString(content[contentTitleField]) || asString(raw.title) || rawSlug || "Untitled";
       const order = toIsoOrder(raw, content, contentOrderField);
       const nextFolderSegments = isFolder && rawSlug ? [...context.folderSegments, rawSlug] : context.folderSegments;
       const nextFolderTitles = isFolder ? [...context.folderTitles, title] : context.folderTitles;
       const nextFolderItemIds = isFolder && itemId ? [...context.folderItemIds, itemId] : context.folderItemIds;
-      const segments = isFolder ? nextFolderSegments : rawSlug ? [...context.folderSegments, rawSlug] : [];
+      const segments = isFolder ? nextFolderSegments : !isGroup && rawSlug ? [...context.folderSegments, rawSlug] : [];
       const path = buildPath({
         baseSegment,
         locale,
@@ -184,7 +196,7 @@ function buildGinkoHierarchyState(rawNodes, options) {
         folderItemIds: nextFolderItemIds,
         depth: context.depth + 1
       });
-      const shouldInclude = isFolder ? includeFolders && Boolean(path) : Boolean(path);
+      const shouldInclude = isGroup ? Boolean(title) : isFolder ? includeFolders && Boolean(path) : Boolean(path);
       if (!shouldInclude) {
         output.push(...children);
         continue;
@@ -196,10 +208,13 @@ function buildGinkoHierarchyState(rawNodes, options) {
         contentId,
         slug: rawSlug,
         title,
+        nodeKind,
         status: asString(raw.status) || "published",
         order,
         updatedAt: asNumber(raw.updatedAt),
         isFolder,
+        icon: getAdornment(raw, content, "icon"),
+        badge: getAdornment(raw, content, "badge"),
         path,
         depth: context.depth,
         segments,

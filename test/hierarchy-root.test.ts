@@ -16,7 +16,7 @@ describe("hierarchy root documents", () => {
       },
       {
         id: "guides",
-        isFolder: true,
+        nodeKind: "folder",
         slug: "guides",
         content: { title: "Guides", slug: "guides" },
         children: [
@@ -59,5 +59,38 @@ describe("hierarchy root documents", () => {
     const authEntry = resolveGinkoHierarchyPath(state, "/docs/guides/authentication");
     expect(authEntry?.slug).toBe("authentication");
     expect(getGinkoHierarchyEntryPath(state, authEntry!)).toBe("/docs/guides/authentication");
+  });
+
+  it("keeps group nodes in navigation while excluding them from route segments", () => {
+    const groupedState = buildGinkoHierarchyState(
+      [
+        {
+          id: "group-intro",
+          nodeKind: "group",
+          content: { title: "Introduction" },
+          children: [
+            {
+              id: "quick-start",
+              slug: "quick-start",
+              content: { title: "Quick Start", slug: "quick-start" },
+            },
+          ],
+        },
+      ],
+      {
+        locale: "en",
+        defaultLocale: "en",
+        baseSegment: "docs",
+        includeFolders: true,
+      },
+    );
+
+    const [group] = groupedState.tree;
+    const [page] = group?.children ?? [];
+
+    expect(group?.nodeKind).toBe("group");
+    expect(group?.path).toBeUndefined();
+    expect(page?.path).toBe("/docs/quick-start");
+    expect(resolveGinkoHierarchyPath(groupedState, "/docs/quick-start")?.title).toBe("Quick Start");
   });
 });
