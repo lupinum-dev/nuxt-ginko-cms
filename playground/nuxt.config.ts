@@ -1,7 +1,7 @@
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineNuxtConfig({
-  modules: ['ginko-nuxt'],
+  modules: ['@lupinum/ginko-nuxt'],
   devtools: { enabled: true },
 
   css: ['~/assets/css/main.css'],
@@ -20,33 +20,37 @@ export default defineNuxtConfig({
     ],
   },
 
-  cmsGinko: {
-    // API connection - uses env vars automatically via module defaults
-    // Set in .env.local: NUXT_CMS_API_URL, NUXT_CMS_TEAM_SLUG
-    // API keys: NUXT_CMS_API_KEY_PUBLIC, NUXT_CMS_API_KEY_PREVIEW
-
-    locales: ['en', 'de'],
-    defaultLocale: 'en',
-
-    collections: [
-      {
-        slug: 'blogs',
-        populate: ['author'],
-        routePattern: '/blog/[slug]',
+  ginkoCms: {
+    site: {
+      defaultLocale: 'en',
+      locales: [{ code: 'en', hreflang: 'en-US', isDefault: true }],
+      routing: {
+        localePrefixStrategy: 'none',
       },
-      {
-        slug: 'authors',
+      staticRoutes: ['/', '/blog', '/docs'],
+      collections: {
+        blog: {
+          kind: 'flat',
+          source: 'blog-posts',
+          routing: {
+            prefix: '/blog',
+          },
+        },
+        docs: {
+          kind: 'hierarchy',
+          source: 'docs',
+          routing: {
+            baseSegment: 'docs',
+            rootSlug: 'quick-start',
+          },
+          includeFolders: true,
+          maxDepth: 3,
+        },
       },
-      {
-        slug: 'legal',
-        routePattern: '/legal/[slug]',
+      search: {
+        enabled: true,
+        defaultLimit: 8,
       },
-    ],
-
-    // Preview mode is auto-detected:
-    // - dev server: preview mode (real-time API)
-    // - production build: static mode (cached content)
-    assetDir: 'cms-assets',
-    cacheDir: '.cms-cache',
+    },
   },
 })

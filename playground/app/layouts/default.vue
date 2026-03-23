@@ -1,51 +1,48 @@
-<script setup lang="ts">
-useCmsLocale()
-</script>
-
 <template>
-  <div class="min-h-screen bg-gray-50">
-    <!-- Header -->
-    <header class="bg-white shadow-sm">
-      <div class="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between">
+  <div class="min-h-screen">
+    <header class="border-b border-[var(--ginko-line)] bg-[var(--ginko-panel)] backdrop-blur">
+      <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
+        <div class="flex items-center gap-6">
           <NuxtLink
             to="/"
-            class="text-xl font-bold text-gray-900"
+            class="text-xl font-semibold tracking-[0.18em] uppercase"
           >
-            CMS Demo
+            Ginko Nuxt
           </NuxtLink>
 
-          <nav class="flex items-center gap-6">
+          <nav class="flex items-center gap-4 text-sm text-[var(--ginko-muted)]">
             <NuxtLink
               to="/blog"
-              class="text-gray-600 hover:text-gray-900"
+              class="rounded-full px-3 py-1.5 transition hover:bg-white/70 hover:text-[var(--ginko-ink)]"
             >
               Blog
             </NuxtLink>
             <NuxtLink
-              to="/legal/privacy-policy"
-              class="text-gray-600 hover:text-gray-900"
+              to="/docs"
+              class="rounded-full px-3 py-1.5 transition hover:bg-white/70 hover:text-[var(--ginko-ink)]"
             >
-              Privacy
+              Docs
             </NuxtLink>
-
-            <!-- Locale Switcher -->
-            <LocaleSwitcher />
           </nav>
         </div>
+
+        <p class="text-xs tracking-[0.24em] uppercase text-[var(--ginko-muted)]">
+          Current API playground
+        </p>
       </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <main class="mx-auto max-w-6xl px-6 py-10">
       <slot />
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-white border-t">
-      <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-        <p class="text-center text-gray-500 text-sm">
-          Demo CMS Consumer - Powered by Convex CMS
+    <footer class="border-t border-[var(--ginko-line)] bg-[var(--ginko-panel)]">
+      <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-5 text-sm text-[var(--ginko-muted)]">
+        <p>
+          Powered by Ginko CMS
+        </p>
+        <p>
+          `ginkoCms.site` + `useGinko*`
         </p>
       </div>
     </footer>

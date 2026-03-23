@@ -1,79 +1,35 @@
 <script setup lang="ts">
-const { author, post } = defineProps<{
-  post: Record<string, unknown>
-  /** Pre-resolved author object (for client-side population) */
-  author?: Record<string, unknown> | null
-}>()
-
-// Resolve featured image URL
-const featuredimageUrl = useCmsAssetUrl(post.featuredimage as string | undefined)
-
-// Use passed author or try to extract from post (if already populated)
-const resolvedAuthor = computed(() => {
-  if (author)
-    return author
-  if (post.author && typeof post.author === 'object') {
-    return post.author as Record<string, unknown>
+defineProps<{
+  post: {
+    slug?: string
+    path?: string
+    title?: string
+    description?: string
+    date?: string
+    readingTime?: string
+    badge?: string
   }
-  return null
-})
-
-const formattedDate = computed(() => {
-  if (!post.publishedAt)
-    return ''
-  return new Date(post.publishedAt as number).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-  })
-})
+}>()
 </script>
 
 <template>
-  <NuxtLink
-    :to="`/blog/${post.slug}`"
-    class="block bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden"
-  >
-    <!-- Featured Image -->
-    <div class="aspect-video bg-gray-100">
-      <img
-        v-if="featuredimageUrl"
-        :src="featuredimageUrl"
-        :alt="post.title as string || ''"
-        class="w-full h-full object-cover"
-      >
-      <div
-        v-else
-        class="w-full h-full flex items-center justify-center text-gray-400"
-      >
-        No image
-      </div>
+  <article class="rounded-[2rem] border border-[var(--ginko-line)] bg-[var(--ginko-panel)] p-6 shadow-[0_18px_50px_rgba(23,32,51,0.08)]">
+    <div class="mb-4 flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.18em] text-[var(--ginko-muted)]">
+      <span v-if="post.badge" class="rounded-full bg-[var(--ginko-accent-soft)] px-3 py-1 text-[var(--ginko-accent)]">
+        {{ post.badge }}
+      </span>
+      <span v-if="post.date">{{ post.date }}</span>
+      <span v-if="post.readingTime">{{ post.readingTime }}</span>
     </div>
 
-    <!-- Content -->
-    <div class="p-4">
-      <h3 class="font-semibold text-gray-900 mb-2 line-clamp-2">
-        {{ post.title }}
-      </h3>
+    <h2 class="text-2xl font-semibold leading-tight">
+      <NuxtLink :to="post.path || `/blog/${post.slug}`" class="transition hover:text-[var(--ginko-accent)]">
+        {{ post.title || "Untitled" }}
+      </NuxtLink>
+    </h2>
 
-      <p
-        v-if="post.excerpt"
-        class="text-gray-600 text-sm mb-3 line-clamp-2"
-      >
-        {{ post.excerpt }}
-      </p>
-
-      <div class="flex items-center justify-between text-sm text-gray-500">
-        <!-- Author -->
-        <span v-if="resolvedAuthor?.name">
-          {{ resolvedAuthor.name }}
-        </span>
-
-        <!-- Date -->
-        <span v-if="formattedDate">
-          {{ formattedDate }}
-        </span>
-      </div>
-    </div>
-  </NuxtLink>
+    <p v-if="post.description" class="mt-3 text-sm leading-7 text-[var(--ginko-muted)]">
+      {{ post.description }}
+    </p>
+  </article>
 </template>

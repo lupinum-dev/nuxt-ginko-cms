@@ -5,9 +5,9 @@ Nuxt integration for Ginko CMS with the current composable-first API.
 ## Current surface
 
 - Configure the module under `ginkoCms`
-- Define site routing under `ginkoCms.site`
-- Use `useGinkoPage`, `useGinkoItems`, `useGinkoNavigation`, `useGinkoSurround`, and `queryGinko`
-- Generate types with the `ginko` CLI
+- Define collection routing and locale policy under `ginkoCms.site`
+- Read content through `useGinkoPage`, `useGinkoItems`, `useGinkoNavigation`, `useGinkoSurround`, `useGinkoSearch`, and `queryGinko`
+- Generate `ginko.generated.ts` and `ginko.module.d.ts` with the `ginko` CLI
 
 ## Install
 
@@ -66,12 +66,29 @@ export default defineNuxtConfig({
 })
 ```
 
-## Canonical docs
+## Example usage
 
-The single source of truth is the `ginko-cms` repo:
+```vue
+<script setup lang="ts">
+const { data: page } = await useGinkoPage('docs', { includeBody: true })
+const { data: posts } = await useGinkoItems('blog', { sort: ['updatedAt', 'desc'] })
+const { data: navigation } = useGinkoNavigation('docs')
+</script>
+```
+
+```ts
+const featuredPosts = await queryGinko('blog')
+  .sort('updatedAt', 'desc')
+  .limit(3)
+  .find()
+```
+
+## Deeper references
+
+For the full cross-repo mental model and seeding workflow, see the `ginko-cms` repo:
 
 - `docs/nuxt-module-reference.md`
 - `docs/runbooks/seed-new-team-via-mcp.md`
 - `docs/ginko-mental-model.md`
 
-The older `cmsGinko` / `useCms*` documentation is no longer current.
+Legacy `cmsGinko` / `useCms*` examples are intentionally removed from the supported path.

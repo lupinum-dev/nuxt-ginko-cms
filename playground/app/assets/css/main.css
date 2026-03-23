@@ -1,1 +1,24 @@
 @import "tailwindcss";
+
+:root {
+  --ginko-ink: #172033;
+  --ginko-muted: #5d6881;
+  --ginko-line: rgba(23, 32, 51, 0.12);
+  --ginko-paper: #f5f0e8;
+  --ginko-accent: #bf5b2c;
+  --ginko-accent-soft: #f4d9c8;
+  --ginko-panel: rgba(255, 253, 248, 0.88);
+}
+
+body {
+  min-height: 100vh;
+  color: var(--ginko-ink);
+  background:
+    radial-gradient(circle at top left, rgba(191, 91, 44, 0.18), transparent 32%),
+    radial-gradient(circle at top right, rgba(244, 217, 200, 0.9), transparent 28%),
+    linear-gradient(180deg, #fffdfa 0%, var(--ginko-paper) 100%);
+}
+
+a {
+  color: inherit;
+}

@@ -1,13 +1,5 @@
 # Architecture
 
-The canonical architecture reference lives in the `ginko-cms` repo.
-
-Read these instead of maintaining a second, stale explanation here:
-
-- `docs/ginko-mental-model.md`
-- `docs/nuxt-module-reference.md`
-- `docs/runbooks/seed-new-team-via-mcp.md`
-
 Current architectural defaults:
 
 - package: `@lupinum/ginko-nuxt`
@@ -17,4 +9,10 @@ Current architectural defaults:
 - composable-first usage
 - explicit hierarchy root documents via `routing.rootSlug` / `routing.rootSlugByLocale`
 
-The old Convex preview/static architecture notes are legacy and intentionally removed from the current path.
+This module no longer supports or documents the older preview/static split, `cmsGinko`, or `useCms*` examples.
+
+Deeper cross-repo references live in:
+
+- `docs/ginko-mental-model.md`
+- `docs/nuxt-module-reference.md`
+- `docs/runbooks/seed-new-team-via-mcp.md`
