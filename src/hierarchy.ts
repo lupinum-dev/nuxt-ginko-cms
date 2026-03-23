@@ -31,7 +31,7 @@ function getNodeKind(raw) {
   if (explicit === "page" || explicit === "folder" || explicit === "group") {
     return explicit;
   }
-  return asBoolean(raw.isFolder) ? "folder" : "page";
+  return "page";
 }
 function getAdornment(raw, content, key) {
   return asString(content[key]) || asString(raw[key]);
@@ -142,7 +142,7 @@ function buildGinkoHierarchyState(rawNodes, options) {
   };
   const register = (entry) => {
     state.flat.push(entry);
-    if (entry.isFolder) {
+    if (entry.nodeKind === "folder") {
       state.folders.push(entry);
     } else if (entry.nodeKind === "page") {
       state.pages.push(entry);
@@ -212,7 +212,6 @@ function buildGinkoHierarchyState(rawNodes, options) {
         status: asString(raw.status) || "published",
         order,
         updatedAt: asNumber(raw.updatedAt),
-        isFolder,
         icon: getAdornment(raw, content, "icon"),
         badge: getAdornment(raw, content, "badge"),
         path,

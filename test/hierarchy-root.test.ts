@@ -93,4 +93,27 @@ describe("hierarchy root documents", () => {
     expect(page?.path).toBe("/docs/quick-start");
     expect(resolveGinkoHierarchyPath(groupedState, "/docs/quick-start")?.title).toBe("Quick Start");
   });
+
+  it("does not infer folders from the legacy isFolder flag anymore", () => {
+    const legacyState = buildGinkoHierarchyState(
+      [
+        {
+          id: "legacy-folder",
+          isFolder: true,
+          slug: "legacy-folder",
+          content: { title: "Legacy Folder", slug: "legacy-folder" },
+        },
+      ],
+      {
+        locale: "en",
+        defaultLocale: "en",
+        baseSegment: "docs",
+        includeFolders: true,
+      },
+    );
+
+    expect(legacyState.tree[0]?.nodeKind).toBe("page");
+    expect(legacyState.folders).toHaveLength(0);
+    expect(legacyState.pages).toHaveLength(1);
+  });
 });
