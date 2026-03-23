@@ -1,100 +1,130 @@
-/**
- * CMS Nuxt Module Types
- */
-
-export interface CollectionConfig {
-  /** Collection slug in the CMS */
-  slug: string
-  /** Fields to populate (relation fields) */
-  populate?: string[]
-  /** Route pattern for prerendering (e.g., '/blog/[slug]') */
-  routePattern?: string
+export interface GinkoCollections {
 }
-
-export interface CmsModuleOptions {
-  /** Convex site URL (e.g., 'https://xxx.convex.site') */
-  apiUrl: string
-  /** Team slug in the CMS */
-  teamSlug: string
-
-  /**
-   * API key for authentication (fallback for backward compatibility)
-   * Prefer using apiKeyPublic and apiKeyPreview for better access control
-   */
-  apiKey?: string
-
-  /** API key with 'public' access level - only sees published content */
-  apiKeyPublic?: string
-
-  /** API key with 'preview' access level - sees preview + published content */
-  apiKeyPreview?: string
-
-  /**
-   * Which access level to use: 'public' or 'preview'
-   * - 'public': Uses apiKeyPublic, only fetches published content (for production)
-   * - 'preview': Uses apiKeyPreview, fetches preview + published content (for staging)
-   *
-   * Default: 'preview' in dev mode, 'public' in production
-   */
-  accessLevel?: 'public' | 'preview'
-
-  /** Available locales */
-  locales: string[]
-  /** Default locale */
-  defaultLocale: string
-
-  /** Collection configurations */
-  collections: CollectionConfig[]
-
-  /** Enable preview mode (real-time API calls vs static generation) */
-  preview?: boolean
-  /** Directory for downloaded assets (relative to public/) */
-  assetDir?: string
-  /** Directory for cached content */
-  cacheDir?: string
-
-  /**
-   * Locale prefix strategy for route generation during prerendering
-   * - 'no_prefix': No locale in routes (e.g., /blog/slug)
-   * - 'prefix_except_default': Default locale has no prefix (e.g., /blog/slug + /de/blog/slug)
-   * - 'prefix_all': All locales have prefix (e.g., /en/blog/slug + /de/blog/slug)
-   *
-   * Default: 'no_prefix'
-   */
-  localePrefix?: 'no_prefix' | 'prefix_except_default' | 'prefix_all'
-
-  /**
-   * Download assets and rewrite URLs to local paths during production build.
-   * When false (default), assets remain at their remote Convex storage URLs.
-   * When true, assets are downloaded to the assetDir and URLs are rewritten.
-   *
-   * Note: Only applies to production builds. Dev/preview always uses remote URLs.
-   *
-   * Default: false
-   */
-  localizeAssets?: boolean
+export type GinkoCmsLocalePrefixStrategy = 'prefix_except_default' | 'prefix_all' | 'none';
+export interface GinkoCmsSiteLocale {
+    code: string;
+    hreflang: string;
+    isDefault?: boolean;
 }
-
-export interface CmsRuntimeConfig {
-  apiUrl: string
-  teamSlug: string
-  locales: string[]
-  defaultLocale: string
-  collections: CollectionConfig[]
-  preview: boolean
-  accessLevel: 'public' | 'preview'
-  assetDir: string
-  cacheDir: string
-  localePrefix: 'no_prefix' | 'prefix_except_default' | 'prefix_all'
-  localizeAssets: boolean
+export interface GinkoCmsSiteRouting {
+    localePrefixStrategy?: GinkoCmsLocalePrefixStrategy;
 }
-
-// Module augmentation for Nuxt
-declare module '@nuxt/schema' {
-  interface PublicRuntimeConfig {
-    cmsGinko: CmsRuntimeConfig
-  }
-  interface RuntimeConfig {
-    cmsGinkoApiKey: string
-  }
+export interface GinkoCmsSiteCollectionSearch {
+    collections?: ReadonlyArray<string>;
+    limit?: number;
+}
+export interface GinkoCmsSiteCollectionCommon {
+    source: string;
+    localized?: boolean;
+    slugField?: string;
+    keyField?: 'id' | 'slug';
+    pageSize?: number;
+    listQuery?: Record<string, unknown>;
+    getQuery?: Record<string, unknown>;
+    search?: GinkoCmsSiteCollectionSearch;
+}
+export interface GinkoCmsSiteFlatRouting {
+    prefix?: string;
+    prefixByLocale?: Record<string, string>;
+    pathMapByLocale?: Record<string, Record<string, string>>;
+}
+export interface GinkoCmsSiteHierarchyRouting {
+    baseSegment?: string;
+    baseSegmentByLocale?: Record<string, string>;
+    rootSlug?: string;
+    rootSlugByLocale?: Record<string, string>;
+}
+export interface GinkoCmsSiteFlatCollection extends GinkoCmsSiteCollectionCommon {
+    kind: 'flat';
+    routing: GinkoCmsSiteFlatRouting;
+}
+export interface GinkoCmsSiteHierarchyCollection extends GinkoCmsSiteCollectionCommon {
+    kind: 'hierarchy';
+    routing: GinkoCmsSiteHierarchyRouting;
+    maxDepth?: number;
+    includeFolders?: boolean;
+    contentSlugField?: string;
+    contentTitleField?: string;
+    contentOrderField?: string;
+    contentIdField?: string;
+}
+export type GinkoCmsSiteCollection = GinkoCmsSiteFlatCollection | GinkoCmsSiteHierarchyCollection;
+export interface GinkoCmsSiteSitemap {
+    enabled?: boolean;
+    sourcePath?: string;
+}
+export interface GinkoPageResponse<T = Record<string, unknown>> {
+    item: T | null;
+    redirect?: string;
+    locale: string;
+    collectionKey?: string;
+}
+export interface GinkoCmsSiteSearch {
+    enabled?: boolean;
+    defaultLimit?: number;
+}
+export interface GinkoCmsSiteConfig {
+    defaultLocale?: string;
+    locales: ReadonlyArray<GinkoCmsSiteLocale>;
+    routing?: GinkoCmsSiteRouting;
+    staticRoutes?: ReadonlyArray<string>;
+    collections: Record<string, GinkoCmsSiteCollection>;
+    search?: GinkoCmsSiteSearch;
+    sitemap?: boolean | GinkoCmsSiteSitemap;
+}
+export interface GinkoResolveResponse {
+    matched: boolean;
+    path: string;
+    locale: string;
+    canonicalPath?: string;
+    collectionKey?: string;
+    collectionSource?: string;
+    kind?: 'flat' | 'hierarchy';
+    slug?: string;
+    itemId?: string;
+    contentId?: string;
+}
+export interface GinkoQueryOperationSearch {
+    q: string;
+    limit?: number;
+}
+export interface GinkoQueryOperationPathBy {
+    itemId?: string;
+    contentId?: string;
+    slug?: string;
+}
+export interface GinkoQueryPayload {
+    op: 'find' | 'first' | 'navigation' | 'surround' | 'search' | 'pathBy' | 'page';
+    collectionKey?: string;
+    path?: string;
+    where?: Record<string, unknown>;
+    sort?: {
+        field: string;
+        dir?: 'asc' | 'desc';
+    };
+    limit?: number;
+    offset?: number;
+    locale?: string | null;
+    includeBody?: boolean;
+    populate?: string[];
+    search?: GinkoQueryOperationSearch;
+    surround?: {
+        path?: string;
+    };
+    pathBy?: GinkoQueryOperationPathBy;
+}
+export interface GinkoQueryResponse<T = Record<string, unknown>> {
+    data: T;
+    meta?: Record<string, unknown>;
+}
+export interface GinkoSearchHit {
+    id?: string;
+    collectionKey?: string;
+    collectionSource?: string;
+    slug?: string;
+    title?: string;
+    snippet?: string;
+    path?: string;
+    updatedAt?: number;
+    raw: Record<string, unknown>;
 }

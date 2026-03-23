@@ -1,17 +1,47 @@
 {
-  "name": "ginko-nuxt",
+  "name": "@lupinum/ginko-nuxt",
   "version": "0.0.2",
-  "description": "Nuxt module for consuming Convex CMS content with preview and static build modes",
+  "description": "Nuxt integration for Ginko CMS (key-first, server-BFF default)",
   "repository": "lupinum-dev/ginko-nuxt",
   "license": "MIT",
   "type": "module",
+  "main": "./dist/module.mjs",
+  "types": "./dist/types.d.mts",
+  "files": [
+    "dist",
+    "bin",
+    "README.md",
+    "LICENSE"
+  ],
   "exports": {
     ".": {
       "types": "./dist/types.d.mts",
       "import": "./dist/module.mjs"
-    }
+    },
+    "./module": {
+      "types": "./dist/types.d.mts",
+      "import": "./dist/module.mjs"
+    },
+    "./runtime/types": {
+      "types": "./dist/runtime/types/index.d.ts",
+      "import": "./dist/runtime/types/index.js",
+      "default": "./dist/runtime/types/index.js"
+    },
+    "./sitemap": {
+      "types": "./dist/sitemap.d.mts",
+      "import": "./dist/sitemap.mjs",
+      "default": "./dist/sitemap.mjs"
+    },
+    "./hierarchy": {
+      "types": "./dist/hierarchy.d.mts",
+      "import": "./dist/hierarchy.mjs",
+      "default": "./dist/hierarchy.mjs"
+    },
+    "./package.json": "./package.json"
   },
-  "main": "./dist/module.mjs",
+  "bin": {
+    "ginko": "./bin/ginko.mjs"
+  },
   "typesVersions": {
     "*": {
       ".": [
@@ -19,53 +49,45 @@
       ]
     }
   },
-  "bin": {
-    "cms-nuxt": "./bin/cms-nuxt.mjs"
-  },
-  "files": [
-    "bin",
-    "dist",
-    "src/cli"
-  ],
-  "workspaces": [
-    "playground"
-  ],
   "scripts": {
-    "prepack": "pnpm run dev:prepare && nuxt-module-build build",
-    "dev": "npm run dev:prepare && nuxt dev playground",
-    "dev:build": "nuxt build playground",
-    "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxt prepare playground",
+    "prepack": "nuxt-module-build build",
+    "dev": "pnpm run dev:prepare && pnpm --dir playground dev",
+    "dev:build": "pnpm --dir playground build",
+    "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && pnpm --dir playground exec nuxi prepare",
     "build": "nuxt-module-build build",
-    "release": "npm run lint && npm run test && npm run prepack && changelogen --release && npm publish && git push --follow-tags",
+    "release": "pnpm run lint && pnpm run test && pnpm run prepack && changelogen --release && npm publish --access public && git push --follow-tags",
     "lint": "eslint .",
-    "test": "pnpm run dev:prepare && vitest run --config vitest.config.ts",
-    "test:watch": "pnpm run dev:prepare && vitest watch",
-    "test:coverage": "pnpm run dev:prepare && vitest run --coverage --config vitest.config.ts",
-    "test:types": "pnpm run dev:prepare && vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
+    "test": "pnpm run prepack && vitest run",
+    "test:unit": "vitest run \"src/**/*.spec.ts\"",
+    "test:smoke": "pnpm run prepack && vitest run \"test/**/*.test.ts\"",
+    "test:watch": "vitest watch",
+    "test:types": "pnpm run dev:prepare",
+    "test:ci": "pnpm run lint && pnpm run test:types && pnpm run test"
   },
   "peerDependencies": {
-    "nuxt": "^3.0.0 || ^4.0.0"
+    "nuxt": "^4.0.0"
   },
   "dependencies": {
-    "@nuxt/kit": "^4.3.1",
-    "defu": "^6.1.4",
-    "ofetch": "^1.5.1",
-    "p-limit": "^7.2.0"
+    "@nuxt/kit": "^4.3.1"
   },
   "devDependencies": {
-    "@nuxt/devtools": "^3.1.1",
-    "@nuxt/eslint-config": "^1.14.0",
+    "@nuxt/devtools": "^3.2.1",
+    "@nuxt/eslint-config": "^1.15.1",
     "@nuxt/module-builder": "^1.0.2",
     "@nuxt/schema": "^4.3.1",
     "@nuxt/test-utils": "^4.0.0",
     "@types/node": "latest",
     "changelogen": "^0.6.2",
-    "eslint": "^9.39.1",
+    "eslint": "^9.39.2",
     "nuxt": "^4.3.1",
     "typescript": "~5.9.3",
+    "unbuild": "^3.6.1",
     "vitest": "^4.0.18",
-    "vue": "^3.5.28",
-    "vue-tsc": "^3.2.4"
+    "vue": "^3.5.0",
+    "vue-tsc": "^3.2.5"
   },
-  "packageManager": "pnpm@10.28.1+sha512.7d7dbbca9e99447b7c3bf7a73286afaaf6be99251eb9498baefa7d406892f67b879adb3a1d7e687fc4ccc1a388c7175fbaae567a26ab44d1067b54fcb0d6a316"
+  "publishConfig": {
+    "access": "public"
+  },
+  "packageManager": "pnpm@10.10.0"
 }

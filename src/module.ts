@@ -1,207 +1,202 @@
-/**
- * ginko-nuxt
- *
- * Nuxt module for consuming Convex CMS public API
- * Supports preview mode (real-time API) and production mode (static SSG)
- */
+import type { GinkoCmsSiteConfig } from './runtime/types/index'
+import { addComponentsDir, addImportsDir, addServerHandler, addServerPlugin, createResolver, defineNuxtModule } from '@nuxt/kit'
 
-import type { CmsModuleOptions, CmsRuntimeConfig } from './runtime/types'
-import process from 'node:process'
-import {
-  addImports,
-  addServerScanDir,
-  addTemplate,
-  createResolver,
-  defineNuxtModule,
-  useLogger,
-} from '@nuxt/kit'
-import { defu } from 'defu'
-import { resolveAccessLevel, resolvePreviewMode } from './internal/module-resolution'
+export interface GinkoCmsNuxtModuleOptions {
+  routeBase?: string
+  site?: GinkoCmsSiteConfig
+}
 
-export type { CmsModuleOptions, CollectionConfig } from './runtime/types'
 export type * from './runtime/types/api'
 
-const logger = useLogger('cms-ginko')
-
-export default defineNuxtModule<CmsModuleOptions>({
-  meta: {
-    name: 'ginko-nuxt',
-    configKey: 'cmsGinko',
-    compatibility: {
-      nuxt: '>=3.0.0',
+function asString(value: unknown) {
+  if (typeof value !== "string") {
+    return void 0;
+  }
+  const normalized = value.trim();
+  return normalized.length > 0 ? normalized : void 0;
+}
+function normalizeLocale(locale: Record<string, unknown>) {
+  const code = asString(locale.code);
+  const hreflang = asString(locale.hreflang);
+  if (!code || !hreflang) {
+    return void 0;
+  }
+  return {
+    code,
+    hreflang,
+    isDefault: locale.isDefault === true
+  };
+}
+function normalizeFlatCollection(key: string, collection: any) {
+  const source = asString(collection.source);
+  if (!source) {
+    throw new Error(`[ginko-cms] Invalid source for flat collection "${key}"`);
+  }
+  const routing = collection.routing || {};
+  const hasPathMap = routing.pathMapByLocale && Object.keys(routing.pathMapByLocale).length > 0;
+  const hasPrefix = asString(routing.prefix);
+  const hasPrefixByLocale = routing.prefixByLocale && Object.keys(routing.prefixByLocale).length > 0;
+  if (!hasPathMap && !hasPrefix && !hasPrefixByLocale) {
+    throw new Error(`[ginko-cms] Flat collection "${key}" must define routing.prefix, routing.prefixByLocale, or routing.pathMapByLocale`);
+  }
+  return {
+    ...collection,
+    kind: "flat",
+    source,
+    routing: {
+      ...asString(routing.prefix) ? { prefix: asString(routing.prefix) } : {},
+      ...routing.prefixByLocale ? { prefixByLocale: routing.prefixByLocale } : {},
+      ...routing.pathMapByLocale ? { pathMapByLocale: routing.pathMapByLocale } : {}
+    }
+  };
+}
+function normalizeHierarchyCollection(key: string, collection: any) {
+  const source = asString(collection.source);
+  if (!source) {
+    throw new Error(`[ginko-cms] Invalid source for hierarchy collection "${key}"`);
+  }
+  const routing = collection.routing || {};
+  const baseSegment = asString(routing.baseSegment);
+  const baseSegmentByLocale = routing.baseSegmentByLocale && Object.keys(routing.baseSegmentByLocale).length > 0 ? routing.baseSegmentByLocale : void 0;
+  const rootSlug = asString(routing.rootSlug);
+  const rootSlugByLocale = routing.rootSlugByLocale && Object.keys(routing.rootSlugByLocale).length > 0 ? routing.rootSlugByLocale : void 0;
+  if (!baseSegment && !baseSegmentByLocale) {
+    throw new Error(`[ginko-cms] Hierarchy collection "${key}" must define routing.baseSegment or routing.baseSegmentByLocale`);
+  }
+  return {
+    ...collection,
+    kind: "hierarchy",
+    source,
+    routing: {
+      ...baseSegment ? { baseSegment } : {},
+      ...baseSegmentByLocale ? { baseSegmentByLocale } : {},
+      ...rootSlug ? { rootSlug } : {},
+      ...rootSlugByLocale ? { rootSlugByLocale } : {}
+    }
+  };
+}
+function normalizeCollection(key: string, collection: any) {
+  if (collection.kind === "hierarchy") {
+    return normalizeHierarchyCollection(key, collection);
+  }
+  return normalizeFlatCollection(key, collection);
+}
+function normalizeSiteConfig(site?: GinkoCmsSiteConfig) {
+  if (!site) {
+    return void 0;
+  }
+  const locales = (site.locales || []).map(normalizeLocale).filter((locale) => Boolean(locale));
+  if (!locales.length) {
+    throw new Error("[ginko-cms] ginkoCms.site.locales must include at least one valid locale");
+  }
+  const localeCodes = /* @__PURE__ */ new Set();
+  for (const locale of locales) {
+    if (localeCodes.has(locale.code)) {
+      throw new Error(`[ginko-cms] Duplicate locale code in ginkoCms.site.locales: ${locale.code}`);
+    }
+    localeCodes.add(locale.code);
+  }
+  const inferredDefaultLocale = asString(site.defaultLocale) || locales.find((locale) => locale.isDefault)?.code || locales[0]?.code;
+  if (!inferredDefaultLocale) {
+    throw new Error("[ginko-cms] Unable to resolve default locale for ginkoCms.site");
+  }
+  const collections = site.collections || {};
+  const normalizedCollections = Object.fromEntries(
+    Object.entries(collections).map(([key, collection]) => [
+      key,
+      normalizeCollection(key, collection)
+    ])
+  );
+  return {
+    defaultLocale: inferredDefaultLocale,
+    locales: locales.map((locale) => ({
+      ...locale,
+      isDefault: locale.code === inferredDefaultLocale
+    })),
+    routing: {
+      localePrefixStrategy: site.routing?.localePrefixStrategy || "prefix_except_default"
     },
+    staticRoutes: (site.staticRoutes || []).filter((route) => typeof route === "string" && route.trim().length > 0),
+    collections: normalizedCollections,
+    search: {
+      enabled: site.search?.enabled !== false,
+      defaultLimit: Math.max(1, Math.min(site.search?.defaultLimit || 12, 100))
+    },
+    sitemap: (() => {
+      const raw = site.sitemap;
+      const enabled = typeof raw === "boolean" ? raw : raw?.enabled !== false;
+      return {
+        enabled,
+        sourcePath: typeof raw === "object" && asString(raw?.sourcePath) || "/api/ginko/sitemap"
+      };
+    })()
+  };
+}
+export type { GinkoCollections } from './runtime/types/index'
+
+const module$1 = defineNuxtModule<GinkoCmsNuxtModuleOptions>({
+  meta: {
+    name: "@lupinum/ginko-nuxt",
+    configKey: "ginkoCms",
+    compatibility: {
+      nuxt: ">=4.0.0"
+    }
   },
   defaults: {
-    apiUrl: process.env.NUXT_CMS_API_URL || '',
-    teamSlug: process.env.NUXT_CMS_TEAM_SLUG || '',
-    apiKey: undefined, // Legacy - prefer apiKeyPublic/apiKeyPreview
-    apiKeyPublic: undefined,
-    apiKeyPreview: undefined,
-    accessLevel: undefined,
-    locales: ['en'],
-    defaultLocale: 'en',
-    collections: [],
-    preview: undefined,
-    assetDir: 'cms-assets',
-    cacheDir: '.cms-cache',
-    localePrefix: 'no_prefix',
-    localizeAssets: false,
+    routeBase: "/api/ginko"
   },
-  async setup(options, nuxt) {
-    const resolver = createResolver(import.meta.url)
-
-    // Validate required options
-    if (!options.apiUrl) {
-      logger.warn('CMS API URL is not configured. Set apiUrl or NUXT_CMS_API_URL environment variable.')
+  setup(options, nuxt) {
+    const resolver = createResolver(import.meta.url);
+    const routeBase = options.routeBase || "/api/ginko";
+    const envKey = process.env.NUXT_GINKO_CMS_KEY || "";
+    const envBase = process.env.NUXT_GINKO_CMS_BASE || "";
+    const envLocale = process.env.NUXT_GINKO_CMS_LOCALE || "";
+    const envTimeout = process.env.NUXT_GINKO_CMS_TIMEOUT_MS || "";
+    const normalizedSite = normalizeSiteConfig(options.site);
+    const existingPrivate = nuxt.options.runtimeConfig.ginkoCms || {};
+    nuxt.options.runtimeConfig.ginkoCms = {
+      key: String(envKey || existingPrivate.key || "").trim(),
+      base: String(envBase || existingPrivate.base || "https://site.ginko-cms.com").trim(),
+      locale: String(envLocale || existingPrivate.locale || normalizedSite?.defaultLocale || "").trim(),
+      timeoutMs: Number(envTimeout || existingPrivate.timeoutMs || 8e3),
+      contextTtlMs: Number(existingPrivate.contextTtlMs || 3e5)
+    };
+    const existingPublic = nuxt.options.runtimeConfig.public.ginkoCms || {};
+    nuxt.options.runtimeConfig.public.ginkoCms = {
+      routeBase,
+      locale: String(envLocale || existingPublic.locale || normalizedSite?.defaultLocale || "").trim(),
+      ...normalizedSite ? { site: normalizedSite } : {}
+    };
+    addImportsDir(resolver.resolve("./runtime/app/composables"));
+    addComponentsDir({
+      path: resolver.resolve("./runtime/app/components"),
+      pathPrefix: false
+    });
+    addServerHandler({
+      route: `${routeBase}/query`,
+      handler: resolver.resolve("./runtime/server/api/ginko/query")
+    });
+    addServerHandler({
+      route: `${routeBase}/resolve`,
+      handler: resolver.resolve("./runtime/server/api/ginko/resolve")
+    });
+    if (normalizedSite?.sitemap?.enabled !== false) {
+      const sitemapSourcePath = normalizedSite?.sitemap?.sourcePath || "/api/ginko/sitemap";
+      addServerHandler({
+        route: sitemapSourcePath,
+        handler: resolver.resolve("./runtime/server/api/ginko/sitemap")
+      });
+      const sitemapConfig = nuxt.options.sitemap || (nuxt.options.sitemap = {});
+      const existingSources = Array.isArray(sitemapConfig.sources) ? sitemapConfig.sources : [];
+      if (!existingSources.includes(sitemapSourcePath)) {
+        sitemapConfig.sources = [...existingSources, sitemapSourcePath];
+      }
     }
-    if (!options.teamSlug) {
-      logger.warn('CMS team slug is not configured. Set teamSlug or NUXT_CMS_TEAM_SLUG environment variable.')
-    }
-
-    // Resolve preview mode (real-time API vs static generation)
-    const isPreview = resolvePreviewMode(options, nuxt.options.dev)
-
-    // Resolve access level and API key
-    const { accessLevel, apiKey } = resolveAccessLevel(options, nuxt.options.dev)
-
-    if (!apiKey) {
-      logger.warn('CMS API key is not configured. Set NUXT_CMS_API_KEY_PUBLIC/NUXT_CMS_API_KEY_PREVIEW or apiKeyPublic/apiKeyPreview.')
-    }
-
-    logger.info(`CMS mode: ${isPreview ? 'preview (real-time API)' : 'production (static)'}, access level: ${accessLevel}`)
-
-    // Build runtime config
-    const runtimeConfig: CmsRuntimeConfig = {
-      apiUrl: options.apiUrl,
-      teamSlug: options.teamSlug,
-      locales: options.locales,
-      defaultLocale: options.defaultLocale,
-      collections: options.collections,
-      preview: isPreview,
-      accessLevel,
-      assetDir: options.assetDir || 'cms-assets',
-      cacheDir: options.cacheDir || '.cms-cache',
-      localePrefix: options.localePrefix || 'no_prefix',
-      localizeAssets: options.localizeAssets ?? false,
-    }
-
-    // Merge into Nuxt runtime config
-    // Public config (available on client) - apiKey is NOT included here
-    const publicConfig = defu(
-      nuxt.options.runtimeConfig.public.cmsGinko as Partial<CmsRuntimeConfig> | undefined,
-      {
-        apiUrl: runtimeConfig.apiUrl,
-        teamSlug: runtimeConfig.teamSlug,
-        locales: runtimeConfig.locales,
-        defaultLocale: runtimeConfig.defaultLocale,
-        collections: runtimeConfig.collections,
-        preview: runtimeConfig.preview,
-        accessLevel: runtimeConfig.accessLevel,
-        assetDir: runtimeConfig.assetDir,
-        cacheDir: runtimeConfig.cacheDir,
-        localePrefix: runtimeConfig.localePrefix,
-        localizeAssets: runtimeConfig.localizeAssets,
-      },
-    )
-    nuxt.options.runtimeConfig.public.cmsGinko = publicConfig
-
-    // Private config (server only) - include the resolved apiKey
-    nuxt.options.runtimeConfig.cmsGinkoApiKey = apiKey
-
-    // Auto-import composables
-    addImports([
-      {
-        name: 'useCmsCollection',
-        from: resolver.resolve('./runtime/composables/useCmsCollection'),
-      },
-      {
-        name: 'useCmsItem',
-        from: resolver.resolve('./runtime/composables/useCmsItem'),
-      },
-      {
-        name: 'useCmsRelatedItem',
-        from: resolver.resolve('./runtime/composables/useCmsRelatedItem'),
-      },
-      {
-        name: 'useCmsLocale',
-        from: resolver.resolve('./runtime/composables/useCmsLocale'),
-      },
-      {
-        name: 'useCmsAssetUrl',
-        from: resolver.resolve('./runtime/composables/useCmsAssetUrl'),
-      },
-      {
-        name: 'useCmsSearchIndex',
-        from: resolver.resolve('./runtime/composables/useCmsSearchIndex'),
-      },
-    ])
-
-    // Register CMS API proxy route (keeps API key secure)
-    // Use addServerScanDir to auto-discover server routes from the module
-    const serverDir = resolver.resolve('./runtime/server')
-    addServerScanDir(serverDir)
-    logger.info(`Registered server routes from: ${serverDir}`)
-
-    // Add type augmentation template
-    addTemplate({
-      filename: 'types/cms-ginko.d.ts',
-      getContents: () => `
-interface CollectionConfig {
-  slug: string
-  populate?: string[]
-  routePattern?: string
-}
-
-interface CmsRuntimeConfig {
-  apiUrl: string
-  teamSlug: string
-  locales: string[]
-  defaultLocale: string
-  collections: CollectionConfig[]
-  preview: boolean
-  accessLevel: 'public' | 'preview'
-  assetDir: string
-  cacheDir: string
-  localePrefix: 'no_prefix' | 'prefix_except_default' | 'prefix_all'
-  localizeAssets: boolean
-}
-
-declare module '@nuxt/schema' {
-  interface PublicRuntimeConfig {
-    cmsGinko: CmsRuntimeConfig
+    addServerPlugin(resolver.resolve("./runtime/server/plugins/validate-ginko-cms"));
+    nuxt.hook("prepare:types", ({ references }) => {
+      references.push({ path: resolver.resolve("./runtime/types/nuxt.d.ts") });
+    });
   }
-  interface RuntimeConfig {
-    cmsGinkoApiKey: string
-  }
-}
+});
 
-declare module '#app' {
-  interface NuxtApp {
-    $cmsPreview: boolean
-    $cmsAccessLevel: 'public' | 'preview'
-  }
-}
-
-export {}
-`,
-    })
-
-    // Add types to tsconfig references
-    nuxt.hook('prepare:types', (opts) => {
-      opts.references.push({
-        path: resolver.resolve(nuxt.options.buildDir, 'types/cms-ginko.d.ts'),
-      })
-    })
-
-    // Register Nitro hooks for build-time processing
-    if (!isPreview) {
-      nuxt.hook('nitro:init', async (nitro) => {
-        // Import and register build hooks
-        const { registerCmsBuildHooks } = await import('./runtime/server/nitro/cms-build')
-        registerCmsBuildHooks(nitro, runtimeConfig, apiKey)
-      })
-    }
-
-    logger.success('CMS Nuxt module initialized')
-  },
-})
+export default module$1

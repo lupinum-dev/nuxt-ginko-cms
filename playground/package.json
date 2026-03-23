@@ -13,7 +13,7 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",
     "fuse.js": "^7.0.0",
-    "ginko-nuxt": "workspace:*",
+    "@lupinum/ginko-nuxt": "workspace:*",
     "tailwindcss": "^4.1.18"
   },
   "devDependencies": {
