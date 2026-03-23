@@ -1,5 +1,5 @@
 import type { GinkoCmsSiteConfig } from './runtime/types/index'
-import { addComponentsDir, addImportsDir, addServerHandler, addServerPlugin, createResolver, defineNuxtModule } from '@nuxt/kit'
+import { addComponentsDir, addImportsDir, addServerHandler, addServerPlugin, createResolver, defineNuxtModule, installModule } from '@nuxt/kit'
 
 export interface GinkoCmsNuxtModuleOptions {
   routeBase?: string
@@ -145,7 +145,7 @@ const module$1 = defineNuxtModule<GinkoCmsNuxtModuleOptions>({
   defaults: {
     routeBase: "/api/ginko"
   },
-  setup(options, nuxt) {
+  async setup(options, nuxt) {
     const resolver = createResolver(import.meta.url);
     const routeBase = options.routeBase || "/api/ginko";
     const envKey = process.env.NUXT_GINKO_CMS_KEY || "";
@@ -167,6 +167,7 @@ const module$1 = defineNuxtModule<GinkoCmsNuxtModuleOptions>({
       locale: String(envLocale || existingPublic.locale || normalizedSite?.defaultLocale || "").trim(),
       ...normalizedSite ? { site: normalizedSite } : {}
     };
+    await installModule('@nuxtjs/mdc')
     addImportsDir(resolver.resolve("./runtime/app/composables"));
     addComponentsDir({
       path: resolver.resolve("./runtime/app/components"),

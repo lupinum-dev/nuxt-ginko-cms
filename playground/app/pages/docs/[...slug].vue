@@ -58,7 +58,7 @@ useHead(() => ({
         </section>
 
         <section class="rounded-[2.5rem] border border-[var(--ginko-line)] bg-white/70 p-8">
-          <pre class="overflow-x-auto whitespace-pre-wrap text-sm leading-8 text-[var(--ginko-ink)]">{{ page.content || "" }}</pre>
+          <GinkoContent :value="page.content || ''" class="max-w-none" />
         </section>
 
         <section class="grid gap-4 md:grid-cols-2">

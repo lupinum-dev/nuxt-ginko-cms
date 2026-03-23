@@ -38,7 +38,7 @@ useHead(() => ({
       </section>
 
       <section class="rounded-[2.5rem] border border-[var(--ginko-line)] bg-white/70 p-8">
-        <pre class="overflow-x-auto whitespace-pre-wrap text-sm leading-8 text-[var(--ginko-ink)]">{{ post.content || "" }}</pre>
+        <GinkoContent :value="post.content || ''" class="max-w-none" />
       </section>
     </template>
   </article>
