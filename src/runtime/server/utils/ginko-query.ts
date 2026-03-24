@@ -653,7 +653,8 @@ export async function executeGinkoQuery(event, payload) {
       locale
     });
     const lookupPath = canonicalizeGinkoHierarchyPath(state, resolved.canonicalPath || requestedPath);
-    const pages = state.pages.map((entry) => ({
+    const navigableEntries = collection.includeFolders ? state.flat.filter((e) => e.nodeKind === "page" || e.nodeKind === "folder") : state.pages;
+    const pages = navigableEntries.map((entry) => ({
       entry,
       path: getGinkoHierarchyEntryPath(state, entry)
     })).filter((entry) => Boolean(entry.path));

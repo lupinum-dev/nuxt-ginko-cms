@@ -190,14 +190,14 @@ function buildGinkoHierarchyState(rawNodes, options) {
       });
       const contentIdFromField = asString(content[contentIdField]);
       const contentId = contentIdFromField || (rawSlug ? extractContentIdFromSlug(rawSlug) : void 0);
-      const children = walk(asChildren(raw.children), {
-        folderSegments: nextFolderSegments,
-        folderTitles: nextFolderTitles,
-        folderItemIds: nextFolderItemIds,
-        depth: context.depth + 1
-      });
       const shouldInclude = isGroup ? Boolean(title) : isFolder ? includeFolders && Boolean(path) : Boolean(path);
       if (!shouldInclude) {
+        const children = walk(asChildren(raw.children), {
+          folderSegments: nextFolderSegments,
+          folderTitles: nextFolderTitles,
+          folderItemIds: nextFolderItemIds,
+          depth: context.depth + 1
+        });
         output.push(...children);
         continue;
       }
@@ -221,9 +221,16 @@ function buildGinkoHierarchyState(rawNodes, options) {
         folderTitles: context.folderTitles,
         folderItemIds: context.folderItemIds,
         content,
-        children
+        children: []
       };
       register(entry);
+      const children = walk(asChildren(raw.children), {
+        folderSegments: nextFolderSegments,
+        folderTitles: nextFolderTitles,
+        folderItemIds: nextFolderItemIds,
+        depth: context.depth + 1
+      });
+      entry.children = children;
       output.push(entry);
     }
     return output;
