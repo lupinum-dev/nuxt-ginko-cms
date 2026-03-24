@@ -52,7 +52,7 @@ export interface UseGinkoSurroundResult {
  *
  * @example
  * ```ts
- * const { prev, next } = await useGinkoSurround('wiki')
+ * const { prev, next } = await useGinkoSurround('wiki', { scope: 'section' })
  * ```
  */
 export async function useGinkoSurround<K extends keyof GinkoCollections | (string & {})>(

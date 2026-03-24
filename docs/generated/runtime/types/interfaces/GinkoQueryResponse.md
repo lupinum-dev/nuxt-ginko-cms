@@ -6,7 +6,7 @@
 
 # Interface: GinkoQueryResponse\<T\>
 
-Defined in: [runtime/types/index.ts:253](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/index.ts#L253)
+Defined in: [runtime/types/index.ts:323](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L323)
 
 Standard response envelope from the query endpoint.
 
@@ -22,7 +22,7 @@ Standard response envelope from the query endpoint.
 
 > **data**: `T`
 
-Defined in: [runtime/types/index.ts:255](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/index.ts#L255)
+Defined in: [runtime/types/index.ts:325](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L325)
 
 The response data. Shape varies by operation.
 
@@ -32,6 +32,6 @@ The response data. Shape varies by operation.
 
 > `optional` **meta?**: `Record`\<`string`, `unknown`\>
 
-Defined in: [runtime/types/index.ts:257](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/index.ts#L257)
+Defined in: [runtime/types/index.ts:327](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L327)
 
 Optional metadata (e.g., pagination info).

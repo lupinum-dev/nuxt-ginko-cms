@@ -7,6 +7,17 @@ import {
   resolveGinkoHierarchyPath,
 } from "../src/hierarchy";
 
+function getSectionLandingPath(section: { children?: any[] }) {
+  const stack = [...(section.children ?? [])];
+  while (stack.length > 0) {
+    const node = stack.shift();
+    if (!node) continue;
+    if (node.path) return node.path;
+    stack.unshift(...(node.children ?? []));
+  }
+  return undefined;
+}
+
 describe("hierarchy root documents", () => {
   const state = buildGinkoHierarchyState(
     [
@@ -187,6 +198,14 @@ describe("hierarchy root documents", () => {
         includeFolders: true,
       }).map((entry) => entry.slug),
     ).toEqual(["deploy-overview", "deploy-vercel", "installation", "nuxt", "quick-start"]);
+
+    const docsSection = sectionedState.tree.find((entry) => entry.slug === "docs");
+    const deploySection = sectionedState.tree.find((entry) => entry.slug === "deploy");
+
+    expect(docsSection?.slug).toBe("docs");
+    expect(deploySection?.slug).toBe("deploy");
+    expect(getSectionLandingPath(docsSection!)).toBe("/docs/installation");
+    expect(getSectionLandingPath(deploySection!)).toBe("/docs/deploy-overview");
   });
 
   it("falls back to collection-wide surround when no sections exist", () => {

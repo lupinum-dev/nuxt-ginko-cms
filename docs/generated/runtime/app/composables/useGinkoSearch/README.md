@@ -8,7 +8,6 @@
 
 ## Interfaces
 
-- [UseGinkoSearchModalResult](interfaces/UseGinkoSearchModalResult.md)
 - [UseGinkoSearchOptions](interfaces/UseGinkoSearchOptions.md)
 - [UseGinkoSearchResult](interfaces/UseGinkoSearchResult.md)
 

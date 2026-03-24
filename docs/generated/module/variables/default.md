@@ -8,4 +8,4 @@
 
 > `const` **default**: `NuxtModule`\<[`GinkoCmsNuxtModuleOptions`](../interfaces/GinkoCmsNuxtModuleOptions.md), [`GinkoCmsNuxtModuleOptions`](../interfaces/GinkoCmsNuxtModuleOptions.md), `false`\>
 
-Defined in: [module.ts:155](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/module.ts#L155)
+Defined in: [module.ts:155](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/module.ts#L155)

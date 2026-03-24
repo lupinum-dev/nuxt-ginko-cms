@@ -6,33 +6,19 @@
 
 # Interface: UseGinkoNavigationOptions
 
-Defined in: [runtime/app/composables/useGinkoNavigation.ts:25](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/app/composables/useGinkoNavigation.ts#L25)
+Defined in: [runtime/app/composables/useGinkoNavigation.ts:28](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoNavigation.ts#L28)
 
 Options for [useGinkoNavigation](../functions/useGinkoNavigation.md).
 
 ## Properties
 
-### key?
-
-> `optional` **key?**: `string`
-
-Defined in: [runtime/app/composables/useGinkoNavigation.ts:31](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/app/composables/useGinkoNavigation.ts#L31)
-
-Custom `useAsyncData` cache key.
-
-#### Default Value
-
-`ginko-nav:<collection>:<locale>`
-
-***
-
 ### locale?
 
 > `optional` **locale?**: `string` \| `Ref`\<`string`, `string`\>
 
-Defined in: [runtime/app/composables/useGinkoNavigation.ts:27](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/app/composables/useGinkoNavigation.ts#L27)
+Defined in: [runtime/app/composables/useGinkoNavigation.ts:30](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoNavigation.ts#L30)
 
-Locale override. Falls back to the standard locale resolution chain.
+Locale override.
 
 ***
 
@@ -40,10 +26,12 @@ Locale override. Falls back to the standard locale resolution chain.
 
 > `optional` **watch?**: `boolean`
 
-Defined in: [runtime/app/composables/useGinkoNavigation.ts:29](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/app/composables/useGinkoNavigation.ts#L29)
+Defined in: [runtime/app/composables/useGinkoNavigation.ts:32](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoNavigation.ts#L32)
 
-Watch locale for reactive refetching.
+Watch for reactive refetching.
 
-#### Default Value
+#### Default
 
-`true`
+```ts
+true
+```

@@ -6,7 +6,7 @@
 
 # Interface: GinkoResolveResponse
 
-Defined in: [runtime/types/index.ts:169](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/index.ts#L169)
+Defined in: [runtime/types/index.ts:237](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L237)
 
 Response from the `GET /api/ginko/resolve` endpoint.
 
@@ -16,7 +16,7 @@ Response from the `GET /api/ginko/resolve` endpoint.
 
 > `optional` **canonicalPath?**: `string`
 
-Defined in: [runtime/types/index.ts:177](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/index.ts#L177)
+Defined in: [runtime/types/index.ts:245](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L245)
 
 The canonical path for this item (may differ from input path).
 
@@ -26,7 +26,7 @@ The canonical path for this item (may differ from input path).
 
 > `optional` **collectionKey?**: `string`
 
-Defined in: [runtime/types/index.ts:179](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/index.ts#L179)
+Defined in: [runtime/types/index.ts:247](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L247)
 
 The matched collection key.
 
@@ -36,7 +36,7 @@ The matched collection key.
 
 > `optional` **collectionSource?**: `string`
 
-Defined in: [runtime/types/index.ts:181](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/index.ts#L181)
+Defined in: [runtime/types/index.ts:249](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L249)
 
 The upstream collection source slug.
 
@@ -46,7 +46,7 @@ The upstream collection source slug.
 
 > `optional` **contentId?**: `string`
 
-Defined in: [runtime/types/index.ts:189](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/index.ts#L189)
+Defined in: [runtime/types/index.ts:257](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L257)
 
 The resolved content/colocation ID (hierarchy only).
 
@@ -56,7 +56,7 @@ The resolved content/colocation ID (hierarchy only).
 
 > `optional` **itemId?**: `string`
 
-Defined in: [runtime/types/index.ts:187](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/index.ts#L187)
+Defined in: [runtime/types/index.ts:255](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L255)
 
 The resolved item ID (hierarchy only).
 
@@ -66,7 +66,7 @@ The resolved item ID (hierarchy only).
 
 > `optional` **kind?**: `"flat"` \| `"hierarchy"`
 
-Defined in: [runtime/types/index.ts:183](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/index.ts#L183)
+Defined in: [runtime/types/index.ts:251](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L251)
 
 The kind of collection that matched.
 
@@ -76,7 +76,7 @@ The kind of collection that matched.
 
 > **locale**: `string`
 
-Defined in: [runtime/types/index.ts:175](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/index.ts#L175)
+Defined in: [runtime/types/index.ts:243](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L243)
 
 The resolved locale.
 
@@ -86,7 +86,7 @@ The resolved locale.
 
 > **matched**: `boolean`
 
-Defined in: [runtime/types/index.ts:171](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/index.ts#L171)
+Defined in: [runtime/types/index.ts:239](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L239)
 
 Whether the path matched any collection route.
 
@@ -96,7 +96,7 @@ Whether the path matched any collection route.
 
 > **path**: `string`
 
-Defined in: [runtime/types/index.ts:173](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/index.ts#L173)
+Defined in: [runtime/types/index.ts:241](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L241)
 
 The input path.
 
@@ -106,6 +106,6 @@ The input path.
 
 > `optional` **slug?**: `string`
 
-Defined in: [runtime/types/index.ts:185](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/index.ts#L185)
+Defined in: [runtime/types/index.ts:253](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L253)
 
 The resolved item slug.

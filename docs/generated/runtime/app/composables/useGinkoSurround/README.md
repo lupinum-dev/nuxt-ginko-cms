@@ -12,6 +12,10 @@
 - [UseGinkoSurroundOptions](interfaces/UseGinkoSurroundOptions.md)
 - [UseGinkoSurroundResult](interfaces/UseGinkoSurroundResult.md)
 
+## Type Aliases
+
+- [SurroundScope](type-aliases/SurroundScope.md)
+
 ## Functions
 
 - [useGinkoSurround](functions/useGinkoSurround.md)

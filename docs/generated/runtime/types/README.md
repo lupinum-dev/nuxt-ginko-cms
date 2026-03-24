@@ -20,6 +20,9 @@
 - [GinkoCmsSiteSearch](interfaces/GinkoCmsSiteSearch.md)
 - [GinkoCmsSiteSitemap](interfaces/GinkoCmsSiteSitemap.md)
 - [GinkoCollections](interfaces/GinkoCollections.md)
+- [GinkoNavGroup](interfaces/GinkoNavGroup.md)
+- [GinkoNavItem](interfaces/GinkoNavItem.md)
+- [GinkoNavSection](interfaces/GinkoNavSection.md)
 - [GinkoPageResponse](interfaces/GinkoPageResponse.md)
 - [GinkoQueryOperationPathBy](interfaces/GinkoQueryOperationPathBy.md)
 - [GinkoQueryOperationSearch](interfaces/GinkoQueryOperationSearch.md)
@@ -27,6 +30,8 @@
 - [GinkoQueryResponse](interfaces/GinkoQueryResponse.md)
 - [GinkoResolveResponse](interfaces/GinkoResolveResponse.md)
 - [GinkoSearchHit](interfaces/GinkoSearchHit.md)
+- [GinkoSearchResult](interfaces/GinkoSearchResult.md)
+- [GinkoTocItem](interfaces/GinkoTocItem.md)
 
 ## Type Aliases
 

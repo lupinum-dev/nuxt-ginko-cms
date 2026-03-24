@@ -6,7 +6,7 @@
 
 # Interface: FieldAssetResult
 
-Defined in: [runtime/types/api.ts:96](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/api.ts#L96)
+Defined in: [runtime/types/api.ts:96](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/api.ts#L96)
 
 Result of scanning a field for asset references.
 
@@ -16,7 +16,7 @@ Result of scanning a field for asset references.
 
 > **assetIds**: `string`[]
 
-Defined in: [runtime/types/api.ts:100](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/api.ts#L100)
+Defined in: [runtime/types/api.ts:100](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/api.ts#L100)
 
 Array of referenced asset IDs.
 
@@ -26,7 +26,7 @@ Array of referenced asset IDs.
 
 > **fieldName**: `string`
 
-Defined in: [runtime/types/api.ts:98](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/api.ts#L98)
+Defined in: [runtime/types/api.ts:98](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/api.ts#L98)
 
 The field name that contains asset references.
 
@@ -36,6 +36,6 @@ The field name that contains asset references.
 
 > **usageType**: `"direct"` \| `"embedded"`
 
-Defined in: [runtime/types/api.ts:102](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/api.ts#L102)
+Defined in: [runtime/types/api.ts:102](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/api.ts#L102)
 
 Whether the asset is directly referenced or embedded in rich text.

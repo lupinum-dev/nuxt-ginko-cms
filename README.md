@@ -6,7 +6,7 @@ Nuxt integration for Ginko CMS with the current composable-first API.
 
 - Configure the module under `ginkoCms`
 - Define collection routing and locale policy under `ginkoCms.site`
-- Read content through `useGinkoPage`, `useGinkoItems`, `useGinkoNavigation`, `useGinkoSurround`, `useGinkoSearch`, and `queryGinko`
+- Read content through `useGinkoPage`, `useGinkoList`, `useGinkoNavigation`, `useGinkoNav`, `useGinkoSurround`, `useGinkoSearch`, and `queryGinko`
 - Generate `ginko.generated.ts` and `ginko.module.d.ts` with the `ginko` CLI
 
 ## Install
@@ -71,16 +71,24 @@ export default defineNuxtConfig({
 ```vue
 <script setup lang="ts">
 const { data: page } = await useGinkoPage('docs', { includeBody: true })
-const { data: posts } = await useGinkoItems('blog', { sort: ['updatedAt', 'desc'] })
-const { data: navigation } = useGinkoNavigation('docs')
+const { data: posts } = await useGinkoList('blog', { sort: '-updatedAt' })
+const { data: navigation } = await useGinkoNavigation('docs')
+const { sections, groups } = useGinkoNav('docs')
+const { prev, next } = await useGinkoSurround('docs', { scope: 'section' })
 </script>
 ```
+
+Use `useGinkoNavigation()` when you need the raw hierarchy tree. Use `useGinkoNav()` when you want section/group/item data ready for docs sidebars and switchers.
 
 ```ts
 const featuredPosts = await queryGinko('blog')
   .sort('updatedAt', 'desc')
   .limit(3)
   .find()
+
+const [prev, next] = await queryGinko('docs').surround('/docs/deploy-overview', {
+  scope: 'section',
+})
 ```
 
 ## Deeper references

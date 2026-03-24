@@ -6,7 +6,7 @@
 
 # Interface: GinkoCmsSiteConfig
 
-Defined in: [runtime/types/index.ts:151](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/index.ts#L151)
+Defined in: [runtime/types/index.ts:151](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L151)
 
 Top-level site configuration DSL.
 
@@ -19,7 +19,7 @@ collections, search behavior, and sitemap settings.
 
 > **collections**: `Record`\<`string`, [`GinkoCmsSiteCollection`](../type-aliases/GinkoCmsSiteCollection.md)\>
 
-Defined in: [runtime/types/index.ts:161](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/index.ts#L161)
+Defined in: [runtime/types/index.ts:161](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L161)
 
 Collection definitions keyed by collection name.
 
@@ -29,7 +29,7 @@ Collection definitions keyed by collection name.
 
 > `optional` **defaultLocale?**: `string`
 
-Defined in: [runtime/types/index.ts:153](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/index.ts#L153)
+Defined in: [runtime/types/index.ts:153](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L153)
 
 Default locale code. Inferred from `isDefault` locale or first locale if not set.
 
@@ -39,7 +39,7 @@ Default locale code. Inferred from `isDefault` locale or first locale if not set
 
 > **locales**: readonly [`GinkoCmsSiteLocale`](GinkoCmsSiteLocale.md)[]
 
-Defined in: [runtime/types/index.ts:155](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/index.ts#L155)
+Defined in: [runtime/types/index.ts:155](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L155)
 
 Available locales. Must include at least one valid locale.
 
@@ -49,7 +49,7 @@ Available locales. Must include at least one valid locale.
 
 > `optional` **routing?**: [`GinkoCmsSiteRouting`](GinkoCmsSiteRouting.md)
 
-Defined in: [runtime/types/index.ts:157](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/index.ts#L157)
+Defined in: [runtime/types/index.ts:157](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L157)
 
 Global routing strategy.
 
@@ -59,7 +59,7 @@ Global routing strategy.
 
 > `optional` **search?**: [`GinkoCmsSiteSearch`](GinkoCmsSiteSearch.md)
 
-Defined in: [runtime/types/index.ts:163](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/index.ts#L163)
+Defined in: [runtime/types/index.ts:163](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L163)
 
 Global search configuration.
 
@@ -69,7 +69,7 @@ Global search configuration.
 
 > `optional` **sitemap?**: `boolean` \| [`GinkoCmsSiteSitemap`](GinkoCmsSiteSitemap.md)
 
-Defined in: [runtime/types/index.ts:165](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/index.ts#L165)
+Defined in: [runtime/types/index.ts:165](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L165)
 
 Sitemap endpoint configuration. Pass `true` for defaults, `false` to disable.
 
@@ -79,6 +79,6 @@ Sitemap endpoint configuration. Pass `true` for defaults, `false` to disable.
 
 > `optional` **staticRoutes?**: readonly `string`[]
 
-Defined in: [runtime/types/index.ts:159](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/index.ts#L159)
+Defined in: [runtime/types/index.ts:159](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L159)
 
 Non-CMS routes to include in sitemap generation (e.g., `['/', '/kontakt']`).

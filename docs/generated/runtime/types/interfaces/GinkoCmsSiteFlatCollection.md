@@ -6,7 +6,7 @@
 
 # Interface: GinkoCmsSiteFlatCollection
 
-Defined in: [runtime/types/index.ts:87](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/index.ts#L87)
+Defined in: [runtime/types/index.ts:87](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L87)
 
 A flat (non-hierarchical) collection with prefix-based routing.
 
@@ -20,7 +20,7 @@ A flat (non-hierarchical) collection with prefix-based routing.
 
 > `optional` **getQuery?**: `Record`\<`string`, `unknown`\>
 
-Defined in: [runtime/types/index.ts:59](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/index.ts#L59)
+Defined in: [runtime/types/index.ts:59](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L59)
 
 Reserved metadata for single-item queries (not currently applied by runtime).
 
@@ -34,7 +34,7 @@ Reserved metadata for single-item queries (not currently applied by runtime).
 
 > `optional` **keyField?**: `"id"` \| `"slug"`
 
-Defined in: [runtime/types/index.ts:53](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/index.ts#L53)
+Defined in: [runtime/types/index.ts:53](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L53)
 
 Key field for sitemap generation helpers.
 
@@ -52,7 +52,7 @@ Key field for sitemap generation helpers.
 
 > **kind**: `"flat"`
 
-Defined in: [runtime/types/index.ts:89](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/index.ts#L89)
+Defined in: [runtime/types/index.ts:89](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L89)
 
 Discriminator: this is a flat collection.
 
@@ -62,7 +62,7 @@ Discriminator: this is a flat collection.
 
 > `optional` **listQuery?**: `Record`\<`string`, `unknown`\>
 
-Defined in: [runtime/types/index.ts:57](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/index.ts#L57)
+Defined in: [runtime/types/index.ts:57](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L57)
 
 Reserved metadata for list queries (not currently applied by runtime).
 
@@ -76,7 +76,7 @@ Reserved metadata for list queries (not currently applied by runtime).
 
 > `optional` **localized?**: `boolean`
 
-Defined in: [runtime/types/index.ts:49](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/index.ts#L49)
+Defined in: [runtime/types/index.ts:49](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L49)
 
 Whether this collection supports localized content.
 
@@ -94,7 +94,7 @@ Whether this collection supports localized content.
 
 > `optional` **pageSize?**: `number`
 
-Defined in: [runtime/types/index.ts:55](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/index.ts#L55)
+Defined in: [runtime/types/index.ts:55](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L55)
 
 Page size for sitemap generation helpers.
 
@@ -112,7 +112,7 @@ Page size for sitemap generation helpers.
 
 > **routing**: [`GinkoCmsSiteFlatRouting`](GinkoCmsSiteFlatRouting.md)
 
-Defined in: [runtime/types/index.ts:91](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/index.ts#L91)
+Defined in: [runtime/types/index.ts:91](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L91)
 
 Routing configuration. One of `prefix`, `prefixByLocale`, or `pathMapByLocale` is required.
 
@@ -122,7 +122,7 @@ Routing configuration. One of `prefix`, `prefixByLocale`, or `pathMapByLocale` i
 
 > `optional` **search?**: [`GinkoCmsSiteCollectionSearch`](GinkoCmsSiteCollectionSearch.md)
 
-Defined in: [runtime/types/index.ts:61](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/index.ts#L61)
+Defined in: [runtime/types/index.ts:61](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L61)
 
 Per-collection search configuration.
 
@@ -136,7 +136,7 @@ Per-collection search configuration.
 
 > `optional` **slugField?**: `string`
 
-Defined in: [runtime/types/index.ts:51](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/index.ts#L51)
+Defined in: [runtime/types/index.ts:51](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L51)
 
 Field name used as the slug identifier for flat path resolution.
 
@@ -154,7 +154,7 @@ Field name used as the slug identifier for flat path resolution.
 
 > **source**: `string`
 
-Defined in: [runtime/types/index.ts:47](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/index.ts#L47)
+Defined in: [runtime/types/index.ts:47](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L47)
 
 Upstream CMS collection slug. Required.
 

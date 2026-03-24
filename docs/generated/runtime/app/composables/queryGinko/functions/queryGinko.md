@@ -8,12 +8,12 @@
 
 > **queryGinko**\<`T`\>(`collectionKey?`): [`GinkoQueryBuilder`](../interfaces/GinkoQueryBuilder.md)\<`T`\>
 
-Defined in: [runtime/app/composables/queryGinko.ts:101](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/app/composables/queryGinko.ts#L101)
+Defined in: [runtime/app/composables/queryGinko.ts:101](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/queryGinko.ts#L101)
 
 Low-level query builder for direct CMS API access.
 
 Provides a chainable interface to construct and execute query payloads against the
-Ginko CMS server endpoint. Use the high-level composables (`useGinkoPage`, `useGinkoItems`, etc.)
+Ginko CMS server endpoint. Use the high-level composables (`useGinkoPage`, `useGinkoList`, etc.)
 for reactive data fetching — this builder is an escape hatch for advanced use cases.
 
 ## Type Parameters

@@ -6,7 +6,7 @@
 
 # Interface: CmsListResponse
 
-Defined in: [runtime/types/api.ts:31](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/api.ts#L31)
+Defined in: [runtime/types/api.ts:31](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/api.ts#L31)
 
 Response from a collection list query.
 
@@ -16,7 +16,7 @@ Response from a collection list query.
 
 > **data**: [`CmsItem`](CmsItem.md)[]
 
-Defined in: [runtime/types/api.ts:33](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/api.ts#L33)
+Defined in: [runtime/types/api.ts:33](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/api.ts#L33)
 
 Array of items matching the query.
 
@@ -26,7 +26,7 @@ Array of items matching the query.
 
 > **meta**: `object`
 
-Defined in: [runtime/types/api.ts:35](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/api.ts#L35)
+Defined in: [runtime/types/api.ts:35](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/api.ts#L35)
 
 Pagination and locale metadata.
 

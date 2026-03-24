@@ -6,7 +6,7 @@
 
 # Interface: GinkoQueryBuilder\<T\>
 
-Defined in: [runtime/app/composables/queryGinko.ts:7](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/app/composables/queryGinko.ts#L7)
+Defined in: [runtime/app/composables/queryGinko.ts:7](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/queryGinko.ts#L7)
 
 Chainable query builder returned by [queryGinko](../functions/queryGinko.md).
 
@@ -22,7 +22,7 @@ Chainable query builder returned by [queryGinko](../functions/queryGinko.md).
 
 > **find**: () => `Promise`\<`T`[]\>
 
-Defined in: [runtime/app/composables/queryGinko.ts:25](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/app/composables/queryGinko.ts#L25)
+Defined in: [runtime/app/composables/queryGinko.ts:25](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/queryGinko.ts#L25)
 
 Execute a `find` query returning a list of items.
 
@@ -36,7 +36,7 @@ Execute a `find` query returning a list of items.
 
 > **first**: () => `Promise`\<`T`\>
 
-Defined in: [runtime/app/composables/queryGinko.ts:27](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/app/composables/queryGinko.ts#L27)
+Defined in: [runtime/app/composables/queryGinko.ts:27](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/queryGinko.ts#L27)
 
 Execute a `first` query returning a single item or `null`.
 
@@ -50,7 +50,7 @@ Execute a `first` query returning a single item or `null`.
 
 > **includeBody**: (`enabled?`) => `GinkoQueryBuilder`\<`T`\>
 
-Defined in: [runtime/app/composables/queryGinko.ts:21](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/app/composables/queryGinko.ts#L21)
+Defined in: [runtime/app/composables/queryGinko.ts:21](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/queryGinko.ts#L21)
 
 Include the full body content in the response.
 
@@ -74,7 +74,7 @@ Include the full body content in the response.
 
 > **limit**: (`n`) => `GinkoQueryBuilder`\<`T`\>
 
-Defined in: [runtime/app/composables/queryGinko.ts:15](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/app/composables/queryGinko.ts#L15)
+Defined in: [runtime/app/composables/queryGinko.ts:15](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/queryGinko.ts#L15)
 
 Set maximum number of items to return. Clamped to `>= 1` client-side, max 200 server-side.
 
@@ -94,7 +94,7 @@ Set maximum number of items to return. Clamped to `>= 1` client-side, max 200 se
 
 > **locale**: (`code`) => `GinkoQueryBuilder`\<`T`\>
 
-Defined in: [runtime/app/composables/queryGinko.ts:19](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/app/composables/queryGinko.ts#L19)
+Defined in: [runtime/app/composables/queryGinko.ts:19](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/queryGinko.ts#L19)
 
 Override the locale. Pass `null` to skip locale resolution.
 
@@ -114,7 +114,7 @@ Override the locale. Pass `null` to skip locale resolution.
 
 > **navigation**: () => `Promise`\<`Record`\<`string`, `unknown`\>[]\>
 
-Defined in: [runtime/app/composables/queryGinko.ts:29](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/app/composables/queryGinko.ts#L29)
+Defined in: [runtime/app/composables/queryGinko.ts:29](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/queryGinko.ts#L29)
 
 Fetch the hierarchy navigation tree. Only valid for hierarchy collections.
 
@@ -128,7 +128,7 @@ Fetch the hierarchy navigation tree. Only valid for hierarchy collections.
 
 > **offset**: (`n`) => `GinkoQueryBuilder`\<`T`\>
 
-Defined in: [runtime/app/composables/queryGinko.ts:17](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/app/composables/queryGinko.ts#L17)
+Defined in: [runtime/app/composables/queryGinko.ts:17](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/queryGinko.ts#L17)
 
 Set result offset. Clamped to `>= 0` client-side.
 
@@ -148,7 +148,7 @@ Set result offset. Clamped to `>= 0` client-side.
 
 > **path**: (`path`) => `GinkoQueryBuilder`\<`T`\>
 
-Defined in: [runtime/app/composables/queryGinko.ts:9](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/app/composables/queryGinko.ts#L9)
+Defined in: [runtime/app/composables/queryGinko.ts:9](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/queryGinko.ts#L9)
 
 Set the content path to resolve.
 
@@ -168,7 +168,7 @@ Set the content path to resolve.
 
 > **pathBy**: (`input`) => `Promise`\<`string`\>
 
-Defined in: [runtime/app/composables/queryGinko.ts:35](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/app/composables/queryGinko.ts#L35)
+Defined in: [runtime/app/composables/queryGinko.ts:35](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/queryGinko.ts#L35)
 
 Resolve a content path by item ID, content ID, or slug.
 
@@ -198,7 +198,7 @@ Resolve a content path by item ID, content ID, or slug.
 
 > **populate**: (`fields`) => `GinkoQueryBuilder`\<`T`\>
 
-Defined in: [runtime/app/composables/queryGinko.ts:23](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/app/composables/queryGinko.ts#L23)
+Defined in: [runtime/app/composables/queryGinko.ts:23](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/queryGinko.ts#L23)
 
 Add fields to populate (relation expansion). Normalized and deduplicated. Only supported for `find`, `first`, and `page` operations.
 
@@ -218,7 +218,7 @@ Add fields to populate (relation expansion). Normalized and deduplicated. Only s
 
 > **search**: (`query`, `options?`) => `Promise`\<[`GinkoSearchHit`](../../../../types/interfaces/GinkoSearchHit.md)[]\>
 
-Defined in: [runtime/app/composables/queryGinko.ts:33](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/app/composables/queryGinko.ts#L33)
+Defined in: [runtime/app/composables/queryGinko.ts:33](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/queryGinko.ts#L33)
 
 Execute a full-text search query.
 
@@ -244,7 +244,7 @@ Execute a full-text search query.
 
 > **sort**: (`field`, `dir?`) => `GinkoQueryBuilder`\<`T`\>
 
-Defined in: [runtime/app/composables/queryGinko.ts:13](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/app/composables/queryGinko.ts#L13)
+Defined in: [runtime/app/composables/queryGinko.ts:13](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/queryGinko.ts#L13)
 
 Set sort field and direction.
 
@@ -270,17 +270,23 @@ dir `'asc'`
 
 ### surround
 
-> **surround**: (`path?`) => `Promise`\<\[`Record`\<`string`, `unknown`\>, `Record`\<`string`, `unknown`\>\]\>
+> **surround**: (`path?`, `options?`) => `Promise`\<\[`Record`\<`string`, `unknown`\>, `Record`\<`string`, `unknown`\>\]\>
 
-Defined in: [runtime/app/composables/queryGinko.ts:31](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/app/composables/queryGinko.ts#L31)
+Defined in: [runtime/app/composables/queryGinko.ts:31](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/queryGinko.ts#L31)
 
-Fetch the previous/next surround items for a hierarchy path.
+Fetch the previous/next surround items for a hierarchy path. Pass `scope: 'section'` to stay within the active section.
 
 #### Parameters
 
 ##### path?
 
 `string`
+
+##### options?
+
+###### scope?
+
+`"collection"` \| `"section"`
 
 #### Returns
 
@@ -292,7 +298,7 @@ Fetch the previous/next surround items for a hierarchy path.
 
 > **where**: (`filters`) => `GinkoQueryBuilder`\<`T`\>
 
-Defined in: [runtime/app/composables/queryGinko.ts:11](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/app/composables/queryGinko.ts#L11)
+Defined in: [runtime/app/composables/queryGinko.ts:11](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/queryGinko.ts#L11)
 
 Merge filter conditions (additive across calls).
 

@@ -6,7 +6,7 @@
 
 # Interface: GinkoQueryOperationPathBy
 
-Defined in: [runtime/types/index.ts:201](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/index.ts#L201)
+Defined in: [runtime/types/index.ts:269](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L269)
 
 PathBy operation payload nested within [GinkoQueryPayload](GinkoQueryPayload.md).
 
@@ -16,7 +16,7 @@ PathBy operation payload nested within [GinkoQueryPayload](GinkoQueryPayload.md)
 
 > `optional` **contentId?**: `string`
 
-Defined in: [runtime/types/index.ts:205](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/index.ts#L205)
+Defined in: [runtime/types/index.ts:273](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L273)
 
 Resolve path by content/colocation folder ID (hierarchy collections).
 
@@ -26,7 +26,7 @@ Resolve path by content/colocation folder ID (hierarchy collections).
 
 > `optional` **itemId?**: `string`
 
-Defined in: [runtime/types/index.ts:203](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/index.ts#L203)
+Defined in: [runtime/types/index.ts:271](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L271)
 
 Resolve path by item ID (hierarchy collections).
 
@@ -36,6 +36,6 @@ Resolve path by item ID (hierarchy collections).
 
 > `optional` **slug?**: `string`
 
-Defined in: [runtime/types/index.ts:207](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/index.ts#L207)
+Defined in: [runtime/types/index.ts:275](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L275)
 
 Resolve path by slug (flat or hierarchy collections).

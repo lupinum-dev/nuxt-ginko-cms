@@ -6,7 +6,7 @@
 
 # Interface: GinkoQueryOperationSearch
 
-Defined in: [runtime/types/index.ts:193](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/index.ts#L193)
+Defined in: [runtime/types/index.ts:261](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L261)
 
 Search operation payload nested within [GinkoQueryPayload](GinkoQueryPayload.md).
 
@@ -16,7 +16,7 @@ Search operation payload nested within [GinkoQueryPayload](GinkoQueryPayload.md)
 
 > `optional` **limit?**: `number`
 
-Defined in: [runtime/types/index.ts:197](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/index.ts#L197)
+Defined in: [runtime/types/index.ts:265](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L265)
 
 Maximum number of search results. Clamped server-side to max 100.
 
@@ -26,6 +26,6 @@ Maximum number of search results. Clamped server-side to max 100.
 
 > **q**: `string`
 
-Defined in: [runtime/types/index.ts:195](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/index.ts#L195)
+Defined in: [runtime/types/index.ts:263](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L263)
 
 The search query string. Queries shorter than 2 characters return empty results.

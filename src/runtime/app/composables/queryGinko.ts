@@ -27,7 +27,7 @@ export interface GinkoQueryBuilder<T = Record<string, unknown>> {
   first: () => Promise<T | null>
   /** Fetch the hierarchy navigation tree. Only valid for hierarchy collections. */
   navigation: () => Promise<Record<string, unknown>[]>
-  /** Fetch the previous/next surround items for a hierarchy path. */
+  /** Fetch the previous/next surround items for a hierarchy path. Pass `scope: 'section'` to stay within the active section. */
   surround: (path?: string, options?: { scope?: 'collection' | 'section' }) => Promise<[Record<string, unknown> | null, Record<string, unknown> | null]>
   /** Execute a full-text search query. */
   search: (query: string, options?: { limit?: number }) => Promise<GinkoSearchHit[]>

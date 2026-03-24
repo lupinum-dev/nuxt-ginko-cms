@@ -171,8 +171,12 @@ export interface GinkoCmsSiteConfig {
 export interface GinkoNavSection {
   /** Slugified section id. */
   id: string
+  /** Original section slug when the hierarchy uses explicit section nodes. */
+  slug?: string
   /** Display title. */
   title: string
+  /** First routable page within the section. */
+  path?: string
   /** Optional icon string (e.g., `'lucide:rocket'`). */
   icon?: string
   /** Groups within this section. */

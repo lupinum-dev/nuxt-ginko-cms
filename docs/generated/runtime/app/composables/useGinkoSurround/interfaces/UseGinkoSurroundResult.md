@@ -6,7 +6,7 @@
 
 # Interface: UseGinkoSurroundResult
 
-Defined in: [runtime/app/composables/useGinkoSurround.ts:26](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/app/composables/useGinkoSurround.ts#L26)
+Defined in: [runtime/app/composables/useGinkoSurround.ts:30](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoSurround.ts#L30)
 
 Return shape of [useGinkoSurround](../functions/useGinkoSurround.md).
 
@@ -16,7 +16,7 @@ Return shape of [useGinkoSurround](../functions/useGinkoSurround.md).
 
 > **error**: `Ref`\<`unknown`\>
 
-Defined in: [runtime/app/composables/useGinkoSurround.ts:34](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/app/composables/useGinkoSurround.ts#L34)
+Defined in: [runtime/app/composables/useGinkoSurround.ts:38](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoSurround.ts#L38)
 
 Error from the last fetch attempt, if any.
 
@@ -26,7 +26,7 @@ Error from the last fetch attempt, if any.
 
 > **next**: `Ref`\<[`SurroundItem`](SurroundItem.md)\>
 
-Defined in: [runtime/app/composables/useGinkoSurround.ts:30](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/app/composables/useGinkoSurround.ts#L30)
+Defined in: [runtime/app/composables/useGinkoSurround.ts:34](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoSurround.ts#L34)
 
 The next page in the hierarchy, or `null` at the end.
 
@@ -36,7 +36,7 @@ The next page in the hierarchy, or `null` at the end.
 
 > **pending**: `Ref`\<`boolean`\>
 
-Defined in: [runtime/app/composables/useGinkoSurround.ts:32](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/app/composables/useGinkoSurround.ts#L32)
+Defined in: [runtime/app/composables/useGinkoSurround.ts:36](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoSurround.ts#L36)
 
 Whether a fetch is currently in progress.
 
@@ -46,7 +46,7 @@ Whether a fetch is currently in progress.
 
 > **prev**: `Ref`\<[`SurroundItem`](SurroundItem.md)\>
 
-Defined in: [runtime/app/composables/useGinkoSurround.ts:28](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/app/composables/useGinkoSurround.ts#L28)
+Defined in: [runtime/app/composables/useGinkoSurround.ts:32](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoSurround.ts#L32)
 
 The previous page in the hierarchy, or `null` at the start.
 
@@ -56,7 +56,7 @@ The previous page in the hierarchy, or `null` at the start.
 
 > **refresh**: () => `Promise`\<`void`\>
 
-Defined in: [runtime/app/composables/useGinkoSurround.ts:36](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/app/composables/useGinkoSurround.ts#L36)
+Defined in: [runtime/app/composables/useGinkoSurround.ts:40](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoSurround.ts#L40)
 
 Manually trigger a refetch.
 

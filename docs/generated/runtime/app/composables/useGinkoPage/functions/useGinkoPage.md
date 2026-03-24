@@ -8,7 +8,7 @@
 
 > **useGinkoPage**\<`K`, `T`, `R`\>(`collectionKey?`, `options?`): `Promise`\<[`UseGinkoPageResult`](../interfaces/UseGinkoPageResult.md)\<`R`\>\>
 
-Defined in: [runtime/app/composables/useGinkoPage.ts:59](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/app/composables/useGinkoPage.ts#L59)
+Defined in: [runtime/app/composables/useGinkoPage.ts:61](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoPage.ts#L61)
 
 Fetches a single CMS page by path with locale resolution.
 

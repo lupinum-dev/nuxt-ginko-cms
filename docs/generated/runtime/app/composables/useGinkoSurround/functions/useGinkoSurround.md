@@ -8,7 +8,7 @@
 
 > **useGinkoSurround**\<`K`\>(`collectionKey`, `options?`): `Promise`\<[`UseGinkoSurroundResult`](../interfaces/UseGinkoSurroundResult.md)\>
 
-Defined in: [runtime/app/composables/useGinkoSurround.ts:54](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/app/composables/useGinkoSurround.ts#L54)
+Defined in: [runtime/app/composables/useGinkoSurround.ts:58](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoSurround.ts#L58)
 
 Fetches the previous and next pages surrounding a path in a hierarchy collection.
 
@@ -44,5 +44,5 @@ Reactive prev/next items, pending state, error, and refresh function.
 ## Example
 
 ```ts
-const { prev, next } = await useGinkoSurround('wiki')
+const { prev, next } = await useGinkoSurround('wiki', { scope: 'section' })
 ```

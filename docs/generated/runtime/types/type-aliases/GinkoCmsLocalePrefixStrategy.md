@@ -8,6 +8,6 @@
 
 > **GinkoCmsLocalePrefixStrategy** = `"prefix_except_default"` \| `"prefix_all"` \| `"none"`
 
-Defined in: [runtime/types/index.ts:18](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/index.ts#L18)
+Defined in: [runtime/types/index.ts:18](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L18)
 
 Strategy for prefixing locale codes in URL paths.

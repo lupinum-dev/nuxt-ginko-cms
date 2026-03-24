@@ -6,7 +6,7 @@
 
 # Interface: UseGinkoCopyPageResult
 
-Defined in: [runtime/app/composables/useGinkoCopyPage.ts:23](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/app/composables/useGinkoCopyPage.ts#L23)
+Defined in: [runtime/app/composables/useGinkoCopyPage.ts:23](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoCopyPage.ts#L23)
 
 Return shape of [useGinkoCopyPage](../functions/useGinkoCopyPage.md).
 
@@ -16,7 +16,7 @@ Return shape of [useGinkoCopyPage](../functions/useGinkoCopyPage.md).
 
 > **copied**: `Ref`\<`boolean`\>
 
-Defined in: [runtime/app/composables/useGinkoCopyPage.ts:29](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/app/composables/useGinkoCopyPage.ts#L29)
+Defined in: [runtime/app/composables/useGinkoCopyPage.ts:29](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoCopyPage.ts#L29)
 
 Whether the content was recently copied. Auto-resets after `resetDelay`.
 
@@ -26,7 +26,7 @@ Whether the content was recently copied. Auto-resets after `resetDelay`.
 
 > **copy**: () => `Promise`\<`void`\>
 
-Defined in: [runtime/app/composables/useGinkoCopyPage.ts:27](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/app/composables/useGinkoCopyPage.ts#L27)
+Defined in: [runtime/app/composables/useGinkoCopyPage.ts:27](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoCopyPage.ts#L27)
 
 Copies the markdown to the clipboard and sets `copied` to `true`.
 
@@ -40,6 +40,6 @@ Copies the markdown to the clipboard and sets `copied` to `true`.
 
 > **markdown**: `ComputedRef`\<`string`\>
 
-Defined in: [runtime/app/composables/useGinkoCopyPage.ts:25](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/app/composables/useGinkoCopyPage.ts#L25)
+Defined in: [runtime/app/composables/useGinkoCopyPage.ts:25](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoCopyPage.ts#L25)
 
 Computed markdown string (frontmatter + MDC body) from the current page data.

@@ -37,6 +37,19 @@ function mapNavItem(node: RawNavNode): GinkoNavItem {
   }
 }
 
+function findFirstPath(items: GinkoNavItem[]): string | undefined {
+  for (const item of items) {
+    if (item.path) {
+      return item.path
+    }
+    const nestedPath = findFirstPath(item.children)
+    if (nestedPath) {
+      return nestedPath
+    }
+  }
+  return undefined
+}
+
 /** Group children of a parent node into NavGroups. Group nodes become group headings. */
 function groupChildren(children: RawNavNode[]): GinkoNavGroup[] {
   const groups: GinkoNavGroup[] = []
@@ -67,24 +80,41 @@ function groupChildren(children: RawNavNode[]): GinkoNavGroup[] {
   return groups
 }
 
+function resolveSectionPath(groups: GinkoNavGroup[]): string | undefined {
+  for (const group of groups) {
+    const path = findFirstPath(group.items)
+    if (path) {
+      return path
+    }
+  }
+  return undefined
+}
+
 /** Process raw tree into sections. */
 function buildSections(rawTree: RawNavNode[]): GinkoNavSection[] {
   const sectionNodes = rawTree.filter(node => getKind(node) === 'section')
 
   if (sectionNodes.length > 0) {
-    return sectionNodes.map(node => ({
-      id: slugify(node.title || node.slug || 'section'),
-      title: node.title || 'Untitled',
-      icon: node.icon,
-      groups: groupChildren(node.children ?? []),
-    }))
+    return sectionNodes.map((node) => {
+      const groups = groupChildren(node.children ?? [])
+      return {
+        id: slugify(node.slug || node.title || 'section'),
+        slug: node.slug,
+        title: node.title || 'Untitled',
+        path: resolveSectionPath(groups),
+        icon: node.icon,
+        groups,
+      }
+    })
   }
 
   // No section nodes → everything goes into one implicit section
+  const groups = groupChildren(rawTree)
   return [{
     id: 'default',
+    path: resolveSectionPath(groups),
     title: '',
-    groups: groupChildren(rawTree),
+    groups,
   }]
 }
 

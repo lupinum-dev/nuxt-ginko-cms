@@ -6,7 +6,7 @@
 
 # Interface: CmsItem
 
-Defined in: [runtime/types/api.ts:7](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/api.ts#L7)
+Defined in: [runtime/types/api.ts:7](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/api.ts#L7)
 
 A single content item from the CMS API.
 
@@ -22,7 +22,7 @@ Additional dynamic fields defined by the collection schema.
 
 > **\_fallback**: `Record`\<`string`, `boolean`\>
 
-Defined in: [runtime/types/api.ts:25](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/api.ts#L25)
+Defined in: [runtime/types/api.ts:25](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/api.ts#L25)
 
 Map of field names to whether they fell back to a different locale.
 
@@ -32,7 +32,7 @@ Map of field names to whether they fell back to a different locale.
 
 > **\_locale**: `string`
 
-Defined in: [runtime/types/api.ts:23](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/api.ts#L23)
+Defined in: [runtime/types/api.ts:23](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/api.ts#L23)
 
 The locale this item was fetched in.
 
@@ -42,7 +42,7 @@ The locale this item was fetched in.
 
 > **createdAt**: `number`
 
-Defined in: [runtime/types/api.ts:19](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/api.ts#L19)
+Defined in: [runtime/types/api.ts:19](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/api.ts#L19)
 
 Epoch timestamp when the item was created.
 
@@ -52,7 +52,7 @@ Epoch timestamp when the item was created.
 
 > **id**: `string`
 
-Defined in: [runtime/types/api.ts:9](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/api.ts#L9)
+Defined in: [runtime/types/api.ts:9](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/api.ts#L9)
 
 Unique item identifier.
 
@@ -62,7 +62,7 @@ Unique item identifier.
 
 > `optional` **previewedAt?**: `number`
 
-Defined in: [runtime/types/api.ts:17](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/api.ts#L17)
+Defined in: [runtime/types/api.ts:17](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/api.ts#L17)
 
 Epoch timestamp when the item was last previewed.
 
@@ -72,7 +72,7 @@ Epoch timestamp when the item was last previewed.
 
 > `optional` **publishedAt?**: `number`
 
-Defined in: [runtime/types/api.ts:15](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/api.ts#L15)
+Defined in: [runtime/types/api.ts:15](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/api.ts#L15)
 
 Epoch timestamp when the item was published.
 
@@ -82,7 +82,7 @@ Epoch timestamp when the item was published.
 
 > **slug**: `string`
 
-Defined in: [runtime/types/api.ts:11](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/api.ts#L11)
+Defined in: [runtime/types/api.ts:11](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/api.ts#L11)
 
 URL-safe slug for the item.
 
@@ -92,7 +92,7 @@ URL-safe slug for the item.
 
 > **status**: `"draft"` \| `"preview"` \| `"published"` \| `"archived"`
 
-Defined in: [runtime/types/api.ts:13](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/api.ts#L13)
+Defined in: [runtime/types/api.ts:13](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/api.ts#L13)
 
 Publication status of the item.
 
@@ -102,6 +102,6 @@ Publication status of the item.
 
 > **updatedAt**: `number`
 
-Defined in: [runtime/types/api.ts:21](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/api.ts#L21)
+Defined in: [runtime/types/api.ts:21](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/api.ts#L21)
 
 Epoch timestamp when the item was last updated.

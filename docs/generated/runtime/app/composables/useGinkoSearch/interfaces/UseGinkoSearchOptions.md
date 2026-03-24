@@ -6,9 +6,9 @@
 
 # Interface: UseGinkoSearchOptions
 
-Defined in: [runtime/app/composables/useGinkoSearch.ts:8](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/app/composables/useGinkoSearch.ts#L8)
+Defined in: [runtime/app/composables/useGinkoSearch.ts:10](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoSearch.ts#L10)
 
-Options for [useGinkoSearch](../functions/useGinkoSearch.md) when called with a collection key.
+Options for [useGinkoSearch](../functions/useGinkoSearch.md).
 
 ## Properties
 
@@ -16,14 +16,30 @@ Options for [useGinkoSearch](../functions/useGinkoSearch.md) when called with a 
 
 > `optional` **debounce?**: `number`
 
-Defined in: [runtime/app/composables/useGinkoSearch.ts:10](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/app/composables/useGinkoSearch.ts#L10)
+Defined in: [runtime/app/composables/useGinkoSearch.ts:12](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoSearch.ts#L12)
 
-Debounce delay in milliseconds before executing search.
+Debounce delay in ms.
 
-#### Default Value
+#### Default
 
 ```ts
-220
+200
+```
+
+***
+
+### includeRaw?
+
+> `optional` **includeRaw?**: `boolean`
+
+Defined in: [runtime/app/composables/useGinkoSearch.ts:18](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoSearch.ts#L18)
+
+Include raw item data in results.
+
+#### Default
+
+```ts
+false
 ```
 
 ***
@@ -32,11 +48,11 @@ Debounce delay in milliseconds before executing search.
 
 > `optional` **limit?**: `number`
 
-Defined in: [runtime/app/composables/useGinkoSearch.ts:14](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/app/composables/useGinkoSearch.ts#L14)
+Defined in: [runtime/app/composables/useGinkoSearch.ts:16](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoSearch.ts#L16)
 
-Maximum number of results to return.
+Max results.
 
-#### Default Value
+#### Default
 
 ```ts
 12
@@ -48,9 +64,9 @@ Maximum number of results to return.
 
 > `optional` **locale?**: `string` \| `Ref`\<`string`, `string`\>
 
-Defined in: [runtime/app/composables/useGinkoSearch.ts:16](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/app/composables/useGinkoSearch.ts#L16)
+Defined in: [runtime/app/composables/useGinkoSearch.ts:20](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoSearch.ts#L20)
 
-Locale override. Falls back to the standard locale resolution chain.
+Locale override.
 
 ***
 
@@ -58,11 +74,11 @@ Locale override. Falls back to the standard locale resolution chain.
 
 > `optional` **minLength?**: `number`
 
-Defined in: [runtime/app/composables/useGinkoSearch.ts:12](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/app/composables/useGinkoSearch.ts#L12)
+Defined in: [runtime/app/composables/useGinkoSearch.ts:14](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoSearch.ts#L14)
 
-Minimum query length required to trigger a search request.
+Minimum query length.
 
-#### Default Value
+#### Default
 
 ```ts
 2

@@ -8,7 +8,7 @@
 
 ## Interfaces
 
-- [NavigationItem](interfaces/NavigationItem.md)
+- [GinkoNavigationItem](interfaces/GinkoNavigationItem.md)
 - [UseGinkoNavigationOptions](interfaces/UseGinkoNavigationOptions.md)
 - [UseGinkoNavigationResult](interfaces/UseGinkoNavigationResult.md)
 

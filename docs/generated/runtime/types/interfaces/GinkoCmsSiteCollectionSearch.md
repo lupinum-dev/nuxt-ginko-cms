@@ -6,7 +6,7 @@
 
 # Interface: GinkoCmsSiteCollectionSearch
 
-Defined in: [runtime/types/index.ts:37](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/index.ts#L37)
+Defined in: [runtime/types/index.ts:37](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L37)
 
 Per-collection search configuration override.
 
@@ -16,7 +16,7 @@ Per-collection search configuration override.
 
 > `optional` **collections?**: readonly `string`[]
 
-Defined in: [runtime/types/index.ts:39](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/index.ts#L39)
+Defined in: [runtime/types/index.ts:39](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L39)
 
 Override which upstream collection sources are searched.
 
@@ -30,6 +30,6 @@ Override which upstream collection sources are searched.
 
 > `optional` **limit?**: `number`
 
-Defined in: [runtime/types/index.ts:41](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/index.ts#L41)
+Defined in: [runtime/types/index.ts:41](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L41)
 
 Reserved: per-collection search limit. The endpoint uses request/site defaults.

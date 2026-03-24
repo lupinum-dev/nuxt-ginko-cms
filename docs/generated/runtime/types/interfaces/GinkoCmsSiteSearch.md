@@ -6,7 +6,7 @@
 
 # Interface: GinkoCmsSiteSearch
 
-Defined in: [runtime/types/index.ts:138](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/index.ts#L138)
+Defined in: [runtime/types/index.ts:138](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L138)
 
 Global search configuration for the site.
 
@@ -16,7 +16,7 @@ Global search configuration for the site.
 
 > `optional` **defaultLimit?**: `number`
 
-Defined in: [runtime/types/index.ts:142](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/index.ts#L142)
+Defined in: [runtime/types/index.ts:142](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L142)
 
 Default search result limit when not specified in the request.
 
@@ -30,7 +30,7 @@ Default search result limit when not specified in the request.
 
 > `optional` **enabled?**: `boolean`
 
-Defined in: [runtime/types/index.ts:140](https://github.com/lupinum-dev/ginko-nuxt/blob/33054431620fb8be90106f41754b7b84d88636bf/src/runtime/types/index.ts#L140)
+Defined in: [runtime/types/index.ts:140](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L140)
 
 Whether search is enabled globally.
 
