@@ -28,7 +28,7 @@ function toIsoOrder(raw, content, contentOrderField) {
 }
 function getNodeKind(raw) {
   const explicit = asString(raw.nodeKind);
-  if (explicit === "page" || explicit === "folder" || explicit === "group") {
+  if (explicit === "page" || explicit === "folder" || explicit === "group" || explicit === "section") {
     return explicit;
   }
   return "page";

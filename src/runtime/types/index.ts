@@ -165,6 +165,70 @@ export interface GinkoCmsSiteConfig {
     sitemap?: boolean | GinkoCmsSiteSitemap;
 }
 
+// ─── Navigation types (v2 composables) ──────────────────────────────────────
+
+/** A navigation section (top-level sidebar partition). */
+export interface GinkoNavSection {
+  /** Slugified section id. */
+  id: string
+  /** Display title. */
+  title: string
+  /** Optional icon string (e.g., `'lucide:rocket'`). */
+  icon?: string
+  /** Groups within this section. */
+  groups: GinkoNavGroup[]
+}
+
+/** A navigation group (section heading / separator). */
+export interface GinkoNavGroup {
+  /** Slugified group id. */
+  id: string
+  /** Display title. `undefined` = ungrouped (no heading rendered). */
+  title?: string
+  /** Navigation items in this group. */
+  items: GinkoNavItem[]
+}
+
+/** A navigation item (page or folder). */
+export interface GinkoNavItem {
+  /** Display title. */
+  title: string
+  /** Resolved URL path. `undefined` = not routable. */
+  path?: string
+  /** Optional icon string. */
+  icon?: string
+  /** Optional badge text. */
+  badge?: string
+  /** Child items (empty for pages). */
+  children: GinkoNavItem[]
+}
+
+/** A table-of-contents item extracted from markdown headings. */
+export interface GinkoTocItem {
+  /** Heading anchor id. */
+  id: string
+  /** Heading text content. */
+  text: string
+  /** Heading depth (2 = h2, 3 = h3, etc.). */
+  depth: number
+}
+
+/** A search result hit. */
+export interface GinkoSearchResult {
+  /** Display title. */
+  title: string
+  /** HTML snippet with `<mark>` tags. */
+  snippet: string
+  /** Resolved URL path. */
+  path: string
+  /** Which collection this came from. */
+  collection: string
+  /** Raw item data (only when `includeRaw: true`). */
+  raw?: Record<string, unknown>
+}
+
+// ─── Existing types ─────────────────────────────────────────────────────────────
+
 /** Response from the `GET /api/ginko/resolve` endpoint. */
 export interface GinkoResolveResponse {
     /** Whether the path matched any collection route. */

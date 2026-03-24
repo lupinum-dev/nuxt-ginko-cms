@@ -166,7 +166,7 @@ const module$1 = defineNuxtModule<GinkoCmsNuxtModuleOptions>({
   async setup(options, nuxt) {
     const resolver = createResolver(import.meta.url);
     const routeBase = options.routeBase || "/api/ginko";
-    const envKey = process.env.NUXT_GINKO_CMS_KEY || "";
+    const envKey = process.env.NUXT_GINKO_KEY || process.env.NUXT_GINKO_CMS_KEY || "";
     const envBase = process.env.NUXT_GINKO_CMS_BASE || "";
     const envLocale = process.env.NUXT_GINKO_CMS_LOCALE || "";
     const envTimeout = process.env.NUXT_GINKO_CMS_TIMEOUT_MS || "";
@@ -187,6 +187,7 @@ const module$1 = defineNuxtModule<GinkoCmsNuxtModuleOptions>({
     };
     await installModule('@nuxtjs/mdc')
     addImportsDir(resolver.resolve("./runtime/app/composables"));
+    addImportsDir(resolver.resolve("./runtime/app/utils"));
     addComponentsDir({
       path: resolver.resolve("./runtime/app/components"),
       pathPrefix: false

@@ -21,6 +21,8 @@ export interface UseGinkoPageOptions<T = Record<string, unknown>, R = T> {
   transform?: (raw: T) => R
   /** Throw a Nuxt 404 error when the resolved item is `null`. @defaultValue `true` */
   throwIfNotFound?: boolean
+  /** Alias for `throwIfNotFound`. @defaultValue `true` */
+  throw404?: boolean
   /** Watch `path` and `locale` for reactive refetching. Set `false` to disable watchers. @defaultValue `true` */
   watch?: boolean
 }
@@ -64,9 +66,11 @@ export async function useGinkoPage<K extends keyof GinkoCollections | (string & 
     includeBody = true,
     populate,
     transform,
-    throwIfNotFound = true,
+    throwIfNotFound,
+    throw404,
     watch: enableWatch = true
   } = options;
+  const shouldThrow = throwIfNotFound ?? throw404 ?? true;
   const nuxtApp = useNuxtApp();
   const route = useRoute();
   const runtimeConfig = useRuntimeConfig();
@@ -98,7 +102,7 @@ export async function useGinkoPage<K extends keyof GinkoCollections | (string & 
         await navigateTo(pageResponse.redirect, { redirectCode: 301, replace: true });
         return null;
       }
-      if (pageResponse.item === null && throwIfNotFound) {
+      if (pageResponse.item === null && shouldThrow) {
         throw createError({ statusCode: 404, fatal: true });
       }
       if (pageResponse.item !== null && transform) {
