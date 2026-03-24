@@ -1,5 +1,5 @@
 /**
- * New v2 config types for `@lupinum/ginko-nuxt`.
+ * Config types for `@lupinum/ginko-nuxt`.
  *
  * Config key: `ginko` (replaces `ginkoCms`).
  * Object form is primary syntax. Shorthand is a bonus for simple setups.

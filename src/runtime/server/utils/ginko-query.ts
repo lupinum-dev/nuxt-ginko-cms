@@ -132,7 +132,7 @@ async function getHierarchyState(args) {
     return inflight;
   }
   const request = (async () => {
-    const upstream = await fetchGinkoCmsJson(args.event, `/api/v2/cms/${args.collection.source}`, {
+    const upstream = await fetchGinkoCmsJson(args.event, `/api/v1/cms/${args.collection.source}`, {
       locale: args.collection.localized === false ? void 0 : args.locale,
       view: "tree",
       include: "content",
@@ -206,7 +206,7 @@ function mapNavigationEntry(entry, state) {
   return {
     title: entry.title,
     slug: entry.slug,
-    nodeKind: entry.nodeKind,
+    kind: entry.nodeKind,
     icon: entry.icon,
     badge: entry.badge,
     path: getGinkoHierarchyEntryPath(state, entry),
@@ -369,7 +369,7 @@ async function fetchHierarchyItemFromResolved(args) {
   }
   const getResponse = await fetchGinkoCmsJson(
     args.event,
-    `/api/v2/cms/${args.collection.source}/${args.resolved.slug}`,
+    `/api/v1/cms/${args.collection.source}/${args.resolved.slug}`,
     {
       ...args.query,
       locale: args.collection.localized === false ? void 0 : args.locale
@@ -405,7 +405,7 @@ async function fetchItemByResolvedPath(args) {
     if (!resolved.slug) {
       return null;
     }
-    const upstream = await fetchGinkoCmsJson(event, `/api/v2/cms/${collection.source}/${resolved.slug}`, {
+    const upstream = await fetchGinkoCmsJson(event, `/api/v1/cms/${collection.source}/${resolved.slug}`, {
       ...query,
       locale: collection.localized === false ? void 0 : locale
     });
@@ -474,7 +474,7 @@ export async function executeGinkoQuery(event, payload) {
       return Array.isArray(configured) && configured.length > 0 ? [...configured] : [collection.source];
     }))];
     const limit = Math.max(1, Math.min(payload.search?.limit || site.search?.defaultLimit || 12, 100));
-    const upstream = await fetchGinkoCmsJson(event, "/api/v2/cms/search", {
+    const upstream = await fetchGinkoCmsJson(event, "/api/v1/cms/search", {
       q: queryText,
       collections: sourceCollections.join(","),
       limit,
@@ -575,7 +575,7 @@ export async function executeGinkoQuery(event, payload) {
     };
     const upstream = await fetchGinkoCmsJson(
       event,
-      `/api/v2/cms/${collection.source}`,
+      `/api/v1/cms/${collection.source}`,
       effectiveQuery
     );
     const rows = Array.isArray(upstream.body?.data) ? upstream.body.data.map((row) => assertValidPublicItem(row, {

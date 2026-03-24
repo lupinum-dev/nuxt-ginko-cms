@@ -165,7 +165,7 @@ export interface GinkoCmsSiteConfig {
     sitemap?: boolean | GinkoCmsSiteSitemap;
 }
 
-// ─── Navigation types (v2 composables) ──────────────────────────────────────
+// ─── Navigation types ────────────────────────────────────────────────────────
 
 /** A navigation section (top-level sidebar partition). */
 export interface GinkoNavSection {

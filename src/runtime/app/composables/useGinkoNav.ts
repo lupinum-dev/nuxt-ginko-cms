@@ -6,13 +6,11 @@ import { computed, ref, watch } from 'vue'
 import { toGinkoError } from '../../types/error.js'
 import { resolveGinkoLocale } from './_ginkoUtils.js'
 
-/** Raw navigation node from BFF (uses `kind` in v3 shape). */
+/** Raw navigation node from BFF. */
 interface RawNavNode {
   title?: string
   slug?: string
   kind?: 'page' | 'folder' | 'group' | 'section'
-  /** Compat: v2 BFF may still send `nodeKind`. */
-  nodeKind?: string
   icon?: string
   badge?: string
   path?: string
@@ -24,7 +22,7 @@ function slugify(str: string): string {
 }
 
 function getKind(node: RawNavNode): string {
-  return node.kind ?? node.nodeKind ?? 'page'
+  return node.kind ?? 'page'
 }
 
 function mapNavItem(node: RawNavNode): GinkoNavItem {

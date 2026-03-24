@@ -96,7 +96,7 @@ async function resolveNormalizedLocales(args) {
   });
   let defaultLocale = localeConfig.defaultLocale;
   if (!args.defaultLocale) {
-    const contextUrl = new URL("/api/v2/cms/context", args.base);
+    const contextUrl = new URL("/api/v1/cms/context", args.base);
     const context = await fetchJson(contextUrl, args.key);
     defaultLocale = asString(context.data?.locale?.default) || defaultLocale;
   }
@@ -135,7 +135,7 @@ async function fetchCollectionRows(args) {
   const rows = [];
   let offset = 0;
   while (true) {
-    const url = new URL(`/api/v2/cms/${args.collection}`, args.base);
+    const url = new URL(`/api/v1/cms/${args.collection}`, args.base);
     url.searchParams.set("locale", args.localeCode);
     url.searchParams.set("limit", String(args.pageSize));
     url.searchParams.set("offset", String(offset));
@@ -233,7 +233,7 @@ async function resolveFlatCollectionPathMap(args) {
 }
 async function collectHierarchyRoutes(args) {
   const maxDepth = Math.max(1, Math.min(args.source.maxDepth || 5, 20));
-  const url = new URL(`/api/v2/cms/${args.source.collection}`, args.base);
+  const url = new URL(`/api/v1/cms/${args.source.collection}`, args.base);
   url.searchParams.set("view", "tree");
   url.searchParams.set("include", "content");
   url.searchParams.set("maxDepth", String(maxDepth));

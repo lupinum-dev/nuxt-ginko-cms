@@ -16,7 +16,7 @@ describe("hierarchy root documents", () => {
       },
       {
         id: "guides",
-        nodeKind: "folder",
+        kind: "folder",
         slug: "guides",
         content: { title: "Guides", slug: "guides" },
         children: [
@@ -66,7 +66,7 @@ describe("hierarchy root documents", () => {
       [
         {
           id: "group-intro",
-          nodeKind: "group",
+          kind: "group",
           content: { title: "Introduction" },
           children: [
             {

@@ -29,7 +29,7 @@ export function getGinkoCmsConfig(event) {
   if (!key) {
     throw createError({
       statusCode: 500,
-      statusMessage: "[ginko-cms] Missing NUXT_GINKO_CMS_KEY (runtimeConfig.ginkoCms.key)"
+      statusMessage: "[ginko-cms] Missing NUXT_GINKO_CMS_KEY or NUXT_GINKO_KEY (runtimeConfig.ginkoCms.key)"
     });
   }
   return {
@@ -115,7 +115,7 @@ export async function fetchGinkoCmsJson(event, path, query = {}) {
     const snippet = rawBody.replace(/\s+/g, " ").trim().slice(0, 160);
     throw createError({
       statusCode: 502,
-      statusMessage: `[ginko-cms] Upstream returned non-JSON (${response.status}) for ${url.pathname}. Check NUXT_GINKO_CMS_BASE and v2 deployment. Body: ${snippet || "<empty>"}`
+      statusMessage: `[ginko-cms] Upstream returned non-JSON (${response.status}) for ${url.pathname}. Check NUXT_GINKO_CMS_BASE and CMS deployment. Body: ${snippet || "<empty>"}`
     });
   }
   return {
@@ -138,7 +138,7 @@ export async function getCachedGinkoCmsContext(event) {
     return inflight;
   }
   const request = (async () => {
-    const result = await fetchGinkoCmsJson(event, "/api/v2/cms/context");
+    const result = await fetchGinkoCmsJson(event, "/api/v1/cms/context");
     if (result.status !== 200) {
       throw createError({
         statusCode: result.status,

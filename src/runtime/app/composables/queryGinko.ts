@@ -79,7 +79,7 @@ function assertPopulateSupported(op: string, state: BuilderState): void {
  * Low-level query builder for direct CMS API access.
  *
  * Provides a chainable interface to construct and execute query payloads against the
- * Ginko CMS server endpoint. Use the high-level composables (`useGinkoPage`, `useGinkoItems`, etc.)
+ * Ginko CMS server endpoint. Use the high-level composables (`useGinkoPage`, `useGinkoList`, etc.)
  * for reactive data fetching — this builder is an escape hatch for advanced use cases.
  *
  * @param collectionKey - The collection to query, or omit for cross-collection operations.
