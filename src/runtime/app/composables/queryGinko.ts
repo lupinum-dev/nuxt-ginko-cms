@@ -1,67 +1,144 @@
-import { useNuxtApp, useRequestFetch, useRoute, useRuntimeConfig } from "#imports";
-import { isPopulateSupportedOperation, normalizePopulateFields } from "../../shared/query-populate.js";
-function asString(value) {
-  if (typeof value !== "string") {
-    return void 0;
-  }
-  const normalized = value.trim();
-  return normalized.length > 0 ? normalized : void 0;
+import type { Ref } from 'vue'
+import type { GinkoSearchHit } from '../../types/index.js'
+import { useNuxtApp, useRequestFetch, useRoute, useRuntimeConfig } from '#imports'
+import { isPopulateSupportedOperation, normalizePopulateFields } from '../../shared/query-populate.js'
+
+/** Chainable query builder returned by {@link queryGinko}. */
+export interface GinkoQueryBuilder<T = Record<string, unknown>> {
+  /** Set the content path to resolve. */
+  path: (path: string) => GinkoQueryBuilder<T>
+  /** Merge filter conditions (additive across calls). */
+  where: (filters: Record<string, unknown>) => GinkoQueryBuilder<T>
+  /** Set sort field and direction. @defaultValue dir `'asc'` */
+  sort: (field: string, dir?: 'asc' | 'desc') => GinkoQueryBuilder<T>
+  /** Set maximum number of items to return. Clamped to `>= 1` client-side, max 200 server-side. */
+  limit: (n: number) => GinkoQueryBuilder<T>
+  /** Set result offset. Clamped to `>= 0` client-side. */
+  offset: (n: number) => GinkoQueryBuilder<T>
+  /** Override the locale. Pass `null` to skip locale resolution. */
+  locale: (code: string | null) => GinkoQueryBuilder<T>
+  /** Include the full body content in the response. @defaultValue `true` */
+  includeBody: (enabled?: boolean) => GinkoQueryBuilder<T>
+  /** Add fields to populate (relation expansion). Normalized and deduplicated. Only supported for `find`, `first`, and `page` operations. */
+  populate: (fields: string | string[]) => GinkoQueryBuilder<T>
+  /** Execute a `find` query returning a list of items. */
+  find: () => Promise<T[]>
+  /** Execute a `first` query returning a single item or `null`. */
+  first: () => Promise<T | null>
+  /** Fetch the hierarchy navigation tree. Only valid for hierarchy collections. */
+  navigation: () => Promise<Record<string, unknown>[]>
+  /** Fetch the previous/next surround items for a hierarchy path. */
+  surround: (path?: string) => Promise<[Record<string, unknown> | null, Record<string, unknown> | null]>
+  /** Execute a full-text search query. */
+  search: (query: string, options?: { limit?: number }) => Promise<GinkoSearchHit[]>
+  /** Resolve a content path by item ID, content ID, or slug. */
+  pathBy: (input: { itemId?: string, contentId?: string, slug?: string }) => Promise<string | null>
 }
-function unrefValue(value) {
-  if (!value || typeof value !== "object") {
-    return value;
+
+function asString(value: unknown): string | undefined {
+  if (typeof value !== 'string') {
+    return undefined
   }
-  if (!("value" in value)) {
-    return value;
-  }
-  return value.value;
+  const normalized = value.trim()
+  return normalized.length > 0 ? normalized : undefined
 }
-function assertPopulateSupported(op, state) {
+
+function unrefValue(value: unknown): unknown {
+  if (!value || typeof value !== 'object') {
+    return value
+  }
+  if (!('value' in value)) {
+    return value
+  }
+  return (value as Ref).value
+}
+
+interface BuilderState {
+  collectionKey?: string
+  path?: string
+  where?: Record<string, unknown>
+  sort?: { field: string, dir: 'asc' | 'desc' }
+  limit?: number
+  offset?: number
+  locale?: string | null
+  includeBody?: boolean
+  populate?: string[]
+}
+
+function assertPopulateSupported(op: string, state: BuilderState): void {
   if (!state.populate?.length) {
-    return;
+    return
   }
   if (isPopulateSupportedOperation(op)) {
-    return;
+    return
   }
-  throw new Error(`[ginko-cms] populate() is not supported for ${op}()`);
+  throw new Error(`[ginko-cms] populate() is not supported for ${op}()`)
 }
-export function queryGinko(collectionKey) {
-  const runtimeConfig = useRuntimeConfig();
-  const route = useRoute();
-  const nuxtApp = useNuxtApp();
-  const requestFetch = useRequestFetch();
-  const routeBase = String(runtimeConfig.public.ginkoCms?.routeBase || "/api/ginko").replace(/\/$/, "");
-  const resolveLocale = (explicitLocale) => {
+
+/**
+ * Low-level query builder for direct CMS API access.
+ *
+ * Provides a chainable interface to construct and execute query payloads against the
+ * Ginko CMS server endpoint. Use the high-level composables (`useGinkoPage`, `useGinkoItems`, etc.)
+ * for reactive data fetching — this builder is an escape hatch for advanced use cases.
+ *
+ * @param collectionKey - The collection to query, or omit for cross-collection operations.
+ * @returns A chainable {@link GinkoQueryBuilder} instance.
+ *
+ * @example
+ * ```ts
+ * // Find published posts sorted by date
+ * const posts = await queryGinko('blog')
+ *   .where({ status: 'published' })
+ *   .sort('publishedAt', 'desc')
+ *   .limit(10)
+ *   .find()
+ *
+ * // Cross-collection search
+ * const hits = await queryGinko().search('auth', { limit: 8 })
+ * ```
+ */
+export function queryGinko<T = Record<string, unknown>>(collectionKey?: string): GinkoQueryBuilder<T> {
+  const runtimeConfig = useRuntimeConfig()
+  const route = useRoute()
+  const nuxtApp = useNuxtApp()
+  const requestFetch = useRequestFetch()
+  const routeBase = String(runtimeConfig.public.ginkoCms?.routeBase || '/api/ginko').replace(/\/$/, '')
+
+  const resolveLocale = (explicitLocale: string | null | undefined): string | null | undefined => {
     if (explicitLocale === null) {
-      return null;
+      return null
     }
-    if (typeof explicitLocale === "string" && explicitLocale.trim()) {
-      return explicitLocale.trim();
+    if (typeof explicitLocale === 'string' && explicitLocale.trim()) {
+      return explicitLocale.trim()
     }
-    const i18nLocale = asString(unrefValue(nuxtApp.$i18n?.locale));
+    const i18nLocale = asString(String(unrefValue((nuxtApp as any).$i18n?.locale) ?? ''))
     if (i18nLocale) {
-      return i18nLocale;
+      return i18nLocale
     }
-    const routeLocale = asString(route.params?.locale);
+    const routeLocale = asString(String((route.params as any)?.locale ?? ''))
     if (routeLocale) {
-      return routeLocale;
+      return routeLocale
     }
-    return asString(runtimeConfig.public.ginkoCms?.locale);
-  };
-  const request = async (payload) => {
-    const response = await requestFetch(`${routeBase}/query`, {
-      method: "POST",
-      body: payload
-    });
-    return response.data;
-  };
-  const createBuilder = (state) => {
-    const withState = (next) => createBuilder({
+    return asString(String((runtimeConfig.public as any).ginkoCms?.locale ?? ''))
+  }
+
+  const request = async (payload: Record<string, unknown>): Promise<any> => {
+    const response: any = await requestFetch(`${routeBase}/query`, {
+      method: 'POST',
+      body: payload,
+    })
+    return response.data
+  }
+
+  const createBuilder = (state: BuilderState): GinkoQueryBuilder<T> => {
+    const withState = (next: Partial<BuilderState>): GinkoQueryBuilder<T> => createBuilder({
       ...state,
-      ...next
-    });
-    const toPayload = (op) => {
-      assertPopulateSupported(op, state);
+      ...next,
+    })
+
+    const toPayload = (op: string): Record<string, unknown> => {
+      assertPopulateSupported(op, state)
       return {
         op,
         collectionKey: state.collectionKey,
@@ -72,56 +149,53 @@ export function queryGinko(collectionKey) {
         offset: state.offset,
         locale: resolveLocale(state.locale),
         includeBody: state.includeBody,
-        populate: state.populate
-      };
-    };
+        populate: state.populate,
+      }
+    }
+
     return {
-      path: (path) => withState({ path }),
-      where: (filters) => withState({ where: { ...state.where || {}, ...filters } }),
-      sort: (field, dir = "asc") => withState({ sort: { field, dir } }),
-      limit: (n) => withState({ limit: Math.max(1, Math.floor(n)) }),
-      offset: (n) => withState({ offset: Math.max(0, Math.floor(n)) }),
-      locale: (code) => withState({ locale: code }),
-      includeBody: (enabled = true) => withState({ includeBody: enabled }),
-      populate: (fields) => {
-        const merged = [.../* @__PURE__ */ new Set([...state.populate || [], ...normalizePopulateFields(fields)])];
-        return withState({ populate: merged });
+      path: (path: string) => withState({ path }),
+      where: (filters: Record<string, unknown>) => withState({ where: { ...state.where || {}, ...filters } }),
+      sort: (field: string, dir: 'asc' | 'desc' = 'asc') => withState({ sort: { field, dir } }),
+      limit: (n: number) => withState({ limit: Math.max(1, Math.floor(n)) }),
+      offset: (n: number) => withState({ offset: Math.max(0, Math.floor(n)) }),
+      locale: (code: string | null) => withState({ locale: code }),
+      includeBody: (enabled: boolean = true) => withState({ includeBody: enabled }),
+      populate: (fields: string | string[]) => {
+        const merged = [...new Set([...state.populate || [], ...normalizePopulateFields(fields)])]
+        return withState({ populate: merged })
       },
       find: async () => {
-        return await request(toPayload("find"));
+        return await request(toPayload('find'))
       },
       first: async () => {
-        return await request(toPayload("first"));
+        return await request(toPayload('first'))
       },
       navigation: async () => {
-        return await request(toPayload("navigation"));
+        return await request(toPayload('navigation'))
       },
-      surround: async (path) => {
+      surround: async (path?: string) => {
         return await request({
-          ...toPayload("surround"),
-          surround: {
-            path
-          }
-        });
+          ...toPayload('surround'),
+          surround: { path },
+        })
       },
-      search: async (query, options = {}) => {
+      search: async (query: string, options: { limit?: number } = {}) => {
         return await request({
-          ...toPayload("search"),
-          search: {
-            q: query,
-            limit: options.limit
-          }
-        });
+          ...toPayload('search'),
+          search: { q: query, limit: options.limit },
+        })
       },
-      pathBy: async (input) => {
+      pathBy: async (input: { itemId?: string, contentId?: string, slug?: string }) => {
         return await request({
-          ...toPayload("pathBy"),
-          pathBy: input
-        });
-      }
-    };
-  };
+          ...toPayload('pathBy'),
+          pathBy: input,
+        })
+      },
+    }
+  }
+
   return createBuilder({
-    collectionKey: collectionKey ? String(collectionKey) : void 0
-  });
+    collectionKey: collectionKey ? String(collectionKey) : undefined,
+  })
 }

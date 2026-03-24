@@ -4,25 +4,53 @@ import { useAsyncData, useNuxtApp, useRequestFetch, useRoute, useRuntimeConfig }
 import { computed, isRef } from 'vue'
 import { resolveGinkoLocale } from './_ginkoUtils.js'
 
+/** A previous or next page link in a hierarchy. */
 export interface SurroundItem {
+  /** Display title of the surround page. */
   title?: string
+  /** Resolved URL path of the surround page. */
   path: string
 }
 
+/** Options for {@link useGinkoSurround}. */
 export interface UseGinkoSurroundOptions {
+  /** Surround anchor path. @defaultValue `route.path` */
   path?: Ref<string> | string
+  /** Locale override. Falls back to the standard locale resolution chain. */
   locale?: Ref<string> | string
+  /** Watch `path` and `locale` for reactive refetching. @defaultValue `true` */
   watch?: boolean
 }
 
+/** Return shape of {@link useGinkoSurround}. */
 export interface UseGinkoSurroundResult {
+  /** The previous page in the hierarchy, or `null` at the start. */
   prev: Ref<SurroundItem | null>
+  /** The next page in the hierarchy, or `null` at the end. */
   next: Ref<SurroundItem | null>
+  /** Whether a fetch is currently in progress. */
   pending: Ref<boolean>
+  /** Error from the last fetch attempt, if any. */
   error: Ref<unknown>
+  /** Manually trigger a refetch. */
   refresh: () => Promise<void>
 }
 
+/**
+ * Fetches the previous and next pages surrounding a path in a hierarchy collection.
+ *
+ * Uses `op: 'surround'`. Converts the raw `[prev, next]` array response into named refs.
+ * Only valid for hierarchy collections.
+ *
+ * @param collectionKey - The hierarchy collection to query.
+ * @param options - Surround options.
+ * @returns Reactive prev/next items, pending state, error, and refresh function.
+ *
+ * @example
+ * ```ts
+ * const { prev, next } = await useGinkoSurround('wiki')
+ * ```
+ */
 export async function useGinkoSurround<K extends keyof GinkoCollections | (string & {})>(
   collectionKey: K,
   options: UseGinkoSurroundOptions = {},

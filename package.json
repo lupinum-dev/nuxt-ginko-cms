@@ -62,14 +62,16 @@
     "test:smoke": "pnpm run prepack && vitest run \"test/**/*.test.ts\"",
     "test:watch": "vitest watch",
     "test:types": "pnpm run dev:prepare",
-    "test:ci": "pnpm run lint && pnpm run test:types && pnpm run test"
+    "test:ci": "pnpm run lint && pnpm run test:types && pnpm run test",
+    "docs:generate": "typedoc",
+    "docs:check": "typedoc && git diff --exit-code docs/generated/"
   },
   "peerDependencies": {
     "nuxt": "^4.0.0"
   },
   "dependencies": {
-    "@nuxtjs/mdc": "^0.20.2",
-    "@nuxt/kit": "^4.3.1"
+    "@nuxt/kit": "^4.3.1",
+    "@nuxtjs/mdc": "^0.20.2"
   },
   "devDependencies": {
     "@nuxt/devtools": "^3.2.1",
@@ -81,6 +83,8 @@
     "changelogen": "^0.6.2",
     "eslint": "^9.39.2",
     "nuxt": "^4.3.1",
+    "typedoc": "^0.28.18",
+    "typedoc-plugin-markdown": "^4.11.0",
     "typescript": "~5.9.3",
     "unbuild": "^3.6.1",
     "vitest": "^4.0.18",

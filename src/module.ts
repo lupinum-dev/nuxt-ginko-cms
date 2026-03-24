@@ -1,8 +1,26 @@
 import type { GinkoCmsSiteConfig } from './runtime/types/index'
 import { addComponentsDir, addImportsDir, addServerHandler, addServerPlugin, createResolver, defineNuxtModule, installModule } from '@nuxt/kit'
 
+/**
+ * Module options for `@lupinum/ginko-nuxt`.
+ *
+ * Set in `nuxt.config.ts` under the `ginkoCms` key.
+ *
+ * @example
+ * ```ts
+ * export default defineNuxtConfig({
+ *   modules: ['@lupinum/ginko-nuxt'],
+ *   ginkoCms: {
+ *     routeBase: '/api/ginko',
+ *     site: { ... },
+ *   },
+ * })
+ * ```
+ */
 export interface GinkoCmsNuxtModuleOptions {
+  /** Base path for the query, resolve, and sitemap server endpoints. @defaultValue `'/api/ginko'` */
   routeBase?: string
+  /** Site configuration DSL defining locales, collections, routing, search, and sitemap. */
   site?: GinkoCmsSiteConfig
 }
 

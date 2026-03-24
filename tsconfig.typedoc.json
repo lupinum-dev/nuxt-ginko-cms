@@ -1,0 +1,23 @@
+{
+  "extends": "./.nuxt/tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "skipLibCheck": true,
+    "noImplicitAny": false,
+    "strict": false
+  },
+  "include": [
+    "src/module.ts",
+    "src/runtime/types/**/*.ts",
+    "src/runtime/app/composables/**/*.ts",
+    "src/runtime/shared/**/*.ts"
+  ],
+  "exclude": [
+    "dist",
+    "node_modules",
+    "playground",
+    "test",
+    "**/*.test.ts",
+    "**/*.spec.ts"
+  ]
+}

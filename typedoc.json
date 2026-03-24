@@ -1,0 +1,25 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "plugin": ["typedoc-plugin-markdown"],
+  "tsconfig": "tsconfig.typedoc.json",
+  "entryPoints": [
+    "src/module.ts",
+    "src/runtime/types/index.ts",
+    "src/runtime/types/api.ts",
+    "src/runtime/app/composables/useGinkoPage.ts",
+    "src/runtime/app/composables/useGinkoItems.ts",
+    "src/runtime/app/composables/useGinkoNavigation.ts",
+    "src/runtime/app/composables/useGinkoSurround.ts",
+    "src/runtime/app/composables/useGinkoSearch.ts",
+    "src/runtime/app/composables/useGinkoCopyPage.ts",
+    "src/runtime/app/composables/queryGinko.ts"
+  ],
+  "out": "docs/generated",
+  "readme": "none",
+  "excludePrivate": true,
+  "excludeInternal": true,
+  "excludeNotDocumented": false,
+  "skipErrorChecking": true,
+  "hideGenerator": true,
+  "disableSources": false
+}

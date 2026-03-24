@@ -7,23 +7,55 @@ import { resolveGinkoLocale } from './_ginkoUtils.js'
 
 type InferCollection<K extends string> = K extends keyof GinkoCollections ? GinkoCollections[K] : Record<string, unknown>
 
+/** Options for {@link useGinkoPage}. */
 export interface UseGinkoPageOptions<T = Record<string, unknown>, R = T> {
+  /** Page path to resolve and fetch. @defaultValue `route.path` */
   path?: Ref<string> | string
+  /** Locale override. Falls back to the standard locale resolution chain. */
   locale?: Ref<string> | string
+  /** Whether to include the full body content in the response. @defaultValue `true` */
   includeBody?: boolean
+  /** Fields to populate (relation expansion). Normalized and deduplicated. */
   populate?: string[]
+  /** Transform function applied to the raw item before exposure. Only called when item is non-null. */
   transform?: (raw: T) => R
+  /** Throw a Nuxt 404 error when the resolved item is `null`. @defaultValue `true` */
   throwIfNotFound?: boolean
+  /** Watch `path` and `locale` for reactive refetching. Set `false` to disable watchers. @defaultValue `true` */
   watch?: boolean
 }
 
+/** Return shape of {@link useGinkoPage}. */
 export interface UseGinkoPageResult<R = Record<string, unknown>> {
+  /** The resolved page item, or `null` if not found. */
   data: Ref<R | null>
+  /** Whether a fetch is currently in progress. */
   pending: Ref<boolean>
+  /** Error from the last fetch attempt, if any. */
   error: Ref<unknown>
+  /** Manually trigger a refetch. */
   refresh: () => Promise<void>
 }
 
+/**
+ * Fetches a single CMS page by path with locale resolution.
+ *
+ * Performs a single `op: 'page'` request that resolves the path to a collection,
+ * checks canonical URL, and fetches the item in one round trip. Handles redirects
+ * automatically and throws a 404 when the item is not found (configurable).
+ *
+ * @param collectionKey - The collection to resolve within, or omit for auto-detection.
+ * @param options - Page fetch options.
+ * @returns Reactive page data, pending state, error, and refresh function.
+ *
+ * @example
+ * ```ts
+ * const { data: post } = await useGinkoPage('blog', {
+ *   populate: ['author', 'tags'],
+ *   transform: raw => mapBlogPost(raw),
+ * })
+ * ```
+ */
 export async function useGinkoPage<K extends keyof GinkoCollections | (string & {}), T = InferCollection<K>, R = T>(
   collectionKey?: K,
   options: UseGinkoPageOptions<T, R> = {},
