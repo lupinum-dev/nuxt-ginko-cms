@@ -111,6 +111,10 @@ export function resolveFlatSlugByPath(args) {
     return void 0;
   }
   const normalizedPrefix = normalizeSitePath(prefix);
+  if (normalizedPrefix === "/") {
+    const candidate = normalizedPath.slice(1);
+    return candidate.length > 0 ? candidate : void 0;
+  }
   if (!normalizedPath.startsWith(`${normalizedPrefix}/`)) {
     return void 0;
   }
