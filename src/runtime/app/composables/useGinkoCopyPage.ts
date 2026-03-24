@@ -11,6 +11,7 @@ import { serializePageMarkdown } from '../../shared/serializePageMarkdown.js'
 
 export interface UseGinkoCopyPageOptions {
   bodyField?: string
+  frontmatterFields?: string[]
   resetDelay?: number
 }
 
@@ -24,7 +25,7 @@ export function useGinkoCopyPage(
   data: Ref<Record<string, unknown> | null | undefined>,
   options: UseGinkoCopyPageOptions = {},
 ): UseGinkoCopyPageResult {
-  const { bodyField = 'body', resetDelay = 2000 } = options
+  const { bodyField = 'body', frontmatterFields, resetDelay = 2000 } = options
   const copied = ref(false)
   let resetTimer: ReturnType<typeof setTimeout> | undefined
 
@@ -32,7 +33,7 @@ export function useGinkoCopyPage(
     const item = data.value
     if (!item)
       return ''
-    return serializePageMarkdown(item, bodyField)
+    return serializePageMarkdown(item, bodyField, frontmatterFields)
   })
 
   watch(copied, (val) => {

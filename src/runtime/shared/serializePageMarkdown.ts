@@ -8,16 +8,18 @@
 export function serializePageMarkdown(
   item: Record<string, unknown>,
   bodyField = 'body',
+  fields?: string[],
 ): string {
   const body = typeof item[bodyField] === 'string' ? (item[bodyField] as string) : ''
   const frontmatterFields: Record<string, unknown> = {}
 
-  for (const [key, value] of Object.entries(item)) {
-    if (key === bodyField || key.startsWith('_'))
-      continue
-    if (value === null || value === undefined)
-      continue
-    frontmatterFields[key] = value
+  if (fields && fields.length > 0) {
+    for (const key of fields) {
+      const value = item[key]
+      if (value === null || value === undefined)
+        continue
+      frontmatterFields[key] = value
+    }
   }
 
   const yamlLines = serializeYamlLines(frontmatterFields)
