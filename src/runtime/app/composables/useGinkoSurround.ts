@@ -12,12 +12,16 @@ export interface SurroundItem {
   path: string
 }
 
+export type SurroundScope = 'collection' | 'section'
+
 /** Options for {@link useGinkoSurround}. */
 export interface UseGinkoSurroundOptions {
   /** Surround anchor path. @defaultValue `route.path` */
   path?: Ref<string> | string
   /** Locale override. Falls back to the standard locale resolution chain. */
   locale?: Ref<string> | string
+  /** Restrict prev/next to the active section when section nodes exist. @defaultValue `'collection'` */
+  scope?: Ref<SurroundScope> | SurroundScope
   /** Watch `path` and `locale` for reactive refetching. @defaultValue `true` */
   watch?: boolean
 }
@@ -61,12 +65,17 @@ export async function useGinkoSurround<K extends keyof GinkoCollections | (strin
   const runtimeConfig = useRuntimeConfig();
   const requestFetch = useRequestFetch();
   const resolvedLocale = resolveGinkoLocale(options.locale, nuxtApp, route, runtimeConfig);
+  const resolvedScope = computed<SurroundScope>(() => {
+    const scope = options.scope;
+    const value = scope ? (isRef(scope) ? scope.value : scope) : "collection";
+    return value === "section" ? "section" : "collection";
+  });
   const resolvedPath = computed(() => {
     const p = options.path;
     return p ? String(isRef(p) ? p.value : p) : route.path;
   });
   const routeBase = String(runtimeConfig.public.ginkoCms?.routeBase || "/api/ginko").replace(/\/$/, "");
-  const cacheKey = () => `ginko-surround:${String(collectionKey)}:${resolvedPath.value}:${resolvedLocale.value}`;
+  const cacheKey = () => `ginko-surround:${String(collectionKey)}:${resolvedPath.value}:${resolvedLocale.value}:${resolvedScope.value}`;
   const { data, pending, error, refresh } = await useAsyncData(
     cacheKey,
     async () => {
@@ -75,7 +84,7 @@ export async function useGinkoSurround<K extends keyof GinkoCollections | (strin
         collectionKey: String(collectionKey),
         path: resolvedPath.value,
         locale: resolvedLocale.value || void 0,
-        surround: { path: resolvedPath.value }
+        surround: { path: resolvedPath.value, scope: resolvedScope.value }
       };
       const response = await requestFetch(`${routeBase}/query`, {
         method: "POST",
@@ -88,7 +97,7 @@ export async function useGinkoSurround<K extends keyof GinkoCollections | (strin
     },
     {
       default: () => ({ prev: null, next: null }),
-      watch: enableWatch ? [resolvedPath, resolvedLocale] : []
+      watch: enableWatch ? [resolvedPath, resolvedLocale, resolvedScope] : []
     }
   );
   return {

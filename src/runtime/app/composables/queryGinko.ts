@@ -28,7 +28,7 @@ export interface GinkoQueryBuilder<T = Record<string, unknown>> {
   /** Fetch the hierarchy navigation tree. Only valid for hierarchy collections. */
   navigation: () => Promise<Record<string, unknown>[]>
   /** Fetch the previous/next surround items for a hierarchy path. */
-  surround: (path?: string) => Promise<[Record<string, unknown> | null, Record<string, unknown> | null]>
+  surround: (path?: string, options?: { scope?: 'collection' | 'section' }) => Promise<[Record<string, unknown> | null, Record<string, unknown> | null]>
   /** Execute a full-text search query. */
   search: (query: string, options?: { limit?: number }) => Promise<GinkoSearchHit[]>
   /** Resolve a content path by item ID, content ID, or slug. */
@@ -174,10 +174,10 @@ export function queryGinko<T = Record<string, unknown>>(collectionKey?: string):
       navigation: async () => {
         return await request(toPayload('navigation'))
       },
-      surround: async (path?: string) => {
+      surround: async (path?: string, options?: { scope?: 'collection' | 'section' }) => {
         return await request({
           ...toPayload('surround'),
-          surround: { path },
+          surround: { path, scope: options?.scope },
         })
       },
       search: async (query: string, options: { limit?: number } = {}) => {

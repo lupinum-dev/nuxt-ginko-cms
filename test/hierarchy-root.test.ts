@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   buildGinkoHierarchyState,
   canonicalizeGinkoHierarchyPath,
+  getGinkoHierarchySurroundEntries,
   getGinkoHierarchyEntryPath,
   resolveGinkoHierarchyPath,
 } from "../src/hierarchy";
@@ -115,5 +116,85 @@ describe("hierarchy root documents", () => {
     expect(legacyState.tree[0]?.nodeKind).toBe("page");
     expect(legacyState.folders).toHaveLength(0);
     expect(legacyState.pages).toHaveLength(1);
+  });
+
+  it("restricts surround entries to the active section when requested", () => {
+    const sectionedState = buildGinkoHierarchyState(
+      [
+        {
+          id: "section-docs",
+          kind: "section",
+          slug: "docs",
+          content: { title: "Docs", slug: "docs" },
+          children: [
+            {
+              id: "quick-start",
+              slug: "quick-start",
+              content: { title: "Quick Start", slug: "quick-start" },
+            },
+            {
+              id: "installation",
+              kind: "folder",
+              slug: "installation",
+              content: { title: "Installation", slug: "installation" },
+              children: [
+                {
+                  id: "nuxt",
+                  slug: "nuxt",
+                  content: { title: "Nuxt", slug: "nuxt" },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          id: "section-deploy",
+          kind: "section",
+          slug: "deploy",
+          content: { title: "Deploy", slug: "deploy" },
+          children: [
+            {
+              id: "deploy-overview",
+              slug: "deploy-overview",
+              content: { title: "Overview", slug: "deploy-overview" },
+            },
+            {
+              id: "deploy-vercel",
+              slug: "deploy-vercel",
+              content: { title: "Vercel", slug: "deploy-vercel" },
+            },
+          ],
+        },
+      ],
+      {
+        locale: "en",
+        defaultLocale: "en",
+        baseSegment: "docs",
+        includeFolders: true,
+      },
+    );
+
+    expect(
+      getGinkoHierarchySurroundEntries(sectionedState, "/docs/deploy-overview", {
+        scope: "section",
+        includeFolders: true,
+      }).map((entry) => entry.slug),
+    ).toEqual(["deploy-overview", "deploy-vercel"]);
+
+    expect(
+      getGinkoHierarchySurroundEntries(sectionedState, "/docs/deploy-overview", {
+        scope: "collection",
+        includeFolders: true,
+      }).map((entry) => entry.slug),
+    ).toEqual(["deploy-overview", "deploy-vercel", "installation", "nuxt", "quick-start"]);
+  });
+
+  it("falls back to collection-wide surround when no sections exist", () => {
+    expect(
+      getGinkoHierarchySurroundEntries(state, "/docs/guides/authentication", {
+        scope: "section",
+        includeFolders: true,
+      }).map((entry) => entry.slug),
+    ).toEqual(["guides", "authentication", "quick-start"]);
   });
 });

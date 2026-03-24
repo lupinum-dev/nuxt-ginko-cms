@@ -308,6 +308,8 @@ export interface GinkoQueryPayload {
     surround?: {
         /** The anchor path for surround lookup. */
         path?: string;
+        /** Restrict surround links to the active section when section nodes exist. @defaultValue `'collection'` */
+        scope?: 'collection' | 'section';
     };
     /** PathBy operation parameters. Required when `op: 'pathBy'`. */
     pathBy?: GinkoQueryOperationPathBy;

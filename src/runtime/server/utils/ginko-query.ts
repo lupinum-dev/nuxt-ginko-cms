@@ -1,6 +1,6 @@
 import { useRuntimeConfig } from '#imports'
 import { createError } from 'h3'
-import { buildGinkoHierarchyState, canonicalizeGinkoHierarchyPath, getGinkoHierarchyEntryPath, resolveGinkoHierarchyPath } from '../../../hierarchy'
+import { buildGinkoHierarchyState, canonicalizeGinkoHierarchyPath, getGinkoHierarchyEntryPath, getGinkoHierarchySurroundEntries, resolveGinkoHierarchyPath } from '../../../hierarchy'
 import {
   detectLocaleFromPath,
   isFlatCollection,
@@ -653,7 +653,10 @@ export async function executeGinkoQuery(event, payload) {
       locale
     });
     const lookupPath = canonicalizeGinkoHierarchyPath(state, resolved.canonicalPath || requestedPath);
-    const navigableEntries = collection.includeFolders ? state.flat.filter((e) => e.nodeKind === "page" || e.nodeKind === "folder") : state.pages;
+    const navigableEntries = getGinkoHierarchySurroundEntries(state, lookupPath, {
+      scope: payload.surround?.scope,
+      includeFolders: collection.includeFolders
+    });
     const pages = navigableEntries.map((entry) => ({
       entry,
       path: getGinkoHierarchyEntryPath(state, entry)

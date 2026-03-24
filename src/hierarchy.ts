@@ -272,9 +272,44 @@ function canonicalizeGinkoHierarchyPath(state, path) {
   }
   return normalizedPath;
 }
+function hierarchySubtreeContainsPath(nodes, path) {
+  for (const node of nodes) {
+    if (node.path === path) {
+      return true;
+    }
+    if (hierarchySubtreeContainsPath(node.children || [], path)) {
+      return true;
+    }
+  }
+  return false;
+}
+function collectNavigableEntries(nodes, includeFolders, output) {
+  for (const node of nodes) {
+    if (node.nodeKind === "page" || includeFolders && node.nodeKind === "folder") {
+      output.push(node);
+    }
+    if (node.children?.length) {
+      collectNavigableEntries(node.children, includeFolders, output);
+    }
+  }
+  return output;
+}
+function getGinkoHierarchySurroundEntries(state, path, options = {}) {
+  const scope = options.scope === "section" ? "section" : "collection";
+  const includeFolders = options.includeFolders !== false;
+  const normalizedPath = canonicalizeGinkoHierarchyPath(state, path);
+  if (scope !== "section") {
+    return collectNavigableEntries(state.tree, includeFolders, []);
+  }
+  const sectionNode = state.tree.find((node) => node.nodeKind === "section" && hierarchySubtreeContainsPath([node], normalizedPath));
+  if (!sectionNode) {
+    return collectNavigableEntries(state.tree, includeFolders, []);
+  }
+  return collectNavigableEntries(sectionNode.children || [], includeFolders, []);
+}
 function getGinkoHierarchyEntryPath(state, entry) {
   const root = resolveRootEntry(state, entry);
   return root?.path || entry.path;
 }
 
-export { buildGinkoHierarchyState, canonicalizeGinkoHierarchyPath, extractContentIdFromSlug, getGinkoHierarchyEntryPath, localizePath, normalizePath, normalizeSlugSegment, resolveGinkoHierarchyPath };
+export { buildGinkoHierarchyState, canonicalizeGinkoHierarchyPath, extractContentIdFromSlug, getGinkoHierarchyEntryPath, getGinkoHierarchySurroundEntries, localizePath, normalizePath, normalizeSlugSegment, resolveGinkoHierarchyPath };
