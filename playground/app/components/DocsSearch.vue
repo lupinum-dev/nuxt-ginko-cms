@@ -33,14 +33,26 @@ const search = useGinkoSearch('docs', {
       class="mt-4 w-full rounded-full border border-[var(--ginko-line)] bg-white/80 px-4 py-3 text-sm outline-none transition focus:border-[var(--ginko-accent)]"
     >
 
-    <p v-if="search.pending" class="mt-4 text-sm text-[var(--ginko-muted)]">
+    <p
+      v-if="search.pending"
+      class="mt-4 text-sm text-[var(--ginko-muted)]"
+    >
       Searching...
     </p>
-    <p v-else-if="search.error" class="mt-4 text-sm text-red-700">
+    <p
+      v-else-if="search.error"
+      class="mt-4 text-sm text-red-700"
+    >
       {{ search.error }}
     </p>
-    <ul v-else-if="search.results.length" class="mt-4 space-y-3">
-      <li v-for="result in search.results" :key="`${result.path}:${result.title}`">
+    <ul
+      v-else-if="search.results.length"
+      class="mt-4 space-y-3"
+    >
+      <li
+        v-for="result in search.results"
+        :key="`${result.path}:${result.title}`"
+      >
         <NuxtLink
           :to="result.path || '/docs'"
           class="block rounded-2xl border border-[var(--ginko-line)] bg-white/80 px-4 py-3 transition hover:border-[var(--ginko-accent)] hover:bg-white"
@@ -48,7 +60,10 @@ const search = useGinkoSearch('docs', {
           <p class="font-medium">
             {{ result.title || "Untitled" }}
           </p>
-          <p v-if="result.snippet" class="mt-1 text-sm text-[var(--ginko-muted)]">
+          <p
+            v-if="result.snippet"
+            class="mt-1 text-sm text-[var(--ginko-muted)]"
+          >
             {{ result.snippet }}
           </p>
         </NuxtLink>

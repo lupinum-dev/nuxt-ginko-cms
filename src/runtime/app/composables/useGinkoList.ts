@@ -96,7 +96,7 @@ export async function useGinkoList<K extends keyof GinkoCollections | (string & 
   const stableWhere = where ? JSON.stringify(where) : ''
   const stableSort = sort ?? ''
   const resolvedOffset = isRef(options.offset) ? options.offset : undefined
-  const staticOffset = isRef(options.offset) ? undefined : options.offset
+  const _staticOffset = isRef(options.offset) ? undefined : options.offset
 
   const cacheKey = () => [
     'ginko-list',
@@ -110,6 +110,7 @@ export async function useGinkoList<K extends keyof GinkoCollections | (string & 
 
   const totalRef = useState<number>(`ginko-list-total:${String(collectionKey)}`, () => 0)
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const watchSources: any[] = enableWatch ? [resolvedLocale] : []
   if (enableWatch && resolvedOffset) {
     watchSources.push(resolvedOffset)
@@ -132,6 +133,7 @@ export async function useGinkoList<K extends keyof GinkoCollections | (string & 
       const offsetVal = toValue(options.offset)
       if (typeof offsetVal === 'number') payload.offset = offsetVal
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const response: any = await requestFetch(`${routeBase}/query`, {
         method: 'POST',
         body: payload,

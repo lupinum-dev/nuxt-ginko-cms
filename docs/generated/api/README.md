@@ -1,8 +1,8 @@
-[**@lupinum/ginko-nuxt**](../README.md)
+[**nuxt-ginko-cms**](../README.md)
 
 ***
 
-[@lupinum/ginko-nuxt](../README.md) / api
+[nuxt-ginko-cms](../README.md) / api
 
 # api
 

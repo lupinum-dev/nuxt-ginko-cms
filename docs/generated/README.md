@@ -1,8 +1,8 @@
-**@lupinum/ginko-nuxt**
+**nuxt-ginko-cms**
 
 ***
 
-# @lupinum/ginko-nuxt
+# nuxt-ginko-cms
 
 ## Modules
 

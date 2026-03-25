@@ -10,7 +10,7 @@ interface MdcTocLink {
 }
 
 /** Recursively flatten nested TOC links into a flat list. */
-function flattenLinks(links: MdcTocLink[]): GinkoTocItem[] {
+function _flattenLinks(links: MdcTocLink[]): GinkoTocItem[] {
   const items: GinkoTocItem[] = []
   const walk = (entries: MdcTocLink[]) => {
     for (const entry of entries) {
@@ -29,7 +29,7 @@ function flattenLinks(links: MdcTocLink[]): GinkoTocItem[] {
 /** Simple heading extraction from markdown content as fallback. */
 function extractHeadingsFromMarkdown(content: string): GinkoTocItem[] {
   const items: GinkoTocItem[] = []
-  const headingRegex = /^(#{2,4})\s+(.+)$/gm
+  const headingRegex = /^(#{2,4})\s+(\S.*)$/gm
   let match: RegExpExecArray | null
 
   match = headingRegex.exec(content)

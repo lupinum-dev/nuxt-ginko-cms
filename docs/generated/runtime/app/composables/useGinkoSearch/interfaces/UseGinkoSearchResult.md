@@ -1,12 +1,12 @@
-[**@lupinum/ginko-nuxt**](../../../../../README.md)
+[**nuxt-ginko-cms**](../../../../../README.md)
 
 ***
 
-[@lupinum/ginko-nuxt](../../../../../README.md) / [runtime/app/composables/useGinkoSearch](../README.md) / UseGinkoSearchResult
+[nuxt-ginko-cms](../../../../../README.md) / [runtime/app/composables/useGinkoSearch](../README.md) / UseGinkoSearchResult
 
 # Interface: UseGinkoSearchResult
 
-Defined in: [runtime/app/composables/useGinkoSearch.ts:24](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoSearch.ts#L24)
+Defined in: [runtime/app/composables/useGinkoSearch.ts:24](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/app/composables/useGinkoSearch.ts#L24)
 
 Return shape of [useGinkoSearch](../functions/useGinkoSearch.md).
 
@@ -16,7 +16,7 @@ Return shape of [useGinkoSearch](../functions/useGinkoSearch.md).
 
 > **clear**: () => `void`
 
-Defined in: [runtime/app/composables/useGinkoSearch.ts:34](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoSearch.ts#L34)
+Defined in: [runtime/app/composables/useGinkoSearch.ts:34](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/app/composables/useGinkoSearch.ts#L34)
 
 Reset query, results, and error.
 
@@ -30,7 +30,7 @@ Reset query, results, and error.
 
 > **error**: `Ref`\<`GinkoError`\>
 
-Defined in: [runtime/app/composables/useGinkoSearch.ts:32](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoSearch.ts#L32)
+Defined in: [runtime/app/composables/useGinkoSearch.ts:32](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/app/composables/useGinkoSearch.ts#L32)
 
 Error from last search.
 
@@ -40,7 +40,7 @@ Error from last search.
 
 > **pending**: `Ref`\<`boolean`\>
 
-Defined in: [runtime/app/composables/useGinkoSearch.ts:30](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoSearch.ts#L30)
+Defined in: [runtime/app/composables/useGinkoSearch.ts:30](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/app/composables/useGinkoSearch.ts#L30)
 
 Whether a request is in flight.
 
@@ -50,7 +50,7 @@ Whether a request is in flight.
 
 > **query**: `Ref`\<`string`\>
 
-Defined in: [runtime/app/composables/useGinkoSearch.ts:26](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoSearch.ts#L26)
+Defined in: [runtime/app/composables/useGinkoSearch.ts:26](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/app/composables/useGinkoSearch.ts#L26)
 
 Bind to search input v-model.
 
@@ -60,6 +60,6 @@ Bind to search input v-model.
 
 > **results**: `Ref`\<[`GinkoSearchResult`](../../../../types/interfaces/GinkoSearchResult.md)[]\>
 
-Defined in: [runtime/app/composables/useGinkoSearch.ts:28](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoSearch.ts#L28)
+Defined in: [runtime/app/composables/useGinkoSearch.ts:28](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/app/composables/useGinkoSearch.ts#L28)
 
 Search results with resolved paths.

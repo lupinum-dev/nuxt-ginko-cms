@@ -1,12 +1,12 @@
-[**@lupinum/ginko-nuxt**](../../../README.md)
+[**nuxt-ginko-cms**](../../../README.md)
 
 ***
 
-[@lupinum/ginko-nuxt](../../../README.md) / [runtime/types](../README.md) / GinkoCmsSiteHierarchyCollection
+[nuxt-ginko-cms](../../../README.md) / [runtime/types](../README.md) / GinkoCmsSiteHierarchyCollection
 
 # Interface: GinkoCmsSiteHierarchyCollection
 
-Defined in: [runtime/types/index.ts:95](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L95)
+Defined in: [runtime/types/index.ts:96](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L96)
 
 A hierarchy (tree-structured) collection with segment-based routing.
 
@@ -20,7 +20,7 @@ A hierarchy (tree-structured) collection with segment-based routing.
 
 > `optional` **contentIdField?**: `string`
 
-Defined in: [runtime/types/index.ts:111](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L111)
+Defined in: [runtime/types/index.ts:112](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L112)
 
 Field name for the colocation folder ID in hierarchy items.
 
@@ -34,7 +34,7 @@ Field name for the colocation folder ID in hierarchy items.
 
 > `optional` **contentOrderField?**: `string`
 
-Defined in: [runtime/types/index.ts:109](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L109)
+Defined in: [runtime/types/index.ts:110](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L110)
 
 Field name for sort ordering in hierarchy items.
 
@@ -48,7 +48,7 @@ Field name for sort ordering in hierarchy items.
 
 > `optional` **contentSlugField?**: `string`
 
-Defined in: [runtime/types/index.ts:105](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L105)
+Defined in: [runtime/types/index.ts:106](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L106)
 
 Field name for the content slug in hierarchy items.
 
@@ -62,7 +62,7 @@ Field name for the content slug in hierarchy items.
 
 > `optional` **contentTitleField?**: `string`
 
-Defined in: [runtime/types/index.ts:107](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L107)
+Defined in: [runtime/types/index.ts:108](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L108)
 
 Field name for the content title in hierarchy items.
 
@@ -76,7 +76,7 @@ Field name for the content title in hierarchy items.
 
 > `optional` **getQuery?**: `Record`\<`string`, `unknown`\>
 
-Defined in: [runtime/types/index.ts:59](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L59)
+Defined in: [runtime/types/index.ts:60](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L60)
 
 Reserved metadata for single-item queries (not currently applied by runtime).
 
@@ -90,7 +90,7 @@ Reserved metadata for single-item queries (not currently applied by runtime).
 
 > `optional` **includeFolders?**: `boolean`
 
-Defined in: [runtime/types/index.ts:103](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L103)
+Defined in: [runtime/types/index.ts:104](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L104)
 
 Whether to include folder nodes in navigation responses.
 
@@ -104,7 +104,7 @@ Whether to include folder nodes in navigation responses.
 
 > `optional` **keyField?**: `"id"` \| `"slug"`
 
-Defined in: [runtime/types/index.ts:53](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L53)
+Defined in: [runtime/types/index.ts:54](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L54)
 
 Key field for sitemap generation helpers.
 
@@ -122,7 +122,7 @@ Key field for sitemap generation helpers.
 
 > **kind**: `"hierarchy"`
 
-Defined in: [runtime/types/index.ts:97](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L97)
+Defined in: [runtime/types/index.ts:98](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L98)
 
 Discriminator: this is a hierarchy collection.
 
@@ -132,7 +132,7 @@ Discriminator: this is a hierarchy collection.
 
 > `optional` **listQuery?**: `Record`\<`string`, `unknown`\>
 
-Defined in: [runtime/types/index.ts:57](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L57)
+Defined in: [runtime/types/index.ts:58](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L58)
 
 Reserved metadata for list queries (not currently applied by runtime).
 
@@ -146,7 +146,7 @@ Reserved metadata for list queries (not currently applied by runtime).
 
 > `optional` **localized?**: `boolean`
 
-Defined in: [runtime/types/index.ts:49](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L49)
+Defined in: [runtime/types/index.ts:50](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L50)
 
 Whether this collection supports localized content.
 
@@ -164,7 +164,7 @@ Whether this collection supports localized content.
 
 > `optional` **maxDepth?**: `number`
 
-Defined in: [runtime/types/index.ts:101](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L101)
+Defined in: [runtime/types/index.ts:102](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L102)
 
 Maximum tree depth for navigation and surround queries.
 
@@ -178,7 +178,7 @@ Maximum tree depth for navigation and surround queries.
 
 > `optional` **pageSize?**: `number`
 
-Defined in: [runtime/types/index.ts:55](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L55)
+Defined in: [runtime/types/index.ts:56](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L56)
 
 Page size for sitemap generation helpers.
 
@@ -196,7 +196,7 @@ Page size for sitemap generation helpers.
 
 > **routing**: [`GinkoCmsSiteHierarchyRouting`](GinkoCmsSiteHierarchyRouting.md)
 
-Defined in: [runtime/types/index.ts:99](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L99)
+Defined in: [runtime/types/index.ts:100](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L100)
 
 Routing configuration. One of `baseSegment` or `baseSegmentByLocale` is required.
 
@@ -206,7 +206,7 @@ Routing configuration. One of `baseSegment` or `baseSegmentByLocale` is required
 
 > `optional` **search?**: [`GinkoCmsSiteCollectionSearch`](GinkoCmsSiteCollectionSearch.md)
 
-Defined in: [runtime/types/index.ts:61](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L61)
+Defined in: [runtime/types/index.ts:62](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L62)
 
 Per-collection search configuration.
 
@@ -220,7 +220,7 @@ Per-collection search configuration.
 
 > `optional` **slugField?**: `string`
 
-Defined in: [runtime/types/index.ts:51](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L51)
+Defined in: [runtime/types/index.ts:52](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L52)
 
 Field name used as the slug identifier for flat path resolution.
 
@@ -238,7 +238,7 @@ Field name used as the slug identifier for flat path resolution.
 
 > **source**: `string`
 
-Defined in: [runtime/types/index.ts:47](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L47)
+Defined in: [runtime/types/index.ts:48](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L48)
 
 Upstream CMS collection slug. Required.
 

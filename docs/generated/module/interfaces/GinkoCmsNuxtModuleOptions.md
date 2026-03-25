@@ -1,14 +1,14 @@
-[**@lupinum/ginko-nuxt**](../../README.md)
+[**nuxt-ginko-cms**](../../README.md)
 
 ***
 
-[@lupinum/ginko-nuxt](../../README.md) / [module](../README.md) / GinkoCmsNuxtModuleOptions
+[nuxt-ginko-cms](../../README.md) / [module](../README.md) / GinkoCmsNuxtModuleOptions
 
 # Interface: GinkoCmsNuxtModuleOptions
 
-Defined in: [module.ts:20](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/module.ts#L20)
+Defined in: [module.ts:20](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/module.ts#L20)
 
-Module options for `@lupinum/ginko-nuxt`.
+Module options for `nuxt-ginko-cms`.
 
 Set in `nuxt.config.ts` under the `ginkoCms` key.
 
@@ -16,7 +16,7 @@ Set in `nuxt.config.ts` under the `ginkoCms` key.
 
 ```ts
 export default defineNuxtConfig({
-  modules: ['@lupinum/ginko-nuxt'],
+  modules: ['nuxt-ginko-cms'],
   ginkoCms: {
     routeBase: '/api/ginko',
     site: { ... },
@@ -30,7 +30,7 @@ export default defineNuxtConfig({
 
 > `optional` **routeBase?**: `string`
 
-Defined in: [module.ts:22](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/module.ts#L22)
+Defined in: [module.ts:22](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/module.ts#L22)
 
 Base path for the query, resolve, and sitemap server endpoints.
 
@@ -44,6 +44,6 @@ Base path for the query, resolve, and sitemap server endpoints.
 
 > `optional` **site?**: [`GinkoCmsSiteConfig`](../../runtime/types/interfaces/GinkoCmsSiteConfig.md)
 
-Defined in: [module.ts:24](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/module.ts#L24)
+Defined in: [module.ts:24](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/module.ts#L24)
 
 Site configuration DSL defining locales, collections, routing, search, and sitemap.

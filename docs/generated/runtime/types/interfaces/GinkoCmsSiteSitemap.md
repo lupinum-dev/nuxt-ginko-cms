@@ -1,12 +1,12 @@
-[**@lupinum/ginko-nuxt**](../../../README.md)
+[**nuxt-ginko-cms**](../../../README.md)
 
 ***
 
-[@lupinum/ginko-nuxt](../../../README.md) / [runtime/types](../README.md) / GinkoCmsSiteSitemap
+[nuxt-ginko-cms](../../../README.md) / [runtime/types](../README.md) / GinkoCmsSiteSitemap
 
 # Interface: GinkoCmsSiteSitemap
 
-Defined in: [runtime/types/index.ts:118](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L118)
+Defined in: [runtime/types/index.ts:119](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L119)
 
 Sitemap endpoint configuration.
 
@@ -16,7 +16,7 @@ Sitemap endpoint configuration.
 
 > `optional` **enabled?**: `boolean`
 
-Defined in: [runtime/types/index.ts:120](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L120)
+Defined in: [runtime/types/index.ts:121](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L121)
 
 Whether the sitemap endpoint is enabled.
 
@@ -30,7 +30,7 @@ Whether the sitemap endpoint is enabled.
 
 > `optional` **sourcePath?**: `string`
 
-Defined in: [runtime/types/index.ts:122](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L122)
+Defined in: [runtime/types/index.ts:123](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L123)
 
 URL path for the sitemap endpoint.
 

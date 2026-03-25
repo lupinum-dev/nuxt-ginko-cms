@@ -1,14 +1,14 @@
-[**@lupinum/ginko-nuxt**](../../../../../README.md)
+[**nuxt-ginko-cms**](../../../../../README.md)
 
 ***
 
-[@lupinum/ginko-nuxt](../../../../../README.md) / [runtime/app/composables/useGinkoPage](../README.md) / useGinkoPage
+[nuxt-ginko-cms](../../../../../README.md) / [runtime/app/composables/useGinkoPage](../README.md) / useGinkoPage
 
 # Function: useGinkoPage()
 
 > **useGinkoPage**\<`K`, `T`, `R`\>(`collectionKey?`, `options?`): `Promise`\<[`UseGinkoPageResult`](../interfaces/UseGinkoPageResult.md)\<`R`\>\>
 
-Defined in: [runtime/app/composables/useGinkoPage.ts:61](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoPage.ts#L61)
+Defined in: [runtime/app/composables/useGinkoPage.ts:61](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/app/composables/useGinkoPage.ts#L61)
 
 Fetches a single CMS page by path with locale resolution.
 

@@ -1,12 +1,12 @@
-[**@lupinum/ginko-nuxt**](../../../../../README.md)
+[**nuxt-ginko-cms**](../../../../../README.md)
 
 ***
 
-[@lupinum/ginko-nuxt](../../../../../README.md) / [runtime/app/composables/useGinkoList](../README.md) / UseGinkoListOptions
+[nuxt-ginko-cms](../../../../../README.md) / [runtime/app/composables/useGinkoList](../README.md) / UseGinkoListOptions
 
 # Interface: UseGinkoListOptions\<T, R\>
 
-Defined in: [runtime/app/composables/useGinkoList.ts:24](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoList.ts#L24)
+Defined in: [runtime/app/composables/useGinkoList.ts:24](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/app/composables/useGinkoList.ts#L24)
 
 Options for [useGinkoList](../functions/useGinkoList.md).
 
@@ -26,7 +26,7 @@ Options for [useGinkoList](../functions/useGinkoList.md).
 
 > `optional` **includeBody?**: `boolean`
 
-Defined in: [runtime/app/composables/useGinkoList.ts:36](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoList.ts#L36)
+Defined in: [runtime/app/composables/useGinkoList.ts:36](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/app/composables/useGinkoList.ts#L36)
 
 Include full body content.
 
@@ -42,7 +42,7 @@ false
 
 > `optional` **limit?**: `number`
 
-Defined in: [runtime/app/composables/useGinkoList.ts:28](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoList.ts#L28)
+Defined in: [runtime/app/composables/useGinkoList.ts:28](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/app/composables/useGinkoList.ts#L28)
 
 Maximum items to return.
 
@@ -52,7 +52,7 @@ Maximum items to return.
 
 > `optional` **locale?**: `string` \| `Ref`\<`string`, `string`\>
 
-Defined in: [runtime/app/composables/useGinkoList.ts:40](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoList.ts#L40)
+Defined in: [runtime/app/composables/useGinkoList.ts:40](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/app/composables/useGinkoList.ts#L40)
 
 Locale override.
 
@@ -62,7 +62,7 @@ Locale override.
 
 > `optional` **offset?**: `number` \| `Ref`\<`number`, `number`\>
 
-Defined in: [runtime/app/composables/useGinkoList.ts:30](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoList.ts#L30)
+Defined in: [runtime/app/composables/useGinkoList.ts:30](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/app/composables/useGinkoList.ts#L30)
 
 Items to skip. Accepts a reactive `Ref<number>` for pagination.
 
@@ -72,7 +72,7 @@ Items to skip. Accepts a reactive `Ref<number>` for pagination.
 
 > `optional` **populate?**: `string`[]
 
-Defined in: [runtime/app/composables/useGinkoList.ts:34](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoList.ts#L34)
+Defined in: [runtime/app/composables/useGinkoList.ts:34](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/app/composables/useGinkoList.ts#L34)
 
 Fields to populate (relation expansion).
 
@@ -82,7 +82,7 @@ Fields to populate (relation expansion).
 
 > `optional` **sort?**: `string`
 
-Defined in: [runtime/app/composables/useGinkoList.ts:26](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoList.ts#L26)
+Defined in: [runtime/app/composables/useGinkoList.ts:26](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/app/composables/useGinkoList.ts#L26)
 
 Sort string. Prefix with `-` for descending. E.g., `'-date'`, `'title'`.
 
@@ -92,7 +92,7 @@ Sort string. Prefix with `-` for descending. E.g., `'-date'`, `'title'`.
 
 > `optional` **transform?**: (`items`) => `R`[]
 
-Defined in: [runtime/app/composables/useGinkoList.ts:38](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoList.ts#L38)
+Defined in: [runtime/app/composables/useGinkoList.ts:38](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/app/composables/useGinkoList.ts#L38)
 
 Transform applied to item list.
 
@@ -112,7 +112,7 @@ Transform applied to item list.
 
 > `optional` **watch?**: `boolean`
 
-Defined in: [runtime/app/composables/useGinkoList.ts:42](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoList.ts#L42)
+Defined in: [runtime/app/composables/useGinkoList.ts:42](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/app/composables/useGinkoList.ts#L42)
 
 Watch reactive sources for refetching.
 
@@ -128,6 +128,6 @@ true
 
 > `optional` **where?**: `Record`\<`string`, `unknown`\>
 
-Defined in: [runtime/app/composables/useGinkoList.ts:32](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoList.ts#L32)
+Defined in: [runtime/app/composables/useGinkoList.ts:32](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/app/composables/useGinkoList.ts#L32)
 
 Filter conditions.

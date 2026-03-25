@@ -112,18 +112,23 @@ export function queryGinko<T = Record<string, unknown>>(collectionKey?: string):
     if (typeof explicitLocale === 'string' && explicitLocale.trim()) {
       return explicitLocale.trim()
     }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const i18nLocale = asString(String(unrefValue((nuxtApp as any).$i18n?.locale) ?? ''))
     if (i18nLocale) {
       return i18nLocale
     }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const routeLocale = asString(String((route.params as any)?.locale ?? ''))
     if (routeLocale) {
       return routeLocale
     }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return asString(String((runtimeConfig.public as any).ginkoCms?.locale ?? ''))
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const request = async (payload: Record<string, unknown>): Promise<any> => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const response: any = await requestFetch(`${routeBase}/query`, {
       method: 'POST',
       body: payload,

@@ -1,8 +1,8 @@
-[**@lupinum/ginko-nuxt**](../../../../README.md)
+[**nuxt-ginko-cms**](../../../../README.md)
 
 ***
 
-[@lupinum/ginko-nuxt](../../../../README.md) / runtime/app/composables/useGinkoSearch
+[nuxt-ginko-cms](../../../../README.md) / runtime/app/composables/useGinkoSearch
 
 # runtime/app/composables/useGinkoSearch
 

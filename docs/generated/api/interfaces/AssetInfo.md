@@ -1,12 +1,12 @@
-[**@lupinum/ginko-nuxt**](../../README.md)
+[**nuxt-ginko-cms**](../../README.md)
 
 ***
 
-[@lupinum/ginko-nuxt](../../README.md) / [api](../README.md) / AssetInfo
+[nuxt-ginko-cms](../../README.md) / [api](../README.md) / AssetInfo
 
 # Interface: AssetInfo
 
-Defined in: [runtime/types/api.ts:82](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/api.ts#L82)
+Defined in: [runtime/types/api.ts:82](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/api.ts#L82)
 
 Metadata for an uploaded asset.
 
@@ -16,7 +16,7 @@ Metadata for an uploaded asset.
 
 > **assetId**: `string`
 
-Defined in: [runtime/types/api.ts:84](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/api.ts#L84)
+Defined in: [runtime/types/api.ts:84](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/api.ts#L84)
 
 Unique asset identifier.
 
@@ -26,7 +26,7 @@ Unique asset identifier.
 
 > **filename**: `string`
 
-Defined in: [runtime/types/api.ts:90](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/api.ts#L90)
+Defined in: [runtime/types/api.ts:90](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/api.ts#L90)
 
 Original filename.
 
@@ -36,7 +36,7 @@ Original filename.
 
 > **localPath**: `string`
 
-Defined in: [runtime/types/api.ts:88](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/api.ts#L88)
+Defined in: [runtime/types/api.ts:88](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/api.ts#L88)
 
 Original local file path (from upload context).
 
@@ -46,7 +46,7 @@ Original local file path (from upload context).
 
 > **mimeType**: `string`
 
-Defined in: [runtime/types/api.ts:92](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/api.ts#L92)
+Defined in: [runtime/types/api.ts:92](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/api.ts#L92)
 
 MIME type of the asset.
 
@@ -56,6 +56,6 @@ MIME type of the asset.
 
 > **storageUrl**: `string`
 
-Defined in: [runtime/types/api.ts:86](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/api.ts#L86)
+Defined in: [runtime/types/api.ts:86](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/api.ts#L86)
 
 CDN or storage URL for the asset.

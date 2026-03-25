@@ -2,8 +2,10 @@
 const featuredPosts = await queryGinko('blog')
   .sort('updatedAt', 'desc')
   .limit(3)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   .find() as Array<Record<string, any>>
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const docsNavigation = await queryGinko('docs').navigation() as Array<Record<string, any>>
 </script>
 
@@ -22,10 +24,16 @@ const docsNavigation = await queryGinko('docs').navigation() as Array<Record<str
         </p>
 
         <div class="mt-8 flex flex-wrap gap-3 text-sm">
-          <NuxtLink to="/blog" class="rounded-full bg-[var(--ginko-accent)] px-5 py-3 text-white transition hover:opacity-90">
+          <NuxtLink
+            to="/blog"
+            class="rounded-full bg-[var(--ginko-accent)] px-5 py-3 text-white transition hover:opacity-90"
+          >
             Browse blog
           </NuxtLink>
-          <NuxtLink to="/docs" class="rounded-full border border-[var(--ginko-line)] px-5 py-3 transition hover:bg-white/80">
+          <NuxtLink
+            to="/docs"
+            class="rounded-full border border-[var(--ginko-line)] px-5 py-3 transition hover:bg-white/80"
+          >
             Open docs tree
           </NuxtLink>
         </div>
@@ -44,7 +52,10 @@ const docsNavigation = await queryGinko('docs').navigation() as Array<Record<str
             :key="entry.path || entry.slug"
             class="rounded-2xl border border-[var(--ginko-line)] bg-white/70 px-4 py-3"
           >
-            <NuxtLink :to="entry.path || '/docs'" class="font-medium text-[var(--ginko-ink)] transition hover:text-[var(--ginko-accent)]">
+            <NuxtLink
+              :to="entry.path || '/docs'"
+              class="font-medium text-[var(--ginko-ink)] transition hover:text-[var(--ginko-accent)]"
+            >
               {{ entry.title || entry.slug || "Untitled" }}
             </NuxtLink>
           </li>
@@ -62,7 +73,10 @@ const docsNavigation = await queryGinko('docs').navigation() as Array<Record<str
             `queryGinko('blog').find()`
           </h2>
         </div>
-        <NuxtLink to="/blog" class="text-sm uppercase tracking-[0.16em] text-[var(--ginko-muted)] transition hover:text-[var(--ginko-accent)]">
+        <NuxtLink
+          to="/blog"
+          class="text-sm uppercase tracking-[0.16em] text-[var(--ginko-muted)] transition hover:text-[var(--ginko-accent)]"
+        >
           View all
         </NuxtLink>
       </div>

@@ -8,13 +8,13 @@ export interface GinkoError {
   code: GinkoErrorCode
 }
 
-export type GinkoErrorCode =
-  | 'NOT_FOUND'
-  | 'FORBIDDEN'
-  | 'TIMEOUT'
-  | 'NETWORK'
-  | 'SERVER'
-  | 'UNKNOWN'
+export type GinkoErrorCode
+  = | 'NOT_FOUND'
+    | 'FORBIDDEN'
+    | 'TIMEOUT'
+    | 'NETWORK'
+    | 'SERVER'
+    | 'UNKNOWN'
 
 /** Map an HTTP status to a GinkoError. */
 export function createGinkoError(status: number, message: string): GinkoError {

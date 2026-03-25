@@ -1,13 +1,13 @@
-[**@lupinum/ginko-nuxt**](../../../README.md)
+[**nuxt-ginko-cms**](../../../README.md)
 
 ***
 
-[@lupinum/ginko-nuxt](../../../README.md) / [runtime/types](../README.md) / GinkoCmsSiteCollection
+[nuxt-ginko-cms](../../../README.md) / [runtime/types](../README.md) / GinkoCmsSiteCollection
 
 # Type Alias: GinkoCmsSiteCollection
 
 > **GinkoCmsSiteCollection** = [`GinkoCmsSiteFlatCollection`](../interfaces/GinkoCmsSiteFlatCollection.md) \| [`GinkoCmsSiteHierarchyCollection`](../interfaces/GinkoCmsSiteHierarchyCollection.md)
 
-Defined in: [runtime/types/index.ts:115](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L115)
+Defined in: [runtime/types/index.ts:116](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L116)
 
 Union of all collection kinds. Use the `kind` discriminator to narrow.

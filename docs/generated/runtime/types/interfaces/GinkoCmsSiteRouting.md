@@ -1,12 +1,12 @@
-[**@lupinum/ginko-nuxt**](../../../README.md)
+[**nuxt-ginko-cms**](../../../README.md)
 
 ***
 
-[@lupinum/ginko-nuxt](../../../README.md) / [runtime/types](../README.md) / GinkoCmsSiteRouting
+[nuxt-ginko-cms](../../../README.md) / [runtime/types](../README.md) / GinkoCmsSiteRouting
 
 # Interface: GinkoCmsSiteRouting
 
-Defined in: [runtime/types/index.ts:31](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L31)
+Defined in: [runtime/types/index.ts:32](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L32)
 
 Global routing strategy for the site.
 
@@ -16,7 +16,7 @@ Global routing strategy for the site.
 
 > `optional` **localePrefixStrategy?**: [`GinkoCmsLocalePrefixStrategy`](../type-aliases/GinkoCmsLocalePrefixStrategy.md)
 
-Defined in: [runtime/types/index.ts:33](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L33)
+Defined in: [runtime/types/index.ts:34](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L34)
 
 How locale prefixes are applied to URL paths.
 

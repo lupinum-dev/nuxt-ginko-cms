@@ -1,12 +1,12 @@
-[**@lupinum/ginko-nuxt**](../../../README.md)
+[**nuxt-ginko-cms**](../../../README.md)
 
 ***
 
-[@lupinum/ginko-nuxt](../../../README.md) / [runtime/types](../README.md) / GinkoCmsSiteCollectionSearch
+[nuxt-ginko-cms](../../../README.md) / [runtime/types](../README.md) / GinkoCmsSiteCollectionSearch
 
 # Interface: GinkoCmsSiteCollectionSearch
 
-Defined in: [runtime/types/index.ts:37](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L37)
+Defined in: [runtime/types/index.ts:38](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L38)
 
 Per-collection search configuration override.
 
@@ -16,7 +16,7 @@ Per-collection search configuration override.
 
 > `optional` **collections?**: readonly `string`[]
 
-Defined in: [runtime/types/index.ts:39](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L39)
+Defined in: [runtime/types/index.ts:40](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L40)
 
 Override which upstream collection sources are searched.
 
@@ -30,6 +30,6 @@ Override which upstream collection sources are searched.
 
 > `optional` **limit?**: `number`
 
-Defined in: [runtime/types/index.ts:41](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L41)
+Defined in: [runtime/types/index.ts:42](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L42)
 
 Reserved: per-collection search limit. The endpoint uses request/site defaults.

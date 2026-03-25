@@ -59,52 +59,52 @@ export async function useGinkoSurround<K extends keyof GinkoCollections | (strin
   collectionKey: K,
   options: UseGinkoSurroundOptions = {},
 ): Promise<UseGinkoSurroundResult> {
-  const { watch: enableWatch = true } = options;
-  const nuxtApp = useNuxtApp();
-  const route = useRoute();
-  const runtimeConfig = useRuntimeConfig();
-  const requestFetch = useRequestFetch();
-  const resolvedLocale = resolveGinkoLocale(options.locale, nuxtApp, route, runtimeConfig);
+  const { watch: enableWatch = true } = options
+  const nuxtApp = useNuxtApp()
+  const route = useRoute()
+  const runtimeConfig = useRuntimeConfig()
+  const requestFetch = useRequestFetch()
+  const resolvedLocale = resolveGinkoLocale(options.locale, nuxtApp, route, runtimeConfig)
   const resolvedScope = computed<SurroundScope>(() => {
-    const scope = options.scope;
-    const value = scope ? (isRef(scope) ? scope.value : scope) : "collection";
-    return value === "section" ? "section" : "collection";
-  });
+    const scope = options.scope
+    const value = scope ? (isRef(scope) ? scope.value : scope) : 'collection'
+    return value === 'section' ? 'section' : 'collection'
+  })
   const resolvedPath = computed(() => {
-    const p = options.path;
-    return p ? String(isRef(p) ? p.value : p) : route.path;
-  });
-  const routeBase = String(runtimeConfig.public.ginkoCms?.routeBase || "/api/ginko").replace(/\/$/, "");
-  const cacheKey = () => `ginko-surround:${String(collectionKey)}:${resolvedPath.value}:${resolvedLocale.value}:${resolvedScope.value}`;
+    const p = options.path
+    return p ? String(isRef(p) ? p.value : p) : route.path
+  })
+  const routeBase = String(runtimeConfig.public.ginkoCms?.routeBase || '/api/ginko').replace(/\/$/, '')
+  const cacheKey = () => `ginko-surround:${String(collectionKey)}:${resolvedPath.value}:${resolvedLocale.value}:${resolvedScope.value}`
   const { data, pending, error, refresh } = await useAsyncData(
     cacheKey,
     async () => {
       const payload = {
-        op: "surround",
+        op: 'surround',
         collectionKey: String(collectionKey),
         path: resolvedPath.value,
         locale: resolvedLocale.value || void 0,
-        surround: { path: resolvedPath.value, scope: resolvedScope.value }
-      };
+        surround: { path: resolvedPath.value, scope: resolvedScope.value },
+      }
       const response = await requestFetch(`${routeBase}/query`, {
-        method: "POST",
-        body: payload
-      });
-      const raw = Array.isArray(response.data) ? response.data : [null, null];
-      const prev = raw[0] ?? null;
-      const next = raw[1] ?? null;
-      return { prev, next };
+        method: 'POST',
+        body: payload,
+      })
+      const raw = Array.isArray(response.data) ? response.data : [null, null]
+      const prev = raw[0] ?? null
+      const next = raw[1] ?? null
+      return { prev, next }
     },
     {
       default: () => ({ prev: null, next: null }),
-      watch: enableWatch ? [resolvedPath, resolvedLocale, resolvedScope] : []
-    }
-  );
+      watch: enableWatch ? [resolvedPath, resolvedLocale, resolvedScope] : [],
+    },
+  )
   return {
     prev: computed(() => data.value?.prev ?? null),
     next: computed(() => data.value?.next ?? null),
     pending,
     error,
-    refresh
-  };
+    refresh,
+  }
 }

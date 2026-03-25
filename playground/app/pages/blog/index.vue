@@ -23,14 +23,23 @@ const { data: posts, pending, error } = await useGinkoItems('blog', {
       </p>
     </section>
 
-    <p v-if="pending" class="text-sm text-[var(--ginko-muted)]">
+    <p
+      v-if="pending"
+      class="text-sm text-[var(--ginko-muted)]"
+    >
       Loading posts...
     </p>
-    <p v-else-if="error" class="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+    <p
+      v-else-if="error"
+      class="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"
+    >
       {{ String(error) }}
     </p>
 
-    <div v-else class="grid gap-5 lg:grid-cols-2">
+    <div
+      v-else
+      class="grid gap-5 lg:grid-cols-2"
+    >
       <BlogCard
         v-for="post in posts"
         :key="post.id || post.slug"

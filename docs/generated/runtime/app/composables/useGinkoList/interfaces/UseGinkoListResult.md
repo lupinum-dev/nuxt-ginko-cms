@@ -1,12 +1,12 @@
-[**@lupinum/ginko-nuxt**](../../../../../README.md)
+[**nuxt-ginko-cms**](../../../../../README.md)
 
 ***
 
-[@lupinum/ginko-nuxt](../../../../../README.md) / [runtime/app/composables/useGinkoList](../README.md) / UseGinkoListResult
+[nuxt-ginko-cms](../../../../../README.md) / [runtime/app/composables/useGinkoList](../README.md) / UseGinkoListResult
 
 # Interface: UseGinkoListResult\<R\>
 
-Defined in: [runtime/app/composables/useGinkoList.ts:46](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoList.ts#L46)
+Defined in: [runtime/app/composables/useGinkoList.ts:46](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/app/composables/useGinkoList.ts#L46)
 
 Return shape of [useGinkoList](../functions/useGinkoList.md).
 
@@ -22,7 +22,7 @@ Return shape of [useGinkoList](../functions/useGinkoList.md).
 
 > **data**: `Ref`\<`R`[]\>
 
-Defined in: [runtime/app/composables/useGinkoList.ts:48](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoList.ts#L48)
+Defined in: [runtime/app/composables/useGinkoList.ts:48](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/app/composables/useGinkoList.ts#L48)
 
 The list of items.
 
@@ -32,7 +32,7 @@ The list of items.
 
 > **error**: `Ref`\<`GinkoError`\>
 
-Defined in: [runtime/app/composables/useGinkoList.ts:54](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoList.ts#L54)
+Defined in: [runtime/app/composables/useGinkoList.ts:54](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/app/composables/useGinkoList.ts#L54)
 
 Error from last fetch, if any.
 
@@ -42,7 +42,7 @@ Error from last fetch, if any.
 
 > **pending**: `Ref`\<`boolean`\>
 
-Defined in: [runtime/app/composables/useGinkoList.ts:52](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoList.ts#L52)
+Defined in: [runtime/app/composables/useGinkoList.ts:52](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/app/composables/useGinkoList.ts#L52)
 
 Whether a fetch is in progress.
 
@@ -52,7 +52,7 @@ Whether a fetch is in progress.
 
 > **refresh**: () => `Promise`\<`void`\>
 
-Defined in: [runtime/app/composables/useGinkoList.ts:56](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoList.ts#L56)
+Defined in: [runtime/app/composables/useGinkoList.ts:56](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/app/composables/useGinkoList.ts#L56)
 
 Manually refetch.
 
@@ -66,6 +66,6 @@ Manually refetch.
 
 > **total**: `Ref`\<`number`\>
 
-Defined in: [runtime/app/composables/useGinkoList.ts:50](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoList.ts#L50)
+Defined in: [runtime/app/composables/useGinkoList.ts:50](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/app/composables/useGinkoList.ts#L50)
 
 Total matching items (for pagination math).

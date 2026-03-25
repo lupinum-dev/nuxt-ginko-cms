@@ -1,12 +1,12 @@
-[**@lupinum/ginko-nuxt**](../../README.md)
+[**nuxt-ginko-cms**](../../README.md)
 
 ***
 
-[@lupinum/ginko-nuxt](../../README.md) / [api](../README.md) / CmsItemResponse
+[nuxt-ginko-cms](../../README.md) / [api](../README.md) / CmsItemResponse
 
 # Interface: CmsItemResponse
 
-Defined in: [runtime/types/api.ts:48](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/api.ts#L48)
+Defined in: [runtime/types/api.ts:48](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/api.ts#L48)
 
 Response from a single-item query.
 
@@ -16,6 +16,6 @@ Response from a single-item query.
 
 > **data**: [`CmsItem`](CmsItem.md)
 
-Defined in: [runtime/types/api.ts:50](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/api.ts#L50)
+Defined in: [runtime/types/api.ts:50](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/api.ts#L50)
 
 The fetched item.

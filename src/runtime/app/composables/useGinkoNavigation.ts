@@ -72,6 +72,7 @@ export async function useGinkoNavigation<K extends keyof GinkoCollections | (str
   const { data, pending, error: rawError, refresh } = await useAsyncData(
     cacheKey,
     async () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const response: any = await requestFetch(`${routeBase}/query`, {
         method: 'POST',
         body: {

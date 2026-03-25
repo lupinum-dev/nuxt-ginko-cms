@@ -213,6 +213,7 @@ export function useGinkoNav<K extends keyof GinkoCollections | (string & {})>(
         collectionKey: String(collectionKey),
         locale: resolvedLocale.value || undefined,
       }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const response: any = await requestFetch(`${routeBase}/query`, {
         method: 'POST',
         body: payload,

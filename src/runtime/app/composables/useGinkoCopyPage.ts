@@ -47,7 +47,9 @@ export function useGinkoCopyPage(
   watch(copied, (val) => {
     if (val) {
       clearTimeout(resetTimer)
-      resetTimer = setTimeout(() => { copied.value = false }, resetDelay)
+      resetTimer = setTimeout(() => {
+        copied.value = false
+      }, resetDelay)
     }
   })
 

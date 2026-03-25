@@ -1,12 +1,12 @@
-[**@lupinum/ginko-nuxt**](../../../README.md)
+[**nuxt-ginko-cms**](../../../README.md)
 
 ***
 
-[@lupinum/ginko-nuxt](../../../README.md) / [runtime/types](../README.md) / GinkoSearchResult
+[nuxt-ginko-cms](../../../README.md) / [runtime/types](../README.md) / GinkoSearchResult
 
 # Interface: GinkoSearchResult
 
-Defined in: [runtime/types/index.ts:221](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L221)
+Defined in: [runtime/types/index.ts:222](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L222)
 
 A search result hit.
 
@@ -16,7 +16,7 @@ A search result hit.
 
 > **collection**: `string`
 
-Defined in: [runtime/types/index.ts:229](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L229)
+Defined in: [runtime/types/index.ts:230](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L230)
 
 Which collection this came from.
 
@@ -26,7 +26,7 @@ Which collection this came from.
 
 > **path**: `string`
 
-Defined in: [runtime/types/index.ts:227](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L227)
+Defined in: [runtime/types/index.ts:228](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L228)
 
 Resolved URL path.
 
@@ -36,7 +36,7 @@ Resolved URL path.
 
 > `optional` **raw?**: `Record`\<`string`, `unknown`\>
 
-Defined in: [runtime/types/index.ts:231](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L231)
+Defined in: [runtime/types/index.ts:232](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L232)
 
 Raw item data (only when `includeRaw: true`).
 
@@ -46,7 +46,7 @@ Raw item data (only when `includeRaw: true`).
 
 > **snippet**: `string`
 
-Defined in: [runtime/types/index.ts:225](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L225)
+Defined in: [runtime/types/index.ts:226](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L226)
 
 HTML snippet with `<mark>` tags.
 
@@ -56,6 +56,6 @@ HTML snippet with `<mark>` tags.
 
 > **title**: `string`
 
-Defined in: [runtime/types/index.ts:223](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L223)
+Defined in: [runtime/types/index.ts:224](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L224)
 
 Display title.

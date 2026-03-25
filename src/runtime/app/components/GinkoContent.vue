@@ -1,49 +1,51 @@
 <script setup>
-import { useRuntimeConfig } from "#imports";
-import { parseMarkdown } from "@nuxtjs/mdc/runtime";
-import { computed, ref, watch } from "vue";
-import { cmsMdcNormalize } from "../utils/cmsMdcNormalize";
-import { mergeMdcComponentMap } from "../utils/mdcComponentMap";
+import { useRuntimeConfig } from '#imports'
+import { parseMarkdown } from '@nuxtjs/mdc/runtime'
+import { computed, ref, watch } from 'vue'
+import { cmsMdcNormalize } from '../utils/cmsMdcNormalize'
+import { mergeMdcComponentMap } from '../utils/mdcComponentMap'
+
 const props = defineProps({
   value: { type: [String, null], required: false, default: null },
-  class: { type: String, required: false, default: "" },
+  class: { type: String, required: false, default: '' },
   prose: { type: Boolean, required: false, default: true },
-  components: { type: Object, required: false, default: void 0 }
-});
-const markdown = computed(() => cmsMdcNormalize(props.value || ""));
-const runtimeConfig = useRuntimeConfig();
-const ast = ref(null);
-const parseError = ref(null);
+  components: { type: Object, required: false, default: void 0 },
+})
+const markdown = computed(() => cmsMdcNormalize(props.value || ''))
+const runtimeConfig = useRuntimeConfig()
+const ast = ref(null)
+const parseError = ref(null)
 async function parseCurrentMarkdown() {
-  parseError.value = null;
+  parseError.value = null
   if (!markdown.value) {
-    ast.value = null;
-    return;
+    ast.value = null
+    return
   }
   try {
-    ast.value = await parseMarkdown(markdown.value);
-  } catch (error) {
-    ast.value = null;
-    parseError.value = error;
+    ast.value = await parseMarkdown(markdown.value)
+  }
+  catch (error) {
+    ast.value = null
+    parseError.value = error
   }
 }
-await parseCurrentMarkdown();
+await parseCurrentMarkdown()
 watch(markdown, () => {
-  void parseCurrentMarkdown();
-});
-const hasError = computed(() => Boolean(parseError.value));
+  void parseCurrentMarkdown()
+})
+const hasError = computed(() => Boolean(parseError.value))
 const runtimeMdcComponentMap = computed(() => {
-  const raw = runtimeConfig.public.mdc?.components?.map;
-  if (!raw || typeof raw !== "object" || Array.isArray(raw)) {
-    return {};
+  const raw = runtimeConfig.public.mdc?.components?.map
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) {
+    return {}
   }
-  return raw;
-});
+  return raw
+})
 const mergedComponents = computed(() => mergeMdcComponentMap({
   body: ast.value?.body,
   runtimeMap: runtimeMdcComponentMap.value,
-  componentOverrides: props.components
-}));
+  componentOverrides: props.components,
+}))
 </script>
 
 <template>
@@ -56,7 +58,10 @@ const mergedComponents = computed(() => mergeMdcComponentMap({
       :prose="props.prose"
     />
 
-    <div v-else-if="hasError" class="text-sm text-red-600">
+    <div
+      v-else-if="hasError"
+      class="text-sm text-red-600"
+    >
       Content could not be rendered.
     </div>
   </div>

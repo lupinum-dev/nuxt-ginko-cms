@@ -24,7 +24,10 @@ useHead(() => ({
         </h2>
 
         <ul class="mt-4 space-y-3 text-sm">
-          <li v-for="entry in navigation" :key="entry.path || entry.slug">
+          <li
+            v-for="entry in navigation"
+            :key="entry.path || entry.slug"
+          >
             <NuxtLink
               :to="entry.path || '/docs'"
               class="block rounded-2xl border border-[var(--ginko-line)] bg-white/75 px-4 py-3 transition hover:border-[var(--ginko-accent)] hover:bg-white"
@@ -37,10 +40,16 @@ useHead(() => ({
     </aside>
 
     <article class="space-y-6">
-      <p v-if="pending" class="text-sm text-[var(--ginko-muted)]">
+      <p
+        v-if="pending"
+        class="text-sm text-[var(--ginko-muted)]"
+      >
         Loading docs page...
       </p>
-      <p v-else-if="error" class="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+      <p
+        v-else-if="error"
+        class="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"
+      >
         {{ String(error) }}
       </p>
 
@@ -52,13 +61,19 @@ useHead(() => ({
           <h1 class="mt-3 text-4xl font-semibold leading-tight">
             {{ page.title || "Untitled" }}
           </h1>
-          <p v-if="page.description" class="mt-4 text-base leading-8 text-[var(--ginko-muted)]">
+          <p
+            v-if="page.description"
+            class="mt-4 text-base leading-8 text-[var(--ginko-muted)]"
+          >
             {{ page.description }}
           </p>
         </section>
 
         <section class="rounded-[2.5rem] border border-[var(--ginko-line)] bg-white/70 p-8">
-          <GinkoContent :value="page.content || ''" class="max-w-none" />
+          <GinkoContent
+            :value="page.content || ''"
+            class="max-w-none"
+          />
         </section>
 
         <section class="grid gap-4 md:grid-cols-2">

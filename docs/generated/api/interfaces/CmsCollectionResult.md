@@ -1,12 +1,12 @@
-[**@lupinum/ginko-nuxt**](../../README.md)
+[**nuxt-ginko-cms**](../../README.md)
 
 ***
 
-[@lupinum/ginko-nuxt](../../README.md) / [api](../README.md) / CmsCollectionResult
+[nuxt-ginko-cms](../../README.md) / [api](../README.md) / CmsCollectionResult
 
 # Interface: CmsCollectionResult
 
-Defined in: [runtime/types/api.ts:54](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/api.ts#L54)
+Defined in: [runtime/types/api.ts:54](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/api.ts#L54)
 
 Processed collection query result used internally.
 
@@ -16,7 +16,7 @@ Processed collection query result used internally.
 
 > **items**: [`CmsItem`](CmsItem.md)[]
 
-Defined in: [runtime/types/api.ts:56](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/api.ts#L56)
+Defined in: [runtime/types/api.ts:56](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/api.ts#L56)
 
 Array of items.
 
@@ -26,7 +26,7 @@ Array of items.
 
 > **locale**: `string`
 
-Defined in: [runtime/types/api.ts:60](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/api.ts#L60)
+Defined in: [runtime/types/api.ts:60](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/api.ts#L60)
 
 The locale used for this query.
 
@@ -36,6 +36,6 @@ The locale used for this query.
 
 > **total**: `number`
 
-Defined in: [runtime/types/api.ts:58](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/api.ts#L58)
+Defined in: [runtime/types/api.ts:58](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/api.ts#L58)
 
 Total count of matching items.

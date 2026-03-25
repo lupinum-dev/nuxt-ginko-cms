@@ -1,12 +1,12 @@
-[**@lupinum/ginko-nuxt**](../../../README.md)
+[**nuxt-ginko-cms**](../../../README.md)
 
 ***
 
-[@lupinum/ginko-nuxt](../../../README.md) / [runtime/types](../README.md) / GinkoSearchHit
+[nuxt-ginko-cms](../../../README.md) / [runtime/types](../README.md) / GinkoSearchHit
 
 # Interface: GinkoSearchHit
 
-Defined in: [runtime/types/index.ts:331](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L331)
+Defined in: [runtime/types/index.ts:332](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L332)
 
 A single search result hit.
 
@@ -16,7 +16,7 @@ A single search result hit.
 
 > `optional` **collectionKey?**: `string`
 
-Defined in: [runtime/types/index.ts:335](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L335)
+Defined in: [runtime/types/index.ts:336](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L336)
 
 The collection key this hit belongs to.
 
@@ -26,7 +26,7 @@ The collection key this hit belongs to.
 
 > `optional` **collectionSource?**: `string`
 
-Defined in: [runtime/types/index.ts:337](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L337)
+Defined in: [runtime/types/index.ts:338](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L338)
 
 The upstream collection source slug.
 
@@ -36,7 +36,7 @@ The upstream collection source slug.
 
 > `optional` **id?**: `string`
 
-Defined in: [runtime/types/index.ts:333](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L333)
+Defined in: [runtime/types/index.ts:334](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L334)
 
 Upstream item ID.
 
@@ -46,7 +46,7 @@ Upstream item ID.
 
 > `optional` **path?**: `string`
 
-Defined in: [runtime/types/index.ts:345](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L345)
+Defined in: [runtime/types/index.ts:346](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L346)
 
 Resolved URL path for this item.
 
@@ -56,7 +56,7 @@ Resolved URL path for this item.
 
 > **raw**: `Record`\<`string`, `unknown`\>
 
-Defined in: [runtime/types/index.ts:349](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L349)
+Defined in: [runtime/types/index.ts:350](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L350)
 
 The full raw item data from the CMS.
 
@@ -66,7 +66,7 @@ The full raw item data from the CMS.
 
 > `optional` **slug?**: `string`
 
-Defined in: [runtime/types/index.ts:339](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L339)
+Defined in: [runtime/types/index.ts:340](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L340)
 
 The item slug.
 
@@ -76,7 +76,7 @@ The item slug.
 
 > `optional` **snippet?**: `string`
 
-Defined in: [runtime/types/index.ts:343](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L343)
+Defined in: [runtime/types/index.ts:344](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L344)
 
 Text snippet with search term context.
 
@@ -86,7 +86,7 @@ Text snippet with search term context.
 
 > `optional` **title?**: `string`
 
-Defined in: [runtime/types/index.ts:341](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L341)
+Defined in: [runtime/types/index.ts:342](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L342)
 
 Display title of the item.
 
@@ -96,6 +96,6 @@ Display title of the item.
 
 > `optional` **updatedAt?**: `number`
 
-Defined in: [runtime/types/index.ts:347](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L347)
+Defined in: [runtime/types/index.ts:348](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L348)
 
 Last update timestamp (epoch ms).

@@ -1,12 +1,12 @@
-[**@lupinum/ginko-nuxt**](../../../README.md)
+[**nuxt-ginko-cms**](../../../README.md)
 
 ***
 
-[@lupinum/ginko-nuxt](../../../README.md) / [runtime/types](../README.md) / GinkoQueryOperationPathBy
+[nuxt-ginko-cms](../../../README.md) / [runtime/types](../README.md) / GinkoQueryOperationPathBy
 
 # Interface: GinkoQueryOperationPathBy
 
-Defined in: [runtime/types/index.ts:269](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L269)
+Defined in: [runtime/types/index.ts:270](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L270)
 
 PathBy operation payload nested within [GinkoQueryPayload](GinkoQueryPayload.md).
 
@@ -16,7 +16,7 @@ PathBy operation payload nested within [GinkoQueryPayload](GinkoQueryPayload.md)
 
 > `optional` **contentId?**: `string`
 
-Defined in: [runtime/types/index.ts:273](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L273)
+Defined in: [runtime/types/index.ts:274](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L274)
 
 Resolve path by content/colocation folder ID (hierarchy collections).
 
@@ -26,7 +26,7 @@ Resolve path by content/colocation folder ID (hierarchy collections).
 
 > `optional` **itemId?**: `string`
 
-Defined in: [runtime/types/index.ts:271](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L271)
+Defined in: [runtime/types/index.ts:272](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L272)
 
 Resolve path by item ID (hierarchy collections).
 
@@ -36,6 +36,6 @@ Resolve path by item ID (hierarchy collections).
 
 > `optional` **slug?**: `string`
 
-Defined in: [runtime/types/index.ts:275](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L275)
+Defined in: [runtime/types/index.ts:276](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L276)
 
 Resolve path by slug (flat or hierarchy collections).

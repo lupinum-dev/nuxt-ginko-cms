@@ -1,12 +1,12 @@
-[**@lupinum/ginko-nuxt**](../../../README.md)
+[**nuxt-ginko-cms**](../../../README.md)
 
 ***
 
-[@lupinum/ginko-nuxt](../../../README.md) / [runtime/types](../README.md) / GinkoNavSection
+[nuxt-ginko-cms](../../../README.md) / [runtime/types](../README.md) / GinkoNavSection
 
 # Interface: GinkoNavSection
 
-Defined in: [runtime/types/index.ts:171](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L171)
+Defined in: [runtime/types/index.ts:172](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L172)
 
 A navigation section (top-level sidebar partition).
 
@@ -16,7 +16,7 @@ A navigation section (top-level sidebar partition).
 
 > **groups**: [`GinkoNavGroup`](GinkoNavGroup.md)[]
 
-Defined in: [runtime/types/index.ts:183](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L183)
+Defined in: [runtime/types/index.ts:184](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L184)
 
 Groups within this section.
 
@@ -26,7 +26,7 @@ Groups within this section.
 
 > `optional` **icon?**: `string`
 
-Defined in: [runtime/types/index.ts:181](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L181)
+Defined in: [runtime/types/index.ts:182](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L182)
 
 Optional icon string (e.g., `'lucide:rocket'`).
 
@@ -36,7 +36,7 @@ Optional icon string (e.g., `'lucide:rocket'`).
 
 > **id**: `string`
 
-Defined in: [runtime/types/index.ts:173](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L173)
+Defined in: [runtime/types/index.ts:174](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L174)
 
 Slugified section id.
 
@@ -46,7 +46,7 @@ Slugified section id.
 
 > `optional` **path?**: `string`
 
-Defined in: [runtime/types/index.ts:179](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L179)
+Defined in: [runtime/types/index.ts:180](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L180)
 
 First routable page within the section.
 
@@ -56,7 +56,7 @@ First routable page within the section.
 
 > `optional` **slug?**: `string`
 
-Defined in: [runtime/types/index.ts:175](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L175)
+Defined in: [runtime/types/index.ts:176](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L176)
 
 Original section slug when the hierarchy uses explicit section nodes.
 
@@ -66,6 +66,6 @@ Original section slug when the hierarchy uses explicit section nodes.
 
 > **title**: `string`
 
-Defined in: [runtime/types/index.ts:177](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L177)
+Defined in: [runtime/types/index.ts:178](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L178)
 
 Display title.

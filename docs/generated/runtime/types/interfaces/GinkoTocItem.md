@@ -1,12 +1,12 @@
-[**@lupinum/ginko-nuxt**](../../../README.md)
+[**nuxt-ginko-cms**](../../../README.md)
 
 ***
 
-[@lupinum/ginko-nuxt](../../../README.md) / [runtime/types](../README.md) / GinkoTocItem
+[nuxt-ginko-cms](../../../README.md) / [runtime/types](../README.md) / GinkoTocItem
 
 # Interface: GinkoTocItem
 
-Defined in: [runtime/types/index.ts:211](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L211)
+Defined in: [runtime/types/index.ts:212](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L212)
 
 A table-of-contents item extracted from markdown headings.
 
@@ -16,7 +16,7 @@ A table-of-contents item extracted from markdown headings.
 
 > **depth**: `number`
 
-Defined in: [runtime/types/index.ts:217](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L217)
+Defined in: [runtime/types/index.ts:218](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L218)
 
 Heading depth (2 = h2, 3 = h3, etc.).
 
@@ -26,7 +26,7 @@ Heading depth (2 = h2, 3 = h3, etc.).
 
 > **id**: `string`
 
-Defined in: [runtime/types/index.ts:213](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L213)
+Defined in: [runtime/types/index.ts:214](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L214)
 
 Heading anchor id.
 
@@ -36,6 +36,6 @@ Heading anchor id.
 
 > **text**: `string`
 
-Defined in: [runtime/types/index.ts:215](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L215)
+Defined in: [runtime/types/index.ts:216](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L216)
 
 Heading text content.

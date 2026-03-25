@@ -1,12 +1,12 @@
-[**@lupinum/ginko-nuxt**](../../../../../README.md)
+[**nuxt-ginko-cms**](../../../../../README.md)
 
 ***
 
-[@lupinum/ginko-nuxt](../../../../../README.md) / [runtime/app/composables/useGinkoNavigation](../README.md) / UseGinkoNavigationResult
+[nuxt-ginko-cms](../../../../../README.md) / [runtime/app/composables/useGinkoNavigation](../README.md) / UseGinkoNavigationResult
 
 # Interface: UseGinkoNavigationResult
 
-Defined in: [runtime/app/composables/useGinkoNavigation.ts:36](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoNavigation.ts#L36)
+Defined in: [runtime/app/composables/useGinkoNavigation.ts:36](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/app/composables/useGinkoNavigation.ts#L36)
 
 Return shape of [useGinkoNavigation](../functions/useGinkoNavigation.md).
 
@@ -16,7 +16,7 @@ Return shape of [useGinkoNavigation](../functions/useGinkoNavigation.md).
 
 > **data**: `Ref`\<[`GinkoNavigationItem`](GinkoNavigationItem.md)[]\>
 
-Defined in: [runtime/app/composables/useGinkoNavigation.ts:38](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoNavigation.ts#L38)
+Defined in: [runtime/app/composables/useGinkoNavigation.ts:38](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/app/composables/useGinkoNavigation.ts#L38)
 
 The raw hierarchy navigation tree.
 
@@ -26,7 +26,7 @@ The raw hierarchy navigation tree.
 
 > **error**: `Ref`\<`GinkoError`\>
 
-Defined in: [runtime/app/composables/useGinkoNavigation.ts:42](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoNavigation.ts#L42)
+Defined in: [runtime/app/composables/useGinkoNavigation.ts:42](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/app/composables/useGinkoNavigation.ts#L42)
 
 Error from the last fetch.
 
@@ -36,7 +36,7 @@ Error from the last fetch.
 
 > **pending**: `Ref`\<`boolean`\>
 
-Defined in: [runtime/app/composables/useGinkoNavigation.ts:40](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoNavigation.ts#L40)
+Defined in: [runtime/app/composables/useGinkoNavigation.ts:40](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/app/composables/useGinkoNavigation.ts#L40)
 
 Whether a fetch is in progress.
 
@@ -46,7 +46,7 @@ Whether a fetch is in progress.
 
 > **refresh**: () => `Promise`\<`void`\>
 
-Defined in: [runtime/app/composables/useGinkoNavigation.ts:44](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoNavigation.ts#L44)
+Defined in: [runtime/app/composables/useGinkoNavigation.ts:44](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/app/composables/useGinkoNavigation.ts#L44)
 
 Manually refetch.
 

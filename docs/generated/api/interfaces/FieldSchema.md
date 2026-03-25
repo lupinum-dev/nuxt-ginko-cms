@@ -1,12 +1,12 @@
-[**@lupinum/ginko-nuxt**](../../README.md)
+[**nuxt-ginko-cms**](../../README.md)
 
 ***
 
-[@lupinum/ginko-nuxt](../../README.md) / [api](../README.md) / FieldSchema
+[nuxt-ginko-cms](../../README.md) / [api](../README.md) / FieldSchema
 
 # Interface: FieldSchema
 
-Defined in: [runtime/types/api.ts:64](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/api.ts#L64)
+Defined in: [runtime/types/api.ts:64](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/api.ts#L64)
 
 Schema definition for a single field in a collection.
 
@@ -16,7 +16,7 @@ Schema definition for a single field in a collection.
 
 > **key**: `string`
 
-Defined in: [runtime/types/api.ts:66](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/api.ts#L66)
+Defined in: [runtime/types/api.ts:66](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/api.ts#L66)
 
 Machine-readable field key.
 
@@ -26,7 +26,7 @@ Machine-readable field key.
 
 > `optional` **localized?**: `boolean`
 
-Defined in: [runtime/types/api.ts:70](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/api.ts#L70)
+Defined in: [runtime/types/api.ts:70](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/api.ts#L70)
 
 Whether this field supports localized values.
 
@@ -36,6 +36,6 @@ Whether this field supports localized values.
 
 > **type**: `string`
 
-Defined in: [runtime/types/api.ts:68](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/api.ts#L68)
+Defined in: [runtime/types/api.ts:68](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/api.ts#L68)
 
 Field type identifier (e.g., `'text'`, `'richtext'`, `'relation'`).

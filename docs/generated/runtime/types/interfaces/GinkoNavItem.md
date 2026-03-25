@@ -1,12 +1,12 @@
-[**@lupinum/ginko-nuxt**](../../../README.md)
+[**nuxt-ginko-cms**](../../../README.md)
 
 ***
 
-[@lupinum/ginko-nuxt](../../../README.md) / [runtime/types](../README.md) / GinkoNavItem
+[nuxt-ginko-cms](../../../README.md) / [runtime/types](../README.md) / GinkoNavItem
 
 # Interface: GinkoNavItem
 
-Defined in: [runtime/types/index.ts:197](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L197)
+Defined in: [runtime/types/index.ts:198](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L198)
 
 A navigation item (page or folder).
 
@@ -16,7 +16,7 @@ A navigation item (page or folder).
 
 > `optional` **badge?**: `string`
 
-Defined in: [runtime/types/index.ts:205](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L205)
+Defined in: [runtime/types/index.ts:206](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L206)
 
 Optional badge text.
 
@@ -26,7 +26,7 @@ Optional badge text.
 
 > **children**: `GinkoNavItem`[]
 
-Defined in: [runtime/types/index.ts:207](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L207)
+Defined in: [runtime/types/index.ts:208](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L208)
 
 Child items (empty for pages).
 
@@ -36,7 +36,7 @@ Child items (empty for pages).
 
 > `optional` **icon?**: `string`
 
-Defined in: [runtime/types/index.ts:203](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L203)
+Defined in: [runtime/types/index.ts:204](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L204)
 
 Optional icon string.
 
@@ -46,7 +46,7 @@ Optional icon string.
 
 > `optional` **path?**: `string`
 
-Defined in: [runtime/types/index.ts:201](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L201)
+Defined in: [runtime/types/index.ts:202](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L202)
 
 Resolved URL path. `undefined` = not routable.
 
@@ -56,6 +56,6 @@ Resolved URL path. `undefined` = not routable.
 
 > **title**: `string`
 
-Defined in: [runtime/types/index.ts:199](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L199)
+Defined in: [runtime/types/index.ts:200](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L200)
 
 Display title.

@@ -114,6 +114,7 @@ export function useGinkoSearch(
             locale: resolvedLocale.value || undefined,
             search: { q, limit: Math.ceil(limit / collectionKeys.length) },
           }
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const response: any = await requestFetch(`${routeBase}/query`, {
             method: 'POST',
             body: payload,
@@ -128,6 +129,7 @@ export function useGinkoSearch(
         if (serial !== requestSerial) return
 
         results.value = allResults.flatMap(({ collection, hits }) =>
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           hits.map((hit: any): GinkoSearchResult => ({
             title: hit.title || 'Untitled',
             snippet: hit.snippet || '',
@@ -144,6 +146,7 @@ export function useGinkoSearch(
           locale: resolvedLocale.value || undefined,
           search: { q, limit },
         }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const response: any = await requestFetch(`${routeBase}/query`, {
           method: 'POST',
           body: payload,
@@ -151,6 +154,7 @@ export function useGinkoSearch(
         if (serial !== requestSerial) return
 
         const hits = Array.isArray(response.data) ? response.data : []
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         results.value = hits.map((hit: any): GinkoSearchResult => ({
           title: hit.title || 'Untitled',
           snippet: hit.snippet || '',

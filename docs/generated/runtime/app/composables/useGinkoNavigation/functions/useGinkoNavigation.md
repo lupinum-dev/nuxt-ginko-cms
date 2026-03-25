@@ -1,14 +1,14 @@
-[**@lupinum/ginko-nuxt**](../../../../../README.md)
+[**nuxt-ginko-cms**](../../../../../README.md)
 
 ***
 
-[@lupinum/ginko-nuxt](../../../../../README.md) / [runtime/app/composables/useGinkoNavigation](../README.md) / useGinkoNavigation
+[nuxt-ginko-cms](../../../../../README.md) / [runtime/app/composables/useGinkoNavigation](../README.md) / useGinkoNavigation
 
 # Function: useGinkoNavigation()
 
 > **useGinkoNavigation**\<`K`\>(`collectionKey`, `options?`): `Promise`\<[`UseGinkoNavigationResult`](../interfaces/UseGinkoNavigationResult.md)\>
 
-Defined in: [runtime/app/composables/useGinkoNavigation.ts:58](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoNavigation.ts#L58)
+Defined in: [runtime/app/composables/useGinkoNavigation.ts:58](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/app/composables/useGinkoNavigation.ts#L58)
 
 Fetch the raw hierarchy navigation tree for a collection.
 

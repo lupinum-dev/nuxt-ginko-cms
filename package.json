@@ -2,7 +2,10 @@
   "name": "nuxt-ginko-cms",
   "version": "0.0.2",
   "description": "Nuxt integration for Ginko CMS (key-first, server-BFF default)",
-  "repository": "lupinum-dev/ginko-nuxt",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lupinum-dev/nuxt-ginko-cms.git"
+  },
   "license": "MIT",
   "type": "module",
   "main": "./dist/module.mjs",
@@ -50,7 +53,7 @@
     "./package.json": "./package.json"
   },
   "bin": {
-    "ginko": "./bin/ginko.mjs"
+    "ginko": "bin/ginko.mjs"
   },
   "typesVersions": {
     "*": {

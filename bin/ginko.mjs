@@ -127,7 +127,7 @@ async function fetchSchemaRows(base, key, teamSlug) {
 
   throw new Error(
     `Failed to fetch schema from configured endpoint(s).\n${details}\n`
-      + 'Set NUXT_GINKO_CMS_SCHEMA_URL to override schema endpoint if needed.',
+    + 'Set NUXT_GINKO_CMS_SCHEMA_URL to override schema endpoint if needed.',
   )
 }
 
@@ -142,24 +142,24 @@ function normalizeSiteConfig(rawSite) {
 
   const locales = Array.isArray(rawSite.locales)
     ? rawSite.locales
-      .map((locale) => {
-        if (!locale || typeof locale !== 'object') {
-          return undefined
-        }
+        .map((locale) => {
+          if (!locale || typeof locale !== 'object') {
+            return undefined
+          }
 
-        const code = typeof locale.code === 'string' ? locale.code.trim() : ''
-        const hreflang = typeof locale.hreflang === 'string' ? locale.hreflang.trim() : ''
-        if (!code || !hreflang) {
-          return undefined
-        }
+          const code = typeof locale.code === 'string' ? locale.code.trim() : ''
+          const hreflang = typeof locale.hreflang === 'string' ? locale.hreflang.trim() : ''
+          if (!code || !hreflang) {
+            return undefined
+          }
 
-        return {
-          code,
-          hreflang,
-          isDefault: locale.isDefault === true,
-        }
-      })
-      .filter(Boolean)
+          return {
+            code,
+            hreflang,
+            isDefault: locale.isDefault === true,
+          }
+        })
+        .filter(Boolean)
     : []
 
   if (!locales.length) {

@@ -1,12 +1,12 @@
-[**@lupinum/ginko-nuxt**](../../../../../README.md)
+[**nuxt-ginko-cms**](../../../../../README.md)
 
 ***
 
-[@lupinum/ginko-nuxt](../../../../../README.md) / [runtime/app/composables/useGinkoNavigation](../README.md) / UseGinkoNavigationOptions
+[nuxt-ginko-cms](../../../../../README.md) / [runtime/app/composables/useGinkoNavigation](../README.md) / UseGinkoNavigationOptions
 
 # Interface: UseGinkoNavigationOptions
 
-Defined in: [runtime/app/composables/useGinkoNavigation.ts:28](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoNavigation.ts#L28)
+Defined in: [runtime/app/composables/useGinkoNavigation.ts:28](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/app/composables/useGinkoNavigation.ts#L28)
 
 Options for [useGinkoNavigation](../functions/useGinkoNavigation.md).
 
@@ -16,7 +16,7 @@ Options for [useGinkoNavigation](../functions/useGinkoNavigation.md).
 
 > `optional` **locale?**: `string` \| `Ref`\<`string`, `string`\>
 
-Defined in: [runtime/app/composables/useGinkoNavigation.ts:30](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoNavigation.ts#L30)
+Defined in: [runtime/app/composables/useGinkoNavigation.ts:30](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/app/composables/useGinkoNavigation.ts#L30)
 
 Locale override.
 
@@ -26,7 +26,7 @@ Locale override.
 
 > `optional` **watch?**: `boolean`
 
-Defined in: [runtime/app/composables/useGinkoNavigation.ts:32](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoNavigation.ts#L32)
+Defined in: [runtime/app/composables/useGinkoNavigation.ts:32](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/app/composables/useGinkoNavigation.ts#L32)
 
 Watch for reactive refetching.
 

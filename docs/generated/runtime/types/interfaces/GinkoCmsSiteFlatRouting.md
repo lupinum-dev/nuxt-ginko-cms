@@ -1,12 +1,12 @@
-[**@lupinum/ginko-nuxt**](../../../README.md)
+[**nuxt-ginko-cms**](../../../README.md)
 
 ***
 
-[@lupinum/ginko-nuxt](../../../README.md) / [runtime/types](../README.md) / GinkoCmsSiteFlatRouting
+[nuxt-ginko-cms](../../../README.md) / [runtime/types](../README.md) / GinkoCmsSiteFlatRouting
 
 # Interface: GinkoCmsSiteFlatRouting
 
-Defined in: [runtime/types/index.ts:65](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L65)
+Defined in: [runtime/types/index.ts:66](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L66)
 
 Routing configuration for flat (non-hierarchical) collections. Exactly one mode must be set.
 
@@ -16,7 +16,7 @@ Routing configuration for flat (non-hierarchical) collections. Exactly one mode 
 
 > `optional` **pathMapByLocale?**: `Record`\<`string`, `Record`\<`string`, `string`\>\>
 
-Defined in: [runtime/types/index.ts:71](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L71)
+Defined in: [runtime/types/index.ts:72](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L72)
 
 Explicit path maps per locale for custom slug-to-path mapping. Highest priority.
 
@@ -26,7 +26,7 @@ Explicit path maps per locale for custom slug-to-path mapping. Highest priority.
 
 > `optional` **prefix?**: `string`
 
-Defined in: [runtime/types/index.ts:67](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L67)
+Defined in: [runtime/types/index.ts:68](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L68)
 
 Single URL prefix for all locales (e.g., `'/blog'`).
 
@@ -36,6 +36,6 @@ Single URL prefix for all locales (e.g., `'/blog'`).
 
 > `optional` **prefixByLocale?**: `Record`\<`string`, `string`\>
 
-Defined in: [runtime/types/index.ts:69](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L69)
+Defined in: [runtime/types/index.ts:70](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L70)
 
 Locale-specific URL prefixes (e.g., `{ de: '/blog', en: '/articles' }`).

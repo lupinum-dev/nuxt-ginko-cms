@@ -68,56 +68,56 @@ export async function useGinkoPage<K extends keyof GinkoCollections | (string & 
     transform,
     throwIfNotFound,
     throw404,
-    watch: enableWatch = true
-  } = options;
-  const shouldThrow = throwIfNotFound ?? throw404 ?? true;
-  const nuxtApp = useNuxtApp();
-  const route = useRoute();
-  const runtimeConfig = useRuntimeConfig();
-  const requestFetch = useRequestFetch();
-  const resolvedLocale = resolveGinkoLocale(options.locale, nuxtApp, route, runtimeConfig);
+    watch: enableWatch = true,
+  } = options
+  const shouldThrow = throwIfNotFound ?? throw404 ?? true
+  const nuxtApp = useNuxtApp()
+  const route = useRoute()
+  const runtimeConfig = useRuntimeConfig()
+  const requestFetch = useRequestFetch()
+  const resolvedLocale = resolveGinkoLocale(options.locale, nuxtApp, route, runtimeConfig)
   const resolvedPath = computed(() => {
-    const p = options.path;
-    return p ? String(isRef(p) ? p.value : p) : route.path;
-  });
-  const routeBase = String(runtimeConfig.public.ginkoCms?.routeBase || "/api/ginko").replace(/\/$/, "");
-  const cacheKey = () => `ginko-page:${String(collectionKey ?? "_auto")}:${resolvedPath.value}:${resolvedLocale.value}`;
+    const p = options.path
+    return p ? String(isRef(p) ? p.value : p) : route.path
+  })
+  const routeBase = String(runtimeConfig.public.ginkoCms?.routeBase || '/api/ginko').replace(/\/$/, '')
+  const cacheKey = () => `ginko-page:${String(collectionKey ?? '_auto')}:${resolvedPath.value}:${resolvedLocale.value}`
   const { data, pending, error, refresh } = await useAsyncData(
     cacheKey,
     async () => {
       const payload = {
-        op: "page",
+        op: 'page',
         collectionKey: collectionKey ? String(collectionKey) : void 0,
         path: resolvedPath.value,
         locale: resolvedLocale.value || void 0,
         includeBody,
-        populate: normalizePopulateFields(populate)
-      };
+        populate: normalizePopulateFields(populate),
+      }
       const response = await requestFetch(`${routeBase}/query`, {
-        method: "POST",
-        body: payload
-      });
-      const pageResponse = response.data;
+        method: 'POST',
+        body: payload,
+      })
+      const pageResponse = response.data
       if (pageResponse.redirect) {
-        await navigateTo(pageResponse.redirect, { redirectCode: 301, replace: true });
-        return null;
+        await navigateTo(pageResponse.redirect, { redirectCode: 301, replace: true })
+        return null
       }
       if (pageResponse.item === null && shouldThrow) {
-        throw createError({ statusCode: 404, fatal: true });
+        throw createError({ statusCode: 404, fatal: true })
       }
       if (pageResponse.item !== null && transform) {
-        return transform(pageResponse.item);
+        return transform(pageResponse.item)
       }
-      return pageResponse.item ?? null;
+      return pageResponse.item ?? null
     },
     {
-      watch: enableWatch ? [resolvedPath, resolvedLocale] : []
-    }
-  );
+      watch: enableWatch ? [resolvedPath, resolvedLocale] : [],
+    },
+  )
   return {
     data,
     pending,
     error,
-    refresh
-  };
+    refresh,
+  }
 }

@@ -1,12 +1,12 @@
-[**@lupinum/ginko-nuxt**](../../../README.md)
+[**nuxt-ginko-cms**](../../../README.md)
 
 ***
 
-[@lupinum/ginko-nuxt](../../../README.md) / [runtime/types](../README.md) / GinkoQueryPayload
+[nuxt-ginko-cms](../../../README.md) / [runtime/types](../README.md) / GinkoQueryPayload
 
 # Interface: GinkoQueryPayload
 
-Defined in: [runtime/types/index.ts:283](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L283)
+Defined in: [runtime/types/index.ts:284](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L284)
 
 Request body for `POST /api/ginko/query`.
 
@@ -18,7 +18,7 @@ The `op` field selects the operation. Additional fields are consumed based on th
 
 > `optional` **collectionKey?**: `string`
 
-Defined in: [runtime/types/index.ts:287](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L287)
+Defined in: [runtime/types/index.ts:288](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L288)
 
 Target collection key. Required for most operations; omit for cross-collection search.
 
@@ -28,7 +28,7 @@ Target collection key. Required for most operations; omit for cross-collection s
 
 > `optional` **includeBody?**: `boolean`
 
-Defined in: [runtime/types/index.ts:306](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L306)
+Defined in: [runtime/types/index.ts:307](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L307)
 
 Include full body content in response.
 
@@ -38,7 +38,7 @@ Include full body content in response.
 
 > `optional` **limit?**: `number`
 
-Defined in: [runtime/types/index.ts:300](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L300)
+Defined in: [runtime/types/index.ts:301](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L301)
 
 Maximum items to return. Clamped server-side to max 200 for find, 100 for search.
 
@@ -48,7 +48,7 @@ Maximum items to return. Clamped server-side to max 200 for find, 100 for search
 
 > `optional` **locale?**: `string`
 
-Defined in: [runtime/types/index.ts:304](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L304)
+Defined in: [runtime/types/index.ts:305](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L305)
 
 Locale for the request. Falls back to runtime config default.
 
@@ -58,7 +58,7 @@ Locale for the request. Falls back to runtime config default.
 
 > `optional` **offset?**: `number`
 
-Defined in: [runtime/types/index.ts:302](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L302)
+Defined in: [runtime/types/index.ts:303](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L303)
 
 Number of items to skip. Clamped server-side to `>= 0`.
 
@@ -68,7 +68,7 @@ Number of items to skip. Clamped server-side to `>= 0`.
 
 > **op**: `"find"` \| `"first"` \| `"navigation"` \| `"surround"` \| `"search"` \| `"pathBy"` \| `"page"`
 
-Defined in: [runtime/types/index.ts:285](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L285)
+Defined in: [runtime/types/index.ts:286](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L286)
 
 The query operation to execute.
 
@@ -78,7 +78,7 @@ The query operation to execute.
 
 > `optional` **path?**: `string`
 
-Defined in: [runtime/types/index.ts:289](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L289)
+Defined in: [runtime/types/index.ts:290](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L290)
 
 Content path for path-based operations (`page`, `find`, `first`, `surround`).
 
@@ -88,7 +88,7 @@ Content path for path-based operations (`page`, `find`, `first`, `surround`).
 
 > `optional` **pathBy?**: [`GinkoQueryOperationPathBy`](GinkoQueryOperationPathBy.md)
 
-Defined in: [runtime/types/index.ts:319](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L319)
+Defined in: [runtime/types/index.ts:320](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L320)
 
 PathBy operation parameters. Required when `op: 'pathBy'`.
 
@@ -98,7 +98,7 @@ PathBy operation parameters. Required when `op: 'pathBy'`.
 
 > `optional` **populate?**: `string`[]
 
-Defined in: [runtime/types/index.ts:308](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L308)
+Defined in: [runtime/types/index.ts:309](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L309)
 
 Fields to populate (relation expansion). Only supported for `find`, `first`, `page`.
 
@@ -108,7 +108,7 @@ Fields to populate (relation expansion). Only supported for `find`, `first`, `pa
 
 > `optional` **search?**: [`GinkoQueryOperationSearch`](GinkoQueryOperationSearch.md)
 
-Defined in: [runtime/types/index.ts:310](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L310)
+Defined in: [runtime/types/index.ts:311](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L311)
 
 Search operation parameters. Required when `op: 'search'`.
 
@@ -118,7 +118,7 @@ Search operation parameters. Required when `op: 'search'`.
 
 > `optional` **sort?**: `object`
 
-Defined in: [runtime/types/index.ts:293](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L293)
+Defined in: [runtime/types/index.ts:294](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L294)
 
 Sort configuration for `find`/`first` operations.
 
@@ -144,7 +144,7 @@ Field name to sort by.
 
 > `optional` **surround?**: `object`
 
-Defined in: [runtime/types/index.ts:312](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L312)
+Defined in: [runtime/types/index.ts:313](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L313)
 
 Surround operation parameters. Used when `op: 'surround'`.
 
@@ -170,6 +170,6 @@ Restrict surround links to the active section when section nodes exist.
 
 > `optional` **where?**: `Record`\<`string`, `unknown`\>
 
-Defined in: [runtime/types/index.ts:291](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L291)
+Defined in: [runtime/types/index.ts:292](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L292)
 
 Filter conditions for `find`/`first` operations.

@@ -1,12 +1,12 @@
-[**@lupinum/ginko-nuxt**](../../../../../README.md)
+[**nuxt-ginko-cms**](../../../../../README.md)
 
 ***
 
-[@lupinum/ginko-nuxt](../../../../../README.md) / [runtime/app/composables/useGinkoNavigation](../README.md) / GinkoNavigationItem
+[nuxt-ginko-cms](../../../../../README.md) / [runtime/app/composables/useGinkoNavigation](../README.md) / GinkoNavigationItem
 
 # Interface: GinkoNavigationItem
 
-Defined in: [runtime/app/composables/useGinkoNavigation.ts:10](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoNavigation.ts#L10)
+Defined in: [runtime/app/composables/useGinkoNavigation.ts:10](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/app/composables/useGinkoNavigation.ts#L10)
 
 A raw hierarchy node returned by the navigation endpoint.
 
@@ -16,7 +16,7 @@ A raw hierarchy node returned by the navigation endpoint.
 
 > `optional` **badge?**: `string`
 
-Defined in: [runtime/app/composables/useGinkoNavigation.ts:20](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoNavigation.ts#L20)
+Defined in: [runtime/app/composables/useGinkoNavigation.ts:20](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/app/composables/useGinkoNavigation.ts#L20)
 
 Optional badge text.
 
@@ -26,7 +26,7 @@ Optional badge text.
 
 > **children**: `GinkoNavigationItem`[]
 
-Defined in: [runtime/app/composables/useGinkoNavigation.ts:24](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoNavigation.ts#L24)
+Defined in: [runtime/app/composables/useGinkoNavigation.ts:24](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/app/composables/useGinkoNavigation.ts#L24)
 
 Child nodes.
 
@@ -36,7 +36,7 @@ Child nodes.
 
 > `optional` **icon?**: `string`
 
-Defined in: [runtime/app/composables/useGinkoNavigation.ts:18](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoNavigation.ts#L18)
+Defined in: [runtime/app/composables/useGinkoNavigation.ts:18](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/app/composables/useGinkoNavigation.ts#L18)
 
 Optional icon string.
 
@@ -46,7 +46,7 @@ Optional icon string.
 
 > `optional` **kind?**: `"page"` \| `"section"` \| `"folder"` \| `"group"`
 
-Defined in: [runtime/app/composables/useGinkoNavigation.ts:16](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoNavigation.ts#L16)
+Defined in: [runtime/app/composables/useGinkoNavigation.ts:16](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/app/composables/useGinkoNavigation.ts#L16)
 
 Node kind as exposed by the public tree API.
 
@@ -56,7 +56,7 @@ Node kind as exposed by the public tree API.
 
 > `optional` **path?**: `string`
 
-Defined in: [runtime/app/composables/useGinkoNavigation.ts:22](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoNavigation.ts#L22)
+Defined in: [runtime/app/composables/useGinkoNavigation.ts:22](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/app/composables/useGinkoNavigation.ts#L22)
 
 Resolved site path when the node is routable.
 
@@ -66,7 +66,7 @@ Resolved site path when the node is routable.
 
 > `optional` **slug?**: `string`
 
-Defined in: [runtime/app/composables/useGinkoNavigation.ts:14](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoNavigation.ts#L14)
+Defined in: [runtime/app/composables/useGinkoNavigation.ts:14](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/app/composables/useGinkoNavigation.ts#L14)
 
 Optional slug for routable nodes and sections.
 
@@ -76,6 +76,6 @@ Optional slug for routable nodes and sections.
 
 > **title**: `string`
 
-Defined in: [runtime/app/composables/useGinkoNavigation.ts:12](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/app/composables/useGinkoNavigation.ts#L12)
+Defined in: [runtime/app/composables/useGinkoNavigation.ts:12](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/app/composables/useGinkoNavigation.ts#L12)
 
 Display title of the navigation node.

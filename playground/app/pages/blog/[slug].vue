@@ -10,20 +10,32 @@ useHead(() => ({
 
 <template>
   <article class="space-y-8">
-    <p v-if="pending" class="text-sm text-[var(--ginko-muted)]">
+    <p
+      v-if="pending"
+      class="text-sm text-[var(--ginko-muted)]"
+    >
       Loading post...
     </p>
-    <p v-else-if="error" class="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+    <p
+      v-else-if="error"
+      class="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"
+    >
       {{ String(error) }}
     </p>
 
     <template v-else-if="post">
       <section class="rounded-[2.5rem] border border-[var(--ginko-line)] bg-[var(--ginko-panel)] p-8">
-        <NuxtLink to="/blog" class="text-xs uppercase tracking-[0.18em] text-[var(--ginko-muted)] transition hover:text-[var(--ginko-accent)]">
+        <NuxtLink
+          to="/blog"
+          class="text-xs uppercase tracking-[0.18em] text-[var(--ginko-muted)] transition hover:text-[var(--ginko-accent)]"
+        >
           Back to blog
         </NuxtLink>
         <div class="mt-5 flex flex-wrap gap-3 text-xs uppercase tracking-[0.18em] text-[var(--ginko-muted)]">
-          <span v-if="post.badge" class="rounded-full bg-[var(--ginko-accent-soft)] px-3 py-1 text-[var(--ginko-accent)]">
+          <span
+            v-if="post.badge"
+            class="rounded-full bg-[var(--ginko-accent-soft)] px-3 py-1 text-[var(--ginko-accent)]"
+          >
             {{ post.badge }}
           </span>
           <span v-if="post.date">{{ post.date }}</span>
@@ -32,13 +44,19 @@ useHead(() => ({
         <h1 class="mt-5 text-4xl font-semibold leading-tight">
           {{ post.title || "Untitled" }}
         </h1>
-        <p v-if="post.description" class="mt-4 max-w-3xl text-base leading-8 text-[var(--ginko-muted)]">
+        <p
+          v-if="post.description"
+          class="mt-4 max-w-3xl text-base leading-8 text-[var(--ginko-muted)]"
+        >
           {{ post.description }}
         </p>
       </section>
 
       <section class="rounded-[2.5rem] border border-[var(--ginko-line)] bg-white/70 p-8">
-        <GinkoContent :value="post.content || ''" class="max-w-none" />
+        <GinkoContent
+          :value="post.content || ''"
+          class="max-w-none"
+        />
       </section>
     </template>
   </article>

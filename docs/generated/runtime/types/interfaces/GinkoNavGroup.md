@@ -1,12 +1,12 @@
-[**@lupinum/ginko-nuxt**](../../../README.md)
+[**nuxt-ginko-cms**](../../../README.md)
 
 ***
 
-[@lupinum/ginko-nuxt](../../../README.md) / [runtime/types](../README.md) / GinkoNavGroup
+[nuxt-ginko-cms](../../../README.md) / [runtime/types](../README.md) / GinkoNavGroup
 
 # Interface: GinkoNavGroup
 
-Defined in: [runtime/types/index.ts:187](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L187)
+Defined in: [runtime/types/index.ts:188](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L188)
 
 A navigation group (section heading / separator).
 
@@ -16,7 +16,7 @@ A navigation group (section heading / separator).
 
 > **id**: `string`
 
-Defined in: [runtime/types/index.ts:189](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L189)
+Defined in: [runtime/types/index.ts:190](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L190)
 
 Slugified group id.
 
@@ -26,7 +26,7 @@ Slugified group id.
 
 > **items**: [`GinkoNavItem`](GinkoNavItem.md)[]
 
-Defined in: [runtime/types/index.ts:193](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L193)
+Defined in: [runtime/types/index.ts:194](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L194)
 
 Navigation items in this group.
 
@@ -36,6 +36,6 @@ Navigation items in this group.
 
 > `optional` **title?**: `string`
 
-Defined in: [runtime/types/index.ts:191](https://github.com/lupinum-dev/ginko-nuxt/blob/3cdd0641fb732f086fddeef0f401b78206eb4c70/src/runtime/types/index.ts#L191)
+Defined in: [runtime/types/index.ts:192](https://github.com/lupinum-dev/nuxt-ginko-cms/blob/a8358dc7dc5703e1e3462f57c4ec98d4612d555a/src/runtime/types/index.ts#L192)
 
 Display title. `undefined` = ungrouped (no heading rendered).
