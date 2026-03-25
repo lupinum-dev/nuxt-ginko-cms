@@ -26,7 +26,7 @@ export function sanitizeSearchSnippet(input) {
   });
   snippet = snippet.replace(/:::[a-z][\w-]*(?:\{[^{}]*\})?/gi, " ").replace(/::[a-z][\w-]*(?:\{[^{}]*\})?/gi, " ").replace(/:::/g, " ").replace(/::/g, " ");
   snippet = snippet.replace(/<!--[\s\S]*?-->/g, " ").replace(/<[^>]+>/g, " ");
-  snippet = snippet.replace(/^\s{0,3}#{1,6}\s+/gm, " ").replace(/^\s{0,3}>\s?/gm, " ").replace(/^\s*([-*_])(?:\s*\1){2,}\s*$/gm, " ").replace(/[*_`]/g, "");
+  snippet = snippet.replace(/^\s{0,3}#{1,6}\s+/gm, " ").replace(/^\s{0,3}>\s?/gm, " ").replace(/^\s*([-*_])(?:\s*\1){2,}\s*$/gm, " ").replace(/[*`]/g, "").replace(/(?<!\w)_+|_+(?!\w)/g, " ");
   // Restore inline code content
   snippet = snippet.replace(/\x00CODE(\d+)\x00/g, (_, i) => codeSlots[Number(i)]);
   return snippet.replace(/\s+/g, " ").trim();
