@@ -1,6 +1,6 @@
 {
   "name": "nuxt-ginko-cms",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Nuxt integration for Ginko CMS (key-first, server-BFF default)",
   "repository": {
     "type": "git",
