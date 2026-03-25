@@ -34,8 +34,8 @@ function extractHeadingsFromMarkdown(content: string): GinkoTocItem[] {
 
   match = headingRegex.exec(content)
   while (match !== null) {
-    const depth = match[1].length
-    const text = match[2].trim()
+    const depth = match[1]!.length
+    const text = match[2]!.trim()
     const id = text
       .toLowerCase()
       .replace(/[^\w\s-]/g, '')

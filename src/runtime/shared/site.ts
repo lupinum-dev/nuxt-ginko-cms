@@ -1,11 +1,24 @@
-function asString(value) {
+function asString(value: unknown): string | undefined {
   if (typeof value !== 'string') {
     return void 0
   }
   const normalized = value.trim()
   return normalized.length > 0 ? normalized : void 0
 }
-export function normalizeSitePath(path) {
+
+interface SiteLocale {
+  code: string
+  hreflang: string
+  isDefault?: boolean
+}
+
+interface SiteLocaleState {
+  locales: SiteLocale[]
+  defaultLocale: string
+  localePrefixStrategy: string
+}
+
+export function normalizeSitePath(path: string): string {
   const withoutHash = path.split('#')[0] || ''
   const withoutQuery = withoutHash.split('?')[0] || ''
   const collapsed = withoutQuery.replace(/\/{2,}/g, '/')
@@ -15,9 +28,9 @@ export function normalizeSitePath(path) {
   const withoutTrailingSlash = collapsed.endsWith('/') ? collapsed.slice(0, -1) : collapsed
   return withoutTrailingSlash.startsWith('/') ? withoutTrailingSlash : `/${withoutTrailingSlash}`
 }
-export function resolveSiteLocales(site) {
-  const locales = []
-  for (const locale of site.locales || []) {
+export function resolveSiteLocales(site: Record<string, unknown>): SiteLocaleState {
+  const locales: SiteLocale[] = []
+  for (const locale of (site.locales as SiteLocale[]) || []) {
     const code = asString(locale.code)
     const hreflang = asString(locale.hreflang)
     if (!code || !hreflang) {
@@ -32,11 +45,12 @@ export function resolveSiteLocales(site) {
   if (!locales.length) {
     throw new Error('[ginko-cms] Missing ginkoCms.site.locales')
   }
-  const defaultLocale = asString(site.defaultLocale) || locales.find(locale => locale.isDefault)?.code || locales[0]?.code
+  const defaultLocale = asString(site.defaultLocale as string) || locales.find(locale => locale.isDefault)?.code || locales[0]?.code
   if (!defaultLocale) {
     throw new Error('[ginko-cms] Unable to resolve default site locale')
   }
-  const localePrefixStrategy = site.routing?.localePrefixStrategy || 'prefix_except_default'
+  const routing = site.routing as Record<string, unknown> | undefined
+  const localePrefixStrategy = (routing?.localePrefixStrategy as string) || 'prefix_except_default'
   return {
     locales: locales.map(locale => ({
       ...locale,
@@ -46,12 +60,12 @@ export function resolveSiteLocales(site) {
     localePrefixStrategy,
   }
 }
-export function normalizeSiteLocale(value, fallback) {
+export function normalizeSiteLocale(value: unknown, fallback: string): string {
   const normalizedFallback = asString(fallback) || fallback
   const normalized = asString(value)
   return normalized || normalizedFallback
 }
-export function localizeSitePath(args) {
+export function localizeSitePath(args: { path: string, locale: unknown, defaultLocale: string, localePrefixStrategy: string }): string {
   const normalizedPath = normalizeSitePath(args.path)
   const localeCode = normalizeSiteLocale(args.locale, args.defaultLocale)
   if (args.localePrefixStrategy === 'none') {
@@ -66,7 +80,7 @@ export function localizeSitePath(args) {
   }
   return normalizeSitePath(`${localePrefix}${normalizedPath}`)
 }
-export function stripLocalePrefix(args) {
+export function stripLocalePrefix(args: { path: string, locale: string, defaultLocale: string, localePrefixStrategy: string }): string {
   const normalizedPath = normalizeSitePath(args.path)
   if (args.localePrefixStrategy === 'none') {
     return normalizedPath
@@ -83,30 +97,36 @@ export function stripLocalePrefix(args) {
   }
   return normalizedPath
 }
-export function resolveFlatPathBySlug(args) {
+export function resolveFlatPathBySlug(args: { collection: Record<string, unknown>, slug: string, locale: string }): string | undefined {
   const slugKey = args.slug.trim()
   if (!slugKey) {
     return void 0
   }
-  const pathFromMap = args.collection.routing.pathMapByLocale?.[args.locale]?.[slugKey]
+  const routing = args.collection.routing as Record<string, unknown> | undefined
+  const pathMapByLocale = routing?.pathMapByLocale as Record<string, Record<string, string>> | undefined
+  const pathFromMap = pathMapByLocale?.[args.locale]?.[slugKey]
   if (pathFromMap && typeof pathFromMap === 'string') {
     return normalizeSitePath(pathFromMap)
   }
-  const prefix = args.collection.routing.prefixByLocale?.[args.locale] || args.collection.routing.prefix
+  const prefixByLocale = routing?.prefixByLocale as Record<string, string> | undefined
+  const prefix = prefixByLocale?.[args.locale] || (routing?.prefix as string | undefined)
   if (!prefix || typeof prefix !== 'string') {
     return void 0
   }
   return normalizeSitePath(`${prefix.replace(/\/+$/g, '')}/${slugKey}`)
 }
-export function resolveFlatSlugByPath(args) {
+export function resolveFlatSlugByPath(args: { collection: Record<string, unknown>, locale: string, path: string }): string | undefined {
   const normalizedPath = normalizeSitePath(args.path)
-  const pathMap = args.collection.routing.pathMapByLocale?.[args.locale] || {}
+  const routing = args.collection.routing as Record<string, unknown> | undefined
+  const pathMapByLocale = routing?.pathMapByLocale as Record<string, Record<string, string>> | undefined
+  const pathMap = pathMapByLocale?.[args.locale] || {}
   for (const [slug, mappedPath] of Object.entries(pathMap)) {
     if (normalizeSitePath(String(mappedPath)) === normalizedPath) {
       return slug
     }
   }
-  const prefix = args.collection.routing.prefixByLocale?.[args.locale] || args.collection.routing.prefix
+  const prefixByLocale = routing?.prefixByLocale as Record<string, string> | undefined
+  const prefix = prefixByLocale?.[args.locale] || (routing?.prefix as string | undefined)
   if (!prefix || typeof prefix !== 'string') {
     return void 0
   }
@@ -121,13 +141,13 @@ export function resolveFlatSlugByPath(args) {
   const candidate = normalizedPath.slice(normalizedPrefix.length + 1)
   return candidate.length > 0 ? candidate : void 0
 }
-export function isHierarchyCollection(collection) {
+export function isHierarchyCollection(collection: Record<string, unknown>): boolean {
   return collection.kind === 'hierarchy'
 }
-export function isFlatCollection(collection) {
+export function isFlatCollection(collection: Record<string, unknown>): boolean {
   return collection.kind === 'flat'
 }
-export function detectLocaleFromPath(args) {
+export function detectLocaleFromPath(args: { path: string, locales: string[], defaultLocale: string, localePrefixStrategy: string }): { locale: string, canonicalPath: string } {
   const normalizedPath = normalizeSitePath(args.path)
   if (args.localePrefixStrategy === 'none') {
     return {

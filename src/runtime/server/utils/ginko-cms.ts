@@ -1,7 +1,17 @@
+import type { H3Event } from 'h3'
 import { createError, getQuery } from 'h3'
 import { useRuntimeConfig } from '#imports'
 
-function getGlobalStore() {
+interface GinkoCmsStore {
+  contextCache: Map<string, { expiresAt: number, value: unknown }>
+  inflightContext: Map<string, Promise<unknown>>
+}
+
+declare const globalThis: {
+  __ginkoCmsNuxtCache?: GinkoCmsStore
+} & Record<string, unknown>
+
+function getGlobalStore(): GinkoCmsStore {
   const globalScope = globalThis
   if (!globalScope.__ginkoCmsNuxtCache) {
     globalScope.__ginkoCmsNuxtCache = {
@@ -11,7 +21,7 @@ function getGlobalStore() {
   }
   return globalScope.__ginkoCmsNuxtCache
 }
-function normalizeBaseUrl(value) {
+function normalizeBaseUrl(value: string | undefined): string {
   if (!value) {
     throw createError({ statusCode: 500, statusMessage: '[ginko-cms] Missing ginkoCms.base runtime config' })
   }
@@ -24,9 +34,10 @@ function normalizeBaseUrl(value) {
   parsed.hash = ''
   return parsed.toString()
 }
-export function getGinkoCmsConfig(event) {
+export function getGinkoCmsConfig(event: H3Event) {
   const runtimeConfig = useRuntimeConfig(event)
-  const key = String(runtimeConfig.ginkoCms?.key || '').trim()
+  const ginkoCms = (runtimeConfig as Record<string, unknown>).ginkoCms as Record<string, unknown> | undefined
+  const key = String(ginkoCms?.key || '').trim()
   if (!key) {
     throw createError({
       statusCode: 500,
@@ -35,13 +46,13 @@ export function getGinkoCmsConfig(event) {
   }
   return {
     key,
-    base: normalizeBaseUrl(String(runtimeConfig.ginkoCms?.base || 'https://site.ginko-cms.com')),
-    locale: String(runtimeConfig.ginkoCms?.locale || '').trim() || void 0,
-    timeoutMs: Number(runtimeConfig.ginkoCms?.timeoutMs || 8e3),
-    contextTtlMs: Number(runtimeConfig.ginkoCms?.contextTtlMs || 3e5),
+    base: normalizeBaseUrl(String(ginkoCms?.base || 'https://site.ginko-cms.com')),
+    locale: String(ginkoCms?.locale || '').trim() || void 0,
+    timeoutMs: Number(ginkoCms?.timeoutMs || 8e3),
+    contextTtlMs: Number(ginkoCms?.contextTtlMs || 3e5),
   }
 }
-function buildUpstreamUrl(base, path, query) {
+function buildUpstreamUrl(base: string, path: string, query: Record<string, unknown>): URL {
   if (!path.startsWith('/api/')) {
     throw createError({ statusCode: 500, statusMessage: '[ginko-cms] Invalid upstream path' })
   }
@@ -58,12 +69,12 @@ function buildUpstreamUrl(base, path, query) {
   }
   return target
 }
-function shouldRetryStatus(status) {
+function shouldRetryStatus(status: number): boolean {
   return status === 429 || status >= 500
 }
-async function fetchWithRetry(url, init, timeoutMs) {
+async function fetchWithRetry(url: URL, init: RequestInit, timeoutMs: number): Promise<Response> {
   const attempts = 2
-  let lastError = null
+  let lastError: unknown = null
   for (let attempt = 0; attempt < attempts; attempt += 1) {
     const controller = new AbortController()
     const timeout = setTimeout(() => controller.abort(), timeoutMs)
@@ -93,7 +104,14 @@ async function fetchWithRetry(url, init, timeoutMs) {
     statusMessage: `[ginko-cms] Upstream request failed: ${message}`,
   })
 }
-export async function fetchGinkoCmsJson(event, path, query = {}) {
+
+interface FetchResult {
+  status: number
+  headers: Headers
+  body: Record<string, unknown>
+}
+
+export async function fetchGinkoCmsJson(event: H3Event, path: string, query: Record<string, unknown> = {}): Promise<FetchResult> {
   const config = getGinkoCmsConfig(event)
   const url = buildUpstreamUrl(config.base, path, query)
   const response = await fetchWithRetry(url, {
@@ -110,7 +128,7 @@ export async function fetchGinkoCmsJson(event, path, query = {}) {
       statusMessage: `[ginko-cms] Upstream returned empty response (${response.status}) for ${url.pathname}`,
     })
   }
-  let parsed
+  let parsed: Record<string, unknown>
   try {
     parsed = JSON.parse(rawBody)
   }
@@ -127,7 +145,7 @@ export async function fetchGinkoCmsJson(event, path, query = {}) {
     body: parsed,
   }
 }
-export async function getCachedGinkoCmsContext(event) {
+export async function getCachedGinkoCmsContext(event: H3Event): Promise<unknown> {
   const config = getGinkoCmsConfig(event)
   const cacheKey = `${config.base}::${config.key}`
   const now = Date.now()
@@ -148,7 +166,8 @@ export async function getCachedGinkoCmsContext(event) {
         statusMessage: `[ginko-cms] Failed to resolve context (${result.status})`,
       })
     }
-    const ttlSeconds = Number(result.body.meta?.cacheTtl || Math.max(Math.floor(config.contextTtlMs / 1e3), 60))
+    const meta = result.body.meta as Record<string, unknown> | undefined
+    const ttlSeconds = Number(meta?.cacheTtl || Math.max(Math.floor(config.contextTtlMs / 1e3), 60))
     store.contextCache.set(cacheKey, {
       expiresAt: Date.now() + ttlSeconds * 1e3,
       value: result.body,
@@ -160,7 +179,7 @@ export async function getCachedGinkoCmsContext(event) {
   store.inflightContext.set(cacheKey, request)
   return request
 }
-export function resolveLocale(event, context) {
+export function resolveLocale(event: H3Event, context: Record<string, unknown>): string {
   const query = getQuery(event)
   if (typeof query.locale === 'string' && query.locale.trim()) {
     return query.locale.trim()
@@ -169,5 +188,7 @@ export function resolveLocale(event, context) {
   if (config.locale?.trim()) {
     return config.locale.trim()
   }
-  return context.data.locale.default || 'en'
+  const data = context.data as Record<string, unknown> | undefined
+  const locale = data?.locale as Record<string, unknown> | undefined
+  return (locale?.default as string) || 'en'
 }

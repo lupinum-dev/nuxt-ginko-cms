@@ -89,7 +89,7 @@ export async function useGinkoSurround<K extends keyof GinkoCollections | (strin
       const response = await requestFetch(`${routeBase}/query`, {
         method: 'POST',
         body: payload,
-      })
+      }) as { data: [SurroundItem | null, SurroundItem | null] | unknown }
       const raw = Array.isArray(response.data) ? response.data : [null, null]
       const prev = raw[0] ?? null
       const next = raw[1] ?? null

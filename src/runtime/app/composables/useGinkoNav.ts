@@ -213,12 +213,11 @@ export function useGinkoNav<K extends keyof GinkoCollections | (string & {})>(
         collectionKey: String(collectionKey),
         locale: resolvedLocale.value || undefined,
       }
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const response: any = await requestFetch(`${routeBase}/query`, {
+      const response = await requestFetch(`${routeBase}/query`, {
         method: 'POST',
         body: payload,
-      })
-      return Array.isArray(response.data) ? response.data as RawNavNode[] : []
+      }) as { data: RawNavNode[] }
+      return Array.isArray(response.data) ? response.data : []
     },
     {
       default: () => [] as RawNavNode[],

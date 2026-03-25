@@ -16,6 +16,8 @@ declare module 'nuxt/schema' {
       routeBase: string
       locale?: string
       site?: GinkoCmsSiteConfig
+      convexUrl?: string
+      searchKey?: string
     }
   }
 }

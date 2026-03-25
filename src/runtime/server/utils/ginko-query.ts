@@ -1,3 +1,5 @@
+import type { H3Event } from 'h3'
+import type { GinkoHierarchyState, HierarchyEntry } from '../../../hierarchy'
 import { useRuntimeConfig } from '#imports'
 import { createError } from 'h3'
 import { buildGinkoHierarchyState, canonicalizeGinkoHierarchyPath, getGinkoHierarchyEntryPath, getGinkoHierarchySurroundEntries, resolveGinkoHierarchyPath } from '../../../hierarchy'
@@ -17,7 +19,16 @@ import { isPopulateSupportedOperation, normalizePopulateFields } from '../../sha
 import { fetchGinkoCmsJson } from './ginko-cms.js'
 import { assertValidPublicItem } from './public-item.js'
 
-function getHierarchyStore() {
+interface HierarchyCacheStore {
+  cache: Map<string, { expiresAt: number, state: unknown }>
+  inflight: Map<string, Promise<unknown>>
+}
+
+declare const globalThis: {
+  __ginkoCmsNuxtHierarchyCache?: HierarchyCacheStore
+} & Record<string, unknown>
+
+function getHierarchyStore(): HierarchyCacheStore {
   const globalScope = globalThis
   if (!globalScope.__ginkoCmsNuxtHierarchyCache) {
     globalScope.__ginkoCmsNuxtHierarchyCache = {
@@ -27,31 +38,31 @@ function getHierarchyStore() {
   }
   return globalScope.__ginkoCmsNuxtHierarchyCache
 }
-function getSiteConfig(event) {
+function getSiteConfig(event: H3Event): Record<string, unknown> {
   const runtimeConfig = useRuntimeConfig(event)
   const site = runtimeConfig.public.ginkoCms?.site
   if (!site) {
     throw createError({ statusCode: 500, statusMessage: '[ginko-cms] Missing ginkoCms.site configuration' })
   }
-  return site
+  return site as unknown as Record<string, unknown>
 }
-function asString(value) {
+function asString(value: unknown): string | undefined {
   if (typeof value !== 'string') {
     return void 0
   }
   const normalized = value.trim()
   return normalized.length > 0 ? normalized : void 0
 }
-function asNumber(value) {
+function _asNumber(value: unknown): number | undefined {
   return typeof value === 'number' && Number.isFinite(value) ? value : void 0
 }
-function toRecord(value) {
+function _toRecord(value: unknown): Record<string, unknown> {
   if (!value || typeof value !== 'object' || Array.isArray(value)) {
     return {}
   }
-  return value
+  return value as Record<string, unknown>
 }
-function toHierarchyDefaultLocale(args) {
+function toHierarchyDefaultLocale(args: { strategy: string, locale: string, defaultLocale: string }): string {
   if (args.strategy === 'none') {
     return args.locale
   }
@@ -60,16 +71,18 @@ function toHierarchyDefaultLocale(args) {
   }
   return args.defaultLocale
 }
-function resolveHierarchyBaseSegment(collection, locale) {
-  const fromLocale = asString(collection.routing.baseSegmentByLocale?.[locale])
+function resolveHierarchyBaseSegment(collection: Record<string, unknown>, locale: string): string {
+  const routing = collection.routing as Record<string, unknown>
+  const byLocale = (routing?.baseSegmentByLocale || {}) as Record<string, unknown>
+  const fromLocale = asString(byLocale[locale])
   if (fromLocale) {
     return fromLocale
   }
-  const fallback = asString(collection.routing.baseSegment)
+  const fallback = asString(routing?.baseSegment)
   if (fallback) {
     return fallback
   }
-  const firstByLocale = Object.values(collection.routing.baseSegmentByLocale || {}).map(value => asString(value)).find(entry => Boolean(entry))
+  const firstByLocale = Object.values(byLocale).map(value => asString(value)).find(entry => Boolean(entry))
   if (firstByLocale) {
     return firstByLocale
   }
@@ -78,14 +91,16 @@ function resolveHierarchyBaseSegment(collection, locale) {
     statusMessage: `[ginko-cms] Missing hierarchy base segment for collection ${collection.source}`,
   })
 }
-function resolveHierarchyRootSlug(collection, locale) {
-  const fromLocale = asString(collection.routing.rootSlugByLocale?.[locale])
+function resolveHierarchyRootSlug(collection: Record<string, unknown>, locale: string): string | undefined {
+  const routing = collection.routing as Record<string, unknown>
+  const rootSlugByLocale = (routing?.rootSlugByLocale || {}) as Record<string, unknown>
+  const fromLocale = asString(rootSlugByLocale[locale])
   if (fromLocale) {
     return fromLocale
   }
-  return asString(collection.routing.rootSlug)
+  return asString(routing?.rootSlug)
 }
-function cacheKey(args) {
+function cacheKey(args: Record<string, unknown>): string {
   return [
     args.source,
     args.locale,
@@ -100,16 +115,17 @@ function cacheKey(args) {
     args.contentIdField,
   ].join('::')
 }
-async function getHierarchyState(args) {
-  const baseSegment = resolveHierarchyBaseSegment(args.collection, args.locale)
-  const maxDepth = Math.max(1, Math.min(args.collection.maxDepth || 5, 20))
-  const includeFolders = args.collection.includeFolders === true
-  const contentSlugField = args.collection.contentSlugField || 'slug'
-  const contentTitleField = args.collection.contentTitleField || 'title'
-  const contentOrderField = args.collection.contentOrderField || 'pageOrder'
-  const contentIdField = args.collection.contentIdField || 'colocationFolderId'
+async function getHierarchyState(args: Record<string, unknown>): Promise<unknown> {
+  const collection = args.collection as Record<string, unknown>
+  const baseSegment = resolveHierarchyBaseSegment(collection, args.locale as string)
+  const maxDepth = Math.max(1, Math.min((collection.maxDepth as number) || 5, 20))
+  const includeFolders = collection.includeFolders === true
+  const contentSlugField = (collection.contentSlugField as string) || 'slug'
+  const contentTitleField = (collection.contentTitleField as string) || 'title'
+  const contentOrderField = (collection.contentOrderField as string) || 'pageOrder'
+  const contentIdField = (collection.contentIdField as string) || 'colocationFolderId'
   const key = cacheKey({
-    source: args.collection.source,
+    source: collection.source,
     locale: args.locale,
     defaultLocale: args.defaultLocale,
     strategy: args.strategy,
@@ -132,8 +148,8 @@ async function getHierarchyState(args) {
     return inflight
   }
   const request = (async () => {
-    const upstream = await fetchGinkoCmsJson(args.event, `/api/v1/cms/${args.collection.source}`, {
-      locale: args.collection.localized === false ? void 0 : args.locale,
+    const upstream = await fetchGinkoCmsJson(args.event as H3Event, `/api/v1/cms/${collection.source}`, {
+      locale: collection.localized === false ? void 0 : args.locale,
       view: 'tree',
       include: 'content',
       maxDepth,
@@ -142,13 +158,13 @@ async function getHierarchyState(args) {
     const state = buildGinkoHierarchyState(rows, {
       locale: args.locale,
       defaultLocale: toHierarchyDefaultLocale({
-        locale: args.locale,
-        defaultLocale: args.defaultLocale,
-        strategy: args.strategy,
+        locale: args.locale as string,
+        defaultLocale: args.defaultLocale as string,
+        strategy: args.strategy as string,
       }),
       baseSegment,
       includeFolders,
-      rootSlug: resolveHierarchyRootSlug(args.collection, args.locale),
+      rootSlug: resolveHierarchyRootSlug(collection, args.locale as string),
       contentSlugField,
       contentTitleField,
       contentOrderField,
@@ -165,7 +181,7 @@ async function getHierarchyState(args) {
   store.inflight.set(key, request)
   return request
 }
-function getLocaleForRequest(args) {
+function getLocaleForRequest(args: { site: Record<string, unknown>, explicitLocale?: string, path?: string }): { locale: string, normalizedPath?: string } {
   const localeState = resolveSiteLocales(args.site)
   const localeCodes = localeState.locales.map(locale => locale.code)
   const explicitLocale = asString(args.explicitLocale)
@@ -192,17 +208,18 @@ function getLocaleForRequest(args) {
     locale: localeState.defaultLocale,
   }
 }
-function getCollectionOrThrow(site, key) {
+function getCollectionOrThrow(site: Record<string, unknown>, key: string | undefined): Record<string, unknown> {
   if (!key) {
     throw createError({ statusCode: 400, statusMessage: '[ginko-cms] Missing collectionKey for this operation' })
   }
-  const collection = site.collections?.[key]
+  const collections = (site.collections || {}) as Record<string, unknown>
+  const collection = collections[key]
   if (!collection) {
     throw createError({ statusCode: 404, statusMessage: `[ginko-cms] Unknown collection key: ${key}` })
   }
-  return collection
+  return collection as Record<string, unknown>
 }
-function mapNavigationEntry(entry, state) {
+function mapNavigationEntry(entry: HierarchyEntry, state: GinkoHierarchyState): Record<string, unknown> {
   return {
     title: entry.title,
     slug: entry.slug,
@@ -210,40 +227,43 @@ function mapNavigationEntry(entry, state) {
     icon: entry.icon,
     badge: entry.badge,
     path: getGinkoHierarchyEntryPath(state, entry),
-    children: entry.children.map(child => mapNavigationEntry(child, state)),
+    children: entry.children.map((child: HierarchyEntry) => mapNavigationEntry(child, state)),
   }
 }
-function attachFlatPath(args) {
-  const slugField = args.collection.slugField || 'slug'
-  const slug = asString(args.item[slugField]) || asString(args.item.slug)
+function attachFlatPath(args: Record<string, unknown>): Record<string, unknown> {
+  const collection = args.collection as Record<string, unknown>
+  const item = args.item as Record<string, unknown>
+  const slugField = (collection.slugField as string) || 'slug'
+  const slug = asString(item[slugField]) || asString(item.slug)
   if (!slug) {
-    return args.item
+    return item
   }
   const canonicalPath = resolveFlatPathBySlug({
-    collection: args.collection,
+    collection,
     slug,
-    locale: args.locale,
+    locale: args.locale as string,
   })
   if (!canonicalPath) {
-    return args.item
+    return item
   }
   return {
-    ...args.item,
+    ...item,
     path: localizeSitePath({
       path: canonicalPath,
-      locale: args.locale,
-      defaultLocale: args.defaultLocale,
-      localePrefixStrategy: args.strategy,
+      locale: args.locale as string,
+      defaultLocale: args.defaultLocale as string,
+      localePrefixStrategy: args.strategy as string,
     }),
   }
 }
-function normalizeListQuery(payload) {
-  const query = {
-    ...payload.where || {},
+function normalizeListQuery(payload: Record<string, unknown>): Record<string, unknown> {
+  const sort = payload.sort as Record<string, unknown> | undefined
+  const query: Record<string, unknown> = {
+    ...((payload.where as Record<string, unknown>) || {}),
   }
-  if (payload.sort?.field) {
-    query.sortBy = payload.sort.field
-    query.sortDir = payload.sort.dir || 'asc'
+  if (sort?.field) {
+    query.sortBy = sort.field
+    query.sortDir = (sort.dir as string) || 'asc'
   }
   if (typeof payload.limit === 'number') {
     query.limit = Math.max(1, Math.min(payload.limit, 200))
@@ -260,20 +280,20 @@ function normalizeListQuery(payload) {
   }
   return query
 }
-export async function resolveSitePath(event, args) {
+export async function resolveSitePath(event: H3Event, args: { path: string, locale?: string }): Promise<Record<string, unknown>> {
   const site = getSiteConfig(event)
   const localeState = resolveSiteLocales(site)
   const localeCodes = localeState.locales.map(locale => locale.code)
   const normalizedPath = normalizeSitePath(args.path)
   const detectedLocale = asString(args.locale)
-    ? normalizeSiteLocale(args.locale, localeState.defaultLocale)
+    ? normalizeSiteLocale(args.locale!, localeState.defaultLocale)
     : detectLocaleFromPath({
       path: normalizedPath,
       locales: localeCodes,
       defaultLocale: localeState.defaultLocale,
       localePrefixStrategy: localeState.localePrefixStrategy,
     }).locale
-  for (const [collectionKey, collection] of Object.entries(site.collections || {})) {
+  for (const [collectionKey, collection] of Object.entries((site.collections || {}) as Record<string, Record<string, unknown>>)) {
     if (!isHierarchyCollection(collection)) {
       continue
     }
@@ -283,7 +303,7 @@ export async function resolveSitePath(event, args) {
       locale: detectedLocale,
       defaultLocale: localeState.defaultLocale,
       strategy: localeState.localePrefixStrategy,
-    })
+    }) as GinkoHierarchyState
     const entry = resolveGinkoHierarchyPath(state, normalizedPath)
     if (!entry) {
       continue
@@ -308,7 +328,7 @@ export async function resolveSitePath(event, args) {
     defaultLocale: localeState.defaultLocale,
     localePrefixStrategy: localeState.localePrefixStrategy,
   })
-  for (const [collectionKey, collection] of Object.entries(site.collections || {})) {
+  for (const [collectionKey, collection] of Object.entries((site.collections || {}) as Record<string, Record<string, unknown>>)) {
     if (!isFlatCollection(collection)) {
       continue
     }
@@ -349,51 +369,65 @@ export async function resolveSitePath(event, args) {
     locale: detectedLocale,
   }
 }
-async function resolveHierarchyPath(args) {
+async function resolveHierarchyPath(args: Record<string, unknown>): Promise<string | undefined> {
+  const collection = args.collection as Record<string, unknown>
+  const item = args.item as Record<string, unknown>
   const state = await getHierarchyState({
     event: args.event,
-    collection: args.collection,
+    collection,
     locale: args.locale,
     defaultLocale: args.defaultLocale,
     strategy: args.strategy,
-  })
-  const itemId = asString(args.item.id)
-  const contentId = asString(args.item[args.collection.contentIdField || 'colocationFolderId']) || asString(args.item.contentId)
-  const slug = asString(args.item.slug)
+  }) as GinkoHierarchyState
+  const itemId = asString(item.id)
+  const contentId = asString(item[(collection.contentIdField as string) || 'colocationFolderId']) || asString(item.contentId)
+  const slug = asString(item.slug)
   const resolvedPath = (itemId && state.pathByItemId[itemId]) || (contentId && state.pathByContentId[contentId]) || (slug && state.pathBySlug[slug])
   if (!resolvedPath) {
     return void 0
   }
-  const entry = state.nodeByPath[resolvedPath]
-  return entry ? getGinkoHierarchyEntryPath(state, entry) : canonicalizeGinkoHierarchyPath(state, resolvedPath)
+  const nodeEntry = state.nodeByPath[resolvedPath]
+  return nodeEntry ? getGinkoHierarchyEntryPath(state, nodeEntry) : canonicalizeGinkoHierarchyPath(state, resolvedPath)
 }
-async function fetchHierarchyItemFromResolved(args) {
-  if (!args.resolved.slug) {
+async function fetchHierarchyItemFromResolved(args: Record<string, unknown>): Promise<Record<string, unknown> | null> {
+  const resolved = args.resolved as Record<string, unknown>
+  const collection = args.collection as Record<string, unknown>
+  const query = args.query as Record<string, unknown>
+  if (!resolved.slug) {
     return null
   }
   const getResponse = await fetchGinkoCmsJson(
-    args.event,
-    `/api/v1/cms/${args.collection.source}/${args.resolved.slug}`,
+    args.event as H3Event,
+    `/api/v1/cms/${collection.source}/${resolved.slug}`,
     {
-      ...args.query,
-      locale: args.collection.localized === false ? void 0 : args.locale,
+      ...query,
+      locale: collection.localized === false ? void 0 : args.locale,
     },
   )
   if (getResponse.status === 200 && getResponse.body?.data) {
     return assertValidPublicItem(getResponse.body.data, {
-      collectionSource: args.collection.source,
+      collectionSource: collection.source as string,
       op: 'page',
-      includeBody: args.query.includeBody === true,
+      includeBody: query.includeBody === true,
     })
   }
   return null
 }
-async function fetchItemByResolvedPath(args) {
-  const { event, site, resolved, locale, defaultLocale, strategy, query } = args
+async function fetchItemByResolvedPath(args: Record<string, unknown>): Promise<Record<string, unknown> | null> {
+  const { event, site, resolved, locale, defaultLocale, strategy, query } = args as {
+    event: H3Event
+    site: Record<string, unknown>
+    resolved: Record<string, unknown>
+    locale: string
+    defaultLocale: string
+    strategy: string
+    query: Record<string, unknown>
+  }
   if (!resolved.matched || !resolved.collectionKey) {
     return null
   }
-  const collection = site.collections?.[resolved.collectionKey]
+  const collections = (site.collections || {}) as Record<string, unknown>
+  const collection = collections[resolved.collectionKey as string] as Record<string, unknown> | undefined
   if (!collection) {
     return null
   }
@@ -410,7 +444,7 @@ async function fetchItemByResolvedPath(args) {
     }
     return attachFlatPath({
       item: assertValidPublicItem(upstream.body.data, {
-        collectionSource: collection.source,
+        collectionSource: collection.source as string,
         op: 'page',
         includeBody: query.includeBody === true,
       }),
@@ -443,17 +477,17 @@ async function fetchItemByResolvedPath(args) {
     ...hierarchyPath ? { path: hierarchyPath } : {},
   }
 }
-export async function executeGinkoQuery(event, payload) {
+export async function executeGinkoQuery(event: H3Event, payload: Record<string, unknown>): Promise<Record<string, unknown>> {
   const site = getSiteConfig(event)
   const localeState = resolveSiteLocales(site)
   const localeInfo = getLocaleForRequest({
-    explicitLocale: payload.locale,
-    path: payload.path,
+    explicitLocale: payload.locale as string | undefined,
+    path: payload.path as string | undefined,
     site,
   })
   const locale = localeInfo.locale
   const populate = normalizePopulateFields(payload.populate)
-  if (populate.length > 0 && !isPopulateSupportedOperation(payload.op)) {
+  if (populate.length > 0 && !isPopulateSupportedOperation(payload.op as string)) {
     throw createError({
       statusCode: 400,
       statusMessage: `[ginko-cms] populate() is not supported for ${payload.op}()`,
@@ -469,8 +503,8 @@ export async function executeGinkoQuery(event, payload) {
     const query = normalizeListQuery(payload)
     if (payload.path) {
       const resolved = await resolveSitePath(event, {
-        path: payload.path,
-        locale: payload.locale,
+        path: payload.path as string,
+        locale: payload.locale as string | undefined,
       })
       if (!resolved.matched || !resolved.collectionKey) {
         return { data: payload.op === 'first' ? null : [] }
@@ -492,8 +526,8 @@ export async function executeGinkoQuery(event, payload) {
         meta: { resolved },
       }
     }
-    const collection = getCollectionOrThrow(site, payload.collectionKey)
-    const effectiveQuery = {
+    const collection = getCollectionOrThrow(site, payload.collectionKey as string | undefined)
+    const effectiveQuery: Record<string, unknown> = {
       ...query,
       ...payload.op === 'first' ? { limit: 1 } : {},
       locale: collection.localized === false ? void 0 : locale,
@@ -504,14 +538,14 @@ export async function executeGinkoQuery(event, payload) {
       effectiveQuery,
     )
     const rows = Array.isArray(upstream.body?.data)
-      ? upstream.body.data.map(row => assertValidPublicItem(row, {
-          collectionSource: collection.source,
-          op: payload.op,
+      ? upstream.body.data.map((row: unknown) => assertValidPublicItem(row, {
+          collectionSource: collection.source as string,
+          op: payload.op as 'find' | 'first' | 'page',
           includeBody: payload.includeBody === true,
         }))
       : []
     if (isFlatCollection(collection)) {
-      const mapped2 = rows.map(row => attachFlatPath({
+      const mapped2 = rows.map((row: Record<string, unknown>) => attachFlatPath({
         item: row,
         collection,
         locale,
@@ -523,7 +557,7 @@ export async function executeGinkoQuery(event, payload) {
         meta: upstream.body?.meta,
       }
     }
-    const mapped = await Promise.all(rows.map(async (row) => {
+    const mapped = await Promise.all(rows.map(async (row: Record<string, unknown>) => {
       const path = await resolveHierarchyPath({
         event,
         collection,
@@ -543,7 +577,7 @@ export async function executeGinkoQuery(event, payload) {
     }
   }
   if (payload.op === 'navigation') {
-    const collection = getCollectionOrThrow(site, payload.collectionKey)
+    const collection = getCollectionOrThrow(site, payload.collectionKey as string | undefined)
     if (!isHierarchyCollection(collection)) {
       throw createError({ statusCode: 400, statusMessage: '[ginko-cms] navigation() is only valid for hierarchy collections' })
     }
@@ -553,18 +587,19 @@ export async function executeGinkoQuery(event, payload) {
       locale,
       defaultLocale: localeState.defaultLocale,
       strategy: localeState.localePrefixStrategy,
-    })
+    }) as GinkoHierarchyState
     return {
-      data: state.tree.map(entry => mapNavigationEntry(entry, state)),
+      data: state.tree.map((entry: HierarchyEntry) => mapNavigationEntry(entry, state)),
       meta: { locale },
     }
   }
   if (payload.op === 'surround') {
-    const collection = getCollectionOrThrow(site, payload.collectionKey)
+    const collection = getCollectionOrThrow(site, payload.collectionKey as string | undefined)
     if (!isHierarchyCollection(collection)) {
       throw createError({ statusCode: 400, statusMessage: '[ginko-cms] surround() is only valid for hierarchy collections' })
     }
-    const requestedPath = payload.surround?.path || payload.path
+    const surround = payload.surround as Record<string, unknown> | undefined
+    const requestedPath = (surround?.path || payload.path) as string | undefined
     if (!requestedPath) {
       throw createError({ statusCode: 400, statusMessage: '[ginko-cms] surround() requires a path' })
     }
@@ -574,17 +609,17 @@ export async function executeGinkoQuery(event, payload) {
       locale,
       defaultLocale: localeState.defaultLocale,
       strategy: localeState.localePrefixStrategy,
-    })
+    }) as GinkoHierarchyState
     const resolved = await resolveSitePath(event, {
       path: requestedPath,
       locale,
     })
-    const lookupPath = canonicalizeGinkoHierarchyPath(state, resolved.canonicalPath || requestedPath)
+    const lookupPath = canonicalizeGinkoHierarchyPath(state, (resolved.canonicalPath || requestedPath) as string)
     const navigableEntries = getGinkoHierarchySurroundEntries(state, lookupPath, {
-      scope: payload.surround?.scope,
+      scope: surround?.scope,
       includeFolders: collection.includeFolders,
     })
-    const pages = navigableEntries.map(entry => ({
+    const pages = navigableEntries.map((entry: HierarchyEntry) => ({
       entry,
       path: getGinkoHierarchyEntryPath(state, entry),
     })).filter(entry => Boolean(entry.path))
@@ -603,8 +638,8 @@ export async function executeGinkoQuery(event, payload) {
     }
   }
   if (payload.op === 'pathBy') {
-    const collection = getCollectionOrThrow(site, payload.collectionKey)
-    const input = payload.pathBy || {}
+    const collection = getCollectionOrThrow(site, payload.collectionKey as string | undefined)
+    const input = (payload.pathBy || {}) as Record<string, unknown>
     if (isFlatCollection(collection)) {
       const slug = asString(input.slug)
       if (!slug) {
@@ -633,7 +668,7 @@ export async function executeGinkoQuery(event, payload) {
       locale,
       defaultLocale: localeState.defaultLocale,
       strategy: localeState.localePrefixStrategy,
-    })
+    }) as GinkoHierarchyState
     const path = (asString(input.itemId) && state.pathByItemId[asString(input.itemId)!]) || (asString(input.contentId) && state.pathByContentId[asString(input.contentId)!]) || (asString(input.slug) && state.pathBySlug[asString(input.slug)!]) || null
     return {
       data: path ? canonicalizeGinkoHierarchyPath(state, path) : null,
@@ -646,8 +681,8 @@ export async function executeGinkoQuery(event, payload) {
     }
     const query = normalizeListQuery(payload)
     const resolved = await resolveSitePath(event, {
-      path: payload.path,
-      locale: payload.locale,
+      path: payload.path as string,
+      locale: payload.locale as string | undefined,
     })
     if (!resolved.matched) {
       return {
@@ -658,8 +693,8 @@ export async function executeGinkoQuery(event, payload) {
         },
       }
     }
-    const requestedPath = normalizeSitePath(payload.path)
-    const canonicalPath = resolved.canonicalPath ? normalizeSitePath(resolved.canonicalPath) : requestedPath
+    const requestedPath = normalizeSitePath(payload.path as string)
+    const canonicalPath = resolved.canonicalPath ? normalizeSitePath(resolved.canonicalPath as string) : requestedPath
     if (canonicalPath !== requestedPath) {
       return {
         data: {

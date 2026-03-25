@@ -73,10 +73,10 @@ export function useGinkoSearch(
   const runtimeConfig = useRuntimeConfig()
   const resolvedLocale = resolveGinkoLocale(options.locale, nuxtApp, route, runtimeConfig)
 
-  const ginkoCms = runtimeConfig.public.ginkoCms as any
-  const convexUrl: string | undefined = ginkoCms?.convexUrl
-  const searchKey: string | undefined = ginkoCms?.searchKey
-  const site = ginkoCms?.site as any
+  const ginkoCms = runtimeConfig.public.ginkoCms
+  const convexUrl = ginkoCms?.convexUrl
+  const searchKey = ginkoCms?.searchKey
+  const site = ginkoCms?.site as Record<string, unknown> | undefined
 
   // Normalize collection keys
   const collectionKeys: string[] | undefined = collections
@@ -141,7 +141,7 @@ export function useGinkoSearch(
         snippet: hit.snippet || '',
         path: resolveHitPath(hit, sourceToCollection, resolvedLocale.value, site),
         collection: resolveCollectionKey(hit.collectionSlug, sourceToCollection) || hit.collectionSlug,
-        ...(includeRaw ? { raw: hit as any } : {}),
+        ...(includeRaw ? { raw: hit as unknown as Record<string, unknown> } : {}),
       }))
     }
     catch (err) {

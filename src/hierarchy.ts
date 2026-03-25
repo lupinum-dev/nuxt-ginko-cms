@@ -1,43 +1,89 @@
-function asString(value) {
+interface HierarchyEntry {
+  id: string
+  itemId: string | undefined
+  contentId: string | undefined
+  slug: string | undefined
+  title: string
+  nodeKind: string
+  status: string
+  order: number
+  updatedAt: number | undefined
+  icon: string | undefined
+  badge: string | undefined
+  path: string | undefined
+  depth: number
+  segments: string[]
+  folderSegments: string[]
+  folderTitles: string[]
+  folderItemIds: string[]
+  content: Record<string, unknown>
+  children: HierarchyEntry[]
+}
+
+interface GinkoHierarchyState {
+  locale: string
+  defaultLocale: string
+  baseSegment: string
+  tree: HierarchyEntry[]
+  flat: HierarchyEntry[]
+  pages: HierarchyEntry[]
+  folders: HierarchyEntry[]
+  nodeByPath: Record<string, HierarchyEntry>
+  nodeByItemId: Record<string, HierarchyEntry>
+  nodeByContentId: Record<string, HierarchyEntry>
+  pathBySlug: Record<string, string>
+  pathByContentId: Record<string, string>
+  pathByItemId: Record<string, string>
+  root: { slug: string, sourcePath: string, path: string, itemId: string | undefined, contentId: string | undefined } | undefined
+}
+
+interface WalkContext {
+  folderSegments: string[]
+  folderTitles: string[]
+  folderItemIds: string[]
+  depth: number
+}
+
+function asString(value: unknown): string | undefined {
   if (typeof value !== 'string') {
     return void 0
   }
   const normalized = value.trim()
   return normalized.length > 0 ? normalized : void 0
 }
-function asNumber(value) {
+function asNumber(value: unknown): number | undefined {
   return typeof value === 'number' && Number.isFinite(value) ? value : void 0
 }
-function _asBoolean(value) {
+function _asBoolean(value: unknown): boolean {
   return value === true
 }
-function asRecord(value) {
+function asRecord(value: unknown): Record<string, unknown> {
   if (!value || typeof value !== 'object' || Array.isArray(value)) {
     return {}
   }
-  return value
+  return value as Record<string, unknown>
 }
-function asChildren(value) {
+function asChildren(value: unknown): Record<string, unknown>[] {
   if (!Array.isArray(value)) {
     return []
   }
-  return value.filter(entry => !!entry && typeof entry === 'object')
+  return value.filter((entry: unknown) => !!entry && typeof entry === 'object') as Record<string, unknown>[]
 }
-function toIsoOrder(raw, content, contentOrderField) {
+function toIsoOrder(raw: Record<string, unknown>, content: Record<string, unknown>, contentOrderField: string): number {
   return asNumber(content[contentOrderField]) ?? asNumber(raw.order) ?? Number.MAX_SAFE_INTEGER
 }
-function getNodeKind(raw) {
+function getNodeKind(raw: Record<string, unknown>): string {
   const explicit = asString(raw.kind)
   if (explicit === 'page' || explicit === 'folder' || explicit === 'group' || explicit === 'section') {
     return explicit
   }
   return 'page'
 }
-function getAdornment(raw, content, key) {
+function getAdornment(raw: Record<string, unknown>, content: Record<string, unknown>, key: string): string | undefined {
   return asString(content[key]) || asString(raw[key])
 }
-function sortRawNodes(nodes, contentOrderField, contentTitleField) {
-  return [...nodes].sort((a, b) => {
+function sortRawNodes(nodes: Record<string, unknown>[], contentOrderField: string, contentTitleField: string): Record<string, unknown>[] {
+  return [...nodes].sort((a: Record<string, unknown>, b: Record<string, unknown>) => {
     const contentA = asRecord(a.content)
     const contentB = asRecord(b.content)
     const orderA = toIsoOrder(a, contentA, contentOrderField)
@@ -50,7 +96,7 @@ function sortRawNodes(nodes, contentOrderField, contentTitleField) {
     return titleA.localeCompare(titleB)
   })
 }
-function normalizePath(path) {
+function normalizePath(path: string): string {
   const withoutHash = path.split('#')[0] || ''
   const withoutQuery = withoutHash.split('?')[0] || ''
   const collapsed = withoutQuery.replace(/\/{2,}/g, '/')
@@ -59,7 +105,7 @@ function normalizePath(path) {
   }
   return collapsed.endsWith('/') ? collapsed.slice(0, -1) : collapsed
 }
-function normalizeSlugSegment(value) {
+function normalizeSlugSegment(value: unknown): string | undefined {
   if (typeof value !== 'string') {
     return void 0
   }
@@ -70,7 +116,7 @@ function normalizeSlugSegment(value) {
   const cleaned = trimmed.replace(/^\/+|\/+$/g, '').replace(/\s+/g, '-').toLowerCase()
   return cleaned || void 0
 }
-function localizePath(path, locale, defaultLocale) {
+function localizePath(path: string, locale: string, defaultLocale: string): string {
   const normalized = normalizePath(path)
   if (locale === defaultLocale) {
     return normalized
@@ -81,24 +127,24 @@ function localizePath(path, locale, defaultLocale) {
   }
   return normalizePath(`${localePrefix}${normalized}`)
 }
-function extractContentIdFromSlug(slug) {
+function extractContentIdFromSlug(slug: string): string | undefined {
   const match = slug.match(/-([a-f0-9]{8,})$/i)
   return match ? match[1] : void 0
 }
-function normalizeBaseSegment(segment) {
+function normalizeBaseSegment(segment: unknown): string {
   const normalized = normalizeSlugSegment(segment)
   if (!normalized) {
     throw new Error('[ginko-cms] Invalid hierarchy base segment')
   }
   return normalized
 }
-function buildPath(args) {
+function buildPath(args: { baseSegment: string, locale: string, defaultLocale: string, segments: string[] }): string | undefined {
   if (!args.segments.length) {
     return void 0
   }
   return localizePath(`/${args.baseSegment}/${args.segments.join('/')}`, args.locale, args.defaultLocale)
 }
-function resolveRootEntry(state, entry) {
+function resolveRootEntry(state: GinkoHierarchyState, entry: HierarchyEntry): GinkoHierarchyState['root'] {
   const root = state.root
   if (!root || !entry.path) {
     return void 0
@@ -114,7 +160,7 @@ function resolveRootEntry(state, entry) {
   }
   return void 0
 }
-function buildGinkoHierarchyState(rawNodes, options) {
+function buildGinkoHierarchyState(rawNodes: Record<string, unknown>[], options: Record<string, unknown>): GinkoHierarchyState {
   const locale = asString(options.locale) || 'en'
   const defaultLocale = asString(options.defaultLocale) || 'en'
   const baseSegment = normalizeBaseSegment(options.baseSegment)
@@ -124,7 +170,7 @@ function buildGinkoHierarchyState(rawNodes, options) {
   const contentIdField = asString(options.contentIdField) || 'colocationFolderId'
   const includeFolders = options.includeFolders !== false
   const rootSlug = normalizeSlugSegment(options.rootSlug)
-  const state = {
+  const state: GinkoHierarchyState = {
     locale,
     defaultLocale,
     baseSegment,
@@ -140,7 +186,7 @@ function buildGinkoHierarchyState(rawNodes, options) {
     pathByItemId: {},
     root: void 0,
   }
-  const register = (entry) => {
+  const register = (entry: HierarchyEntry): void => {
     state.flat.push(entry)
     if (entry.nodeKind === 'folder') {
       state.folders.push(entry)
@@ -167,8 +213,8 @@ function buildGinkoHierarchyState(rawNodes, options) {
       state.nodeByContentId[entry.contentId] = entry
     }
   }
-  const walk = (nodes, context) => {
-    const output = []
+  const walk = (nodes: Record<string, unknown>[], context: WalkContext): HierarchyEntry[] => {
+    const output: HierarchyEntry[] = []
     const sorted = sortRawNodes(nodes, contentOrderField, contentTitleField)
     for (const raw of sorted) {
       const content = asRecord(raw.content)
@@ -203,7 +249,7 @@ function buildGinkoHierarchyState(rawNodes, options) {
         continue
       }
       const entryId = itemId || contentId || `${isFolder ? 'folder' : 'page'}:${segments.join('/') || title}`
-      const entry = {
+      const entry: HierarchyEntry = {
         id: entryId,
         itemId,
         contentId,
@@ -257,7 +303,7 @@ function buildGinkoHierarchyState(rawNodes, options) {
   }
   return state
 }
-function resolveGinkoHierarchyPath(state, path) {
+function resolveGinkoHierarchyPath(state: GinkoHierarchyState, path: string): HierarchyEntry | undefined {
   const normalizedPath = normalizePath(path)
   const root = state.root
   if (root && (normalizedPath === root.path || normalizedPath === root.sourcePath)) {
@@ -265,7 +311,7 @@ function resolveGinkoHierarchyPath(state, path) {
   }
   return state.nodeByPath[normalizedPath]
 }
-function canonicalizeGinkoHierarchyPath(state, path) {
+function canonicalizeGinkoHierarchyPath(state: GinkoHierarchyState, path: string): string {
   const normalizedPath = normalizePath(path)
   const root = state.root
   if (root && (normalizedPath === root.path || normalizedPath === root.sourcePath)) {
@@ -273,7 +319,7 @@ function canonicalizeGinkoHierarchyPath(state, path) {
   }
   return normalizedPath
 }
-function hierarchySubtreeContainsPath(nodes, path) {
+function hierarchySubtreeContainsPath(nodes: HierarchyEntry[], path: string): boolean {
   for (const node of nodes) {
     if (node.path === path) {
       return true
@@ -284,7 +330,7 @@ function hierarchySubtreeContainsPath(nodes, path) {
   }
   return false
 }
-function collectNavigableEntries(nodes, includeFolders, output) {
+function collectNavigableEntries(nodes: HierarchyEntry[], includeFolders: boolean, output: HierarchyEntry[]): HierarchyEntry[] {
   for (const node of nodes) {
     if (node.nodeKind === 'page' || (includeFolders && node.nodeKind === 'folder')) {
       output.push(node)
@@ -295,22 +341,23 @@ function collectNavigableEntries(nodes, includeFolders, output) {
   }
   return output
 }
-function getGinkoHierarchySurroundEntries(state, path, options = {}) {
+function getGinkoHierarchySurroundEntries(state: GinkoHierarchyState, path: string, options: Record<string, unknown> = {}): HierarchyEntry[] {
   const scope = options.scope === 'section' ? 'section' : 'collection'
   const includeFolders = options.includeFolders !== false
   const normalizedPath = canonicalizeGinkoHierarchyPath(state, path)
   if (scope !== 'section') {
     return collectNavigableEntries(state.tree, includeFolders, [])
   }
-  const sectionNode = state.tree.find(node => node.nodeKind === 'section' && hierarchySubtreeContainsPath([node], normalizedPath))
+  const sectionNode = state.tree.find((node: HierarchyEntry) => node.nodeKind === 'section' && hierarchySubtreeContainsPath([node], normalizedPath))
   if (!sectionNode) {
     return collectNavigableEntries(state.tree, includeFolders, [])
   }
   return collectNavigableEntries(sectionNode.children || [], includeFolders, [])
 }
-function getGinkoHierarchyEntryPath(state, entry) {
+function getGinkoHierarchyEntryPath(state: GinkoHierarchyState, entry: HierarchyEntry): string | undefined {
   const root = resolveRootEntry(state, entry)
   return root?.path || entry.path
 }
 
 export { buildGinkoHierarchyState, canonicalizeGinkoHierarchyPath, extractContentIdFromSlug, getGinkoHierarchyEntryPath, getGinkoHierarchySurroundEntries, localizePath, normalizePath, normalizeSlugSegment, resolveGinkoHierarchyPath }
+export type { GinkoHierarchyState, HierarchyEntry }

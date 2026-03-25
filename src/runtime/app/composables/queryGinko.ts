@@ -109,10 +109,10 @@ export function queryGinko<T = Record<string, unknown>>(collectionKey?: string):
   const routeBase = String(runtimeConfig.public.ginkoCms?.routeBase || '/api/ginko').replace(/\/$/, '')
 
   // Search config — read once per queryGinko() instance
-  const ginkoCms = runtimeConfig.public.ginkoCms as any
-  const searchConvexUrl: string | undefined = ginkoCms?.convexUrl
-  const searchKey: string | undefined = ginkoCms?.searchKey
-  const site = ginkoCms?.site as any
+  const ginkoCms = runtimeConfig.public.ginkoCms
+  const searchConvexUrl = ginkoCms?.convexUrl
+  const searchKey = ginkoCms?.searchKey
+  const site = ginkoCms?.site as Record<string, unknown> | undefined
   const searchSourceMap = buildSourceMap(site)
 
   const resolveLocale = (explicitLocale: string | null | undefined): string | null | undefined => {
@@ -122,27 +122,23 @@ export function queryGinko<T = Record<string, unknown>>(collectionKey?: string):
     if (typeof explicitLocale === 'string' && explicitLocale.trim()) {
       return explicitLocale.trim()
     }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const i18nLocale = asString(String(unrefValue((nuxtApp as any).$i18n?.locale) ?? ''))
+    const i18n = (nuxtApp as Record<string, unknown>).$i18n as Record<string, unknown> | undefined
+    const i18nLocale = asString(String(unrefValue(i18n?.locale) ?? ''))
     if (i18nLocale) {
       return i18nLocale
     }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const routeLocale = asString(String((route.params as any)?.locale ?? ''))
+    const routeLocale = asString(String((route.params as Record<string, unknown>)?.locale ?? ''))
     if (routeLocale) {
       return routeLocale
     }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return asString(String((runtimeConfig.public as any).ginkoCms?.locale ?? ''))
+    return asString(String(runtimeConfig.public.ginkoCms?.locale ?? ''))
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const request = async (payload: Record<string, unknown>): Promise<any> => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const response: any = await requestFetch(`${routeBase}/query`, {
+  const request = async (payload: Record<string, unknown>): Promise<unknown> => {
+    const response = await requestFetch(`${routeBase}/query`, {
       method: 'POST',
       body: payload,
-    })
+    }) as { data: unknown }
     return response.data
   }
 
@@ -202,7 +198,8 @@ export function queryGinko<T = Record<string, unknown>>(collectionKey?: string):
           )
         }
 
-        const collectionKeys = state.collectionKey ? [state.collectionKey] : Object.keys(site?.collections || {})
+        const siteCollections = (site?.collections || {}) as Record<string, unknown>
+        const collectionKeys = state.collectionKey ? [state.collectionKey] : Object.keys(siteCollections)
         const sourceCollections = resolveSourceCollections(collectionKeys, site)
         const locale = resolveLocale(state.locale) || ''
 
@@ -224,7 +221,7 @@ export function queryGinko<T = Record<string, unknown>>(collectionKey?: string):
             collectionSource: hit.collectionSlug,
             slug: hit.slug,
             updatedAt: hit.updatedAt,
-            raw: hit as any,
+            raw: hit as unknown as Record<string, unknown>,
           }))
         }
         catch (err) {

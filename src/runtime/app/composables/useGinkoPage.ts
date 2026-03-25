@@ -1,8 +1,10 @@
 import type { Ref } from 'vue'
 import type { GinkoCollections } from '../../types/index.js'
+import type { GinkoError } from '../../types/error.js'
 import { createError, navigateTo, useAsyncData, useNuxtApp, useRequestFetch, useRoute, useRuntimeConfig } from '#imports'
 import { computed, isRef } from 'vue'
 import { normalizePopulateFields } from '../../shared/query-populate.js'
+import { toGinkoError } from '../../types/error.js'
 import { resolveGinkoLocale } from './_ginkoUtils.js'
 
 type InferCollection<K extends string> = K extends keyof GinkoCollections ? GinkoCollections[K] : Record<string, unknown>
@@ -34,7 +36,7 @@ export interface UseGinkoPageResult<R = Record<string, unknown>> {
   /** Whether a fetch is currently in progress. */
   pending: Ref<boolean>
   /** Error from the last fetch attempt, if any. */
-  error: Ref<unknown>
+  error: Ref<GinkoError | null>
   /** Manually trigger a refetch. */
   refresh: () => Promise<void>
 }
@@ -82,7 +84,7 @@ export async function useGinkoPage<K extends keyof GinkoCollections | (string & 
   })
   const routeBase = String(runtimeConfig.public.ginkoCms?.routeBase || '/api/ginko').replace(/\/$/, '')
   const cacheKey = () => `ginko-page:${String(collectionKey ?? '_auto')}:${resolvedPath.value}:${resolvedLocale.value}`
-  const { data, pending, error, refresh } = await useAsyncData(
+  const { data, pending, error: rawError, refresh } = await useAsyncData(
     cacheKey,
     async () => {
       const payload = {
@@ -96,7 +98,7 @@ export async function useGinkoPage<K extends keyof GinkoCollections | (string & 
       const response = await requestFetch(`${routeBase}/query`, {
         method: 'POST',
         body: payload,
-      })
+      }) as { data: { redirect?: string, item: T | null } }
       const pageResponse = response.data
       if (pageResponse.redirect) {
         await navigateTo(pageResponse.redirect, { redirectCode: 301, replace: true })
@@ -114,10 +116,13 @@ export async function useGinkoPage<K extends keyof GinkoCollections | (string & 
       watch: enableWatch ? [resolvedPath, resolvedLocale] : [],
     },
   )
+  const typedError = computed<GinkoError | null>(() =>
+    rawError.value ? toGinkoError(rawError.value) : null,
+  )
   return {
-    data,
+    data: data as Ref<R | null>,
     pending,
-    error,
+    error: typedError as Ref<GinkoError | null>,
     refresh,
   }
 }

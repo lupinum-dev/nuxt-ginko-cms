@@ -52,7 +52,7 @@ function serializeYamlLines(obj: Record<string, unknown>, indent = 0): string[] 
         if (typeof item === 'object' && item !== null) {
           const nested = serializeYamlLines(item as Record<string, unknown>, indent + 2)
           if (nested.length > 0) {
-            lines.push(`${prefix}- ${nested[0].trimStart()}`)
+            lines.push(`${prefix}- ${nested[0]!.trimStart()}`)
             for (const n of nested.slice(1))
               lines.push(`${prefix}  ${n.trimStart()}`)
           }

@@ -72,17 +72,16 @@ export async function useGinkoNavigation<K extends keyof GinkoCollections | (str
   const { data, pending, error: rawError, refresh } = await useAsyncData(
     cacheKey,
     async () => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const response: any = await requestFetch(`${routeBase}/query`, {
+      const response = await requestFetch(`${routeBase}/query`, {
         method: 'POST',
         body: {
           op: 'navigation',
           collectionKey: String(collectionKey),
           locale: resolvedLocale.value || undefined,
         },
-      })
+      }) as { data: GinkoNavigationItem[] }
 
-      return Array.isArray(response.data) ? response.data as GinkoNavigationItem[] : []
+      return Array.isArray(response.data) ? response.data : []
     },
     {
       default: () => [] as GinkoNavigationItem[],

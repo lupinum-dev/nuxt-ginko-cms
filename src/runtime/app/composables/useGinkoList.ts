@@ -110,8 +110,7 @@ export async function useGinkoList<K extends keyof GinkoCollections | (string & 
 
   const totalRef = useState<number>(`ginko-list-total:${String(collectionKey)}`, () => 0)
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const watchSources: any[] = enableWatch ? [resolvedLocale] : []
+  const watchSources: Ref[] = enableWatch ? [resolvedLocale] : []
   if (enableWatch && resolvedOffset) {
     watchSources.push(resolvedOffset)
   }
@@ -133,11 +132,10 @@ export async function useGinkoList<K extends keyof GinkoCollections | (string & 
       const offsetVal = toValue(options.offset)
       if (typeof offsetVal === 'number') payload.offset = offsetVal
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const response: any = await requestFetch(`${routeBase}/query`, {
+      const response = await requestFetch(`${routeBase}/query`, {
         method: 'POST',
         body: payload,
-      })
+      }) as { data: T[], meta?: { total?: number } }
 
       const items = Array.isArray(response.data) ? response.data : []
       const total = typeof response.meta?.total === 'number' ? response.meta.total : items.length

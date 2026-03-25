@@ -33,7 +33,7 @@ function asString(value: unknown) {
   const normalized = value.trim()
   return normalized.length > 0 ? normalized : void 0
 }
-function normalizeLocale(locale: Record<string, unknown>) {
+function normalizeLocale(locale: { code: string, hreflang: string, isDefault?: boolean }) {
   const code = asString(locale.code)
   const hreflang = asString(locale.hreflang)
   if (!code || !hreflang) {
@@ -45,8 +45,7 @@ function normalizeLocale(locale: Record<string, unknown>) {
     isDefault: locale.isDefault === true,
   }
 }
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function normalizeFlatCollection(key: string, collection: any) {
+function normalizeFlatCollection(key: string, collection: Record<string, unknown>) {
   const source = asString(collection.source)
   if (!source) {
     throw new Error(`[ginko-cms] Invalid source for flat collection "${key}"`)
@@ -69,8 +68,7 @@ function normalizeFlatCollection(key: string, collection: any) {
     },
   }
 }
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function normalizeHierarchyCollection(key: string, collection: any) {
+function normalizeHierarchyCollection(key: string, collection: Record<string, unknown>) {
   const source = asString(collection.source)
   if (!source) {
     throw new Error(`[ginko-cms] Invalid source for hierarchy collection "${key}"`)
@@ -95,8 +93,7 @@ function normalizeHierarchyCollection(key: string, collection: any) {
     },
   }
 }
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function normalizeCollection(key: string, collection: any) {
+function normalizeCollection(key: string, collection: Record<string, unknown>) {
   if (collection.kind === 'hierarchy') {
     return normalizeHierarchyCollection(key, collection)
   }
@@ -106,7 +103,7 @@ function normalizeSiteConfig(site?: GinkoCmsSiteConfig) {
   if (!site) {
     return void 0
   }
-  const locales = (site.locales || []).map(normalizeLocale).filter(locale => Boolean(locale))
+  const locales = (site.locales || []).map(normalizeLocale).filter((locale): locale is NonNullable<typeof locale> => Boolean(locale))
   if (!locales.length) {
     throw new Error('[ginko-cms] ginkoCms.site.locales must include at least one valid locale')
   }
@@ -211,8 +208,9 @@ const module$1 = defineNuxtModule<GinkoCmsNuxtModuleOptions>({
         route: sitemapSourcePath,
         handler: resolver.resolve('./runtime/server/api/ginko/sitemap'),
       })
-      const sitemapConfig = nuxt.options.sitemap || (nuxt.options.sitemap = {})
-      const existingSources = Array.isArray(sitemapConfig.sources) ? sitemapConfig.sources : []
+      const nuxtOptions = nuxt.options as unknown as Record<string, unknown>
+      const sitemapConfig = (nuxtOptions.sitemap || (nuxtOptions.sitemap = {})) as Record<string, unknown>
+      const existingSources = Array.isArray(sitemapConfig.sources) ? sitemapConfig.sources as string[] : []
       if (!existingSources.includes(sitemapSourcePath)) {
         sitemapConfig.sources = [...existingSources, sitemapSourcePath]
       }

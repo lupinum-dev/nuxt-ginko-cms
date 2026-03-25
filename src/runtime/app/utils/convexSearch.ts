@@ -55,7 +55,7 @@ export async function fetchConvexSearch(args: FetchConvexSearchArgs): Promise<Co
     throw new ConvexSearchError(`Convex search failed with HTTP ${res.status}`, `http_${res.status}`)
   }
 
-  let body: any
+  let body: Record<string, unknown>
   try {
     body = await res.json()
   }
@@ -64,13 +64,13 @@ export async function fetchConvexSearch(args: FetchConvexSearchArgs): Promise<Co
   }
 
   if (body.status !== 'success') {
-    throw new ConvexSearchError(body.errorMessage || 'Convex query failed', 'convex_error')
+    throw new ConvexSearchError((body.errorMessage as string) || 'Convex query failed', 'convex_error')
   }
 
-  const value = body.value
+  const value = body.value as Record<string, unknown>
   if (value.status !== 'ok') {
-    throw new ConvexSearchError(value.error || 'Search error', value.error)
+    throw new ConvexSearchError((value.error as string) || 'Search error', value.error as string)
   }
 
-  return value.hits
+  return value.hits as ConvexSearchHit[]
 }
