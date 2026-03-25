@@ -187,6 +187,8 @@ const module$1 = defineNuxtModule<GinkoCmsNuxtModuleOptions>({
       routeBase,
       locale: String(envLocale || existingPublic.locale || normalizedSite?.defaultLocale || '').trim(),
       ...normalizedSite ? { site: normalizedSite } : {},
+      convexUrl: String(process.env.NUXT_PUBLIC_GINKO_CMS_CONVEX_URL || '').trim() || undefined,
+      searchKey: String(process.env.NUXT_PUBLIC_GINKO_CMS_SEARCH_KEY || '').trim() || undefined,
     }
     await installModule('@nuxtjs/mdc')
     addImportsDir(resolver.resolve('./runtime/app/composables'))

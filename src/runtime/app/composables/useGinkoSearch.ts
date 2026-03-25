@@ -1,9 +1,12 @@
 import type { Ref } from 'vue'
 import type { GinkoSearchResult } from '../../types/index.js'
 import type { GinkoError } from '../../types/error.js'
-import { useNuxtApp, useRequestFetch, useRoute, useRuntimeConfig } from '#imports'
+import type { ConvexSearchHit } from '../utils/convexSearch.js'
+import { useNuxtApp, useRoute, useRuntimeConfig } from '#imports'
 import { computed, onScopeDispose, ref, watch } from 'vue'
 import { toGinkoError } from '../../types/error.js'
+import { fetchConvexSearch } from '../utils/convexSearch.js'
+import { buildSourceMap, resolveCollectionKey, resolveHitPath, resolveSourceCollections } from '../utils/searchHelpers.js'
 import { resolveGinkoLocale } from './_ginkoUtils.js'
 
 /** Options for {@link useGinkoSearch}. */
@@ -35,7 +38,7 @@ export interface UseGinkoSearchResult {
 }
 
 /**
- * Pure data search composable. No modal state — that's the consumer's concern.
+ * Pure data search composable — calls Convex directly from the browser.
  *
  * @module ginko
  * @scope search
@@ -68,14 +71,23 @@ export function useGinkoSearch(
   const nuxtApp = useNuxtApp()
   const route = useRoute()
   const runtimeConfig = useRuntimeConfig()
-  const requestFetch = useRequestFetch()
   const resolvedLocale = resolveGinkoLocale(options.locale, nuxtApp, route, runtimeConfig)
-  const routeBase = String(runtimeConfig.public.ginkoCms?.routeBase || '/api/ginko').replace(/\/$/, '')
+
+  const ginkoCms = runtimeConfig.public.ginkoCms as any
+  const convexUrl: string | undefined = ginkoCms?.convexUrl
+  const searchKey: string | undefined = ginkoCms?.searchKey
+  const site = ginkoCms?.site as any
 
   // Normalize collection keys
   const collectionKeys: string[] | undefined = collections
     ? (typeof collections === 'string' ? [collections] : collections)
     : undefined
+
+  // Map collection keys → upstream source slugs (built once)
+  const sourceCollections = resolveSourceCollections(collectionKeys, site)
+
+  // Build reverse map: source slug → collection config (built once)
+  const sourceToCollection = buildSourceMap(site)
 
   const query = ref('')
   const results = ref<GinkoSearchResult[]>([])
@@ -100,69 +112,37 @@ export function useGinkoSearch(
       return
     }
 
+    if (!convexUrl || !searchKey) {
+      rawError.value = new Error(
+        '[nuxt-ginko-cms] Search not configured. Set NUXT_PUBLIC_GINKO_CMS_CONVEX_URL and NUXT_PUBLIC_GINKO_CMS_SEARCH_KEY.',
+      )
+      pending.value = false
+      return
+    }
+
     const serial = ++requestSerial
     pending.value = true
     rawError.value = null
 
     try {
-      // Fan out to each collection (or single search if undefined)
-      if (collectionKeys && collectionKeys.length > 0) {
-        const promises = collectionKeys.map(async (key) => {
-          const payload = {
-            op: 'search' as const,
-            collectionKey: key,
-            locale: resolvedLocale.value || undefined,
-            search: { q, limit: Math.ceil(limit / collectionKeys.length) },
-          }
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const response: any = await requestFetch(`${routeBase}/query`, {
-            method: 'POST',
-            body: payload,
-          })
-          return {
-            collection: key,
-            hits: Array.isArray(response.data) ? response.data : [],
-          }
-        })
+      const hits = await fetchConvexSearch({
+        convexUrl,
+        searchKey,
+        query: q,
+        collections: sourceCollections,
+        locale: resolvedLocale.value || undefined,
+        limit,
+      })
 
-        const allResults = await Promise.all(promises)
-        if (serial !== requestSerial) return
+      if (serial !== requestSerial) return
 
-        results.value = allResults.flatMap(({ collection, hits }) =>
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          hits.map((hit: any): GinkoSearchResult => ({
-            title: hit.title || 'Untitled',
-            snippet: hit.snippet || '',
-            path: hit.path || '/',
-            collection: hit.collectionKey || collection,
-            ...(includeRaw && hit.raw ? { raw: hit.raw } : {}),
-          })),
-        )
-      }
-      else {
-        // No collections specified — search all
-        const payload = {
-          op: 'search' as const,
-          locale: resolvedLocale.value || undefined,
-          search: { q, limit },
-        }
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const response: any = await requestFetch(`${routeBase}/query`, {
-          method: 'POST',
-          body: payload,
-        })
-        if (serial !== requestSerial) return
-
-        const hits = Array.isArray(response.data) ? response.data : []
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        results.value = hits.map((hit: any): GinkoSearchResult => ({
-          title: hit.title || 'Untitled',
-          snippet: hit.snippet || '',
-          path: hit.path || '/',
-          collection: hit.collectionKey || '',
-          ...(includeRaw && hit.raw ? { raw: hit.raw } : {}),
-        }))
-      }
+      results.value = hits.map((hit: ConvexSearchHit): GinkoSearchResult => ({
+        title: hit.title || 'Untitled',
+        snippet: hit.snippet || '',
+        path: resolveHitPath(hit, sourceToCollection, resolvedLocale.value, site),
+        collection: resolveCollectionKey(hit.collectionSlug, sourceToCollection) || hit.collectionSlug,
+        ...(includeRaw ? { raw: hit as any } : {}),
+      }))
     }
     catch (err) {
       if (serial !== requestSerial) return

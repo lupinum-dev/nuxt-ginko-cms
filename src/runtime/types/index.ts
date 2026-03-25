@@ -224,8 +224,8 @@ export interface GinkoSearchResult {
   title: string
   /** HTML snippet with `<mark>` tags. */
   snippet: string
-  /** Resolved URL path. */
-  path: string
+  /** Resolved URL path. `undefined` when path resolution fails (e.g. missing routing config). */
+  path?: string
   /** Which collection this came from. */
   collection: string
   /** Raw item data (only when `includeRaw: true`). */
@@ -307,7 +307,7 @@ export interface GinkoQueryPayload {
   includeBody?: boolean
   /** Fields to populate (relation expansion). Only supported for `find`, `first`, `page`. */
   populate?: string[]
-  /** Search operation parameters. Required when `op: 'search'`. */
+  /** @deprecated Search now uses direct Convex queries. Server returns 410 for `op: 'search'`. */
   search?: GinkoQueryOperationSearch
   /** Surround operation parameters. Used when `op: 'surround'`. */
   surround?: {

@@ -1,7 +1,10 @@
 import type { Ref } from 'vue'
 import type { GinkoSearchHit } from '../../types/index.js'
+import type { ConvexSearchHit } from '../utils/convexSearch.js'
 import { useNuxtApp, useRequestFetch, useRoute, useRuntimeConfig } from '#imports'
 import { isPopulateSupportedOperation, normalizePopulateFields } from '../../shared/query-populate.js'
+import { fetchConvexSearch } from '../utils/convexSearch.js'
+import { buildSourceMap, resolveHitPath, resolveSourceCollections } from '../utils/searchHelpers.js'
 
 /** Chainable query builder returned by {@link queryGinko}. */
 export interface GinkoQueryBuilder<T = Record<string, unknown>> {
@@ -105,6 +108,13 @@ export function queryGinko<T = Record<string, unknown>>(collectionKey?: string):
   const requestFetch = useRequestFetch()
   const routeBase = String(runtimeConfig.public.ginkoCms?.routeBase || '/api/ginko').replace(/\/$/, '')
 
+  // Search config — read once per queryGinko() instance
+  const ginkoCms = runtimeConfig.public.ginkoCms as any
+  const searchConvexUrl: string | undefined = ginkoCms?.convexUrl
+  const searchKey: string | undefined = ginkoCms?.searchKey
+  const site = ginkoCms?.site as any
+  const searchSourceMap = buildSourceMap(site)
+
   const resolveLocale = (explicitLocale: string | null | undefined): string | null | undefined => {
     if (explicitLocale === null) {
       return null
@@ -186,10 +196,43 @@ export function queryGinko<T = Record<string, unknown>>(collectionKey?: string):
         })
       },
       search: async (query: string, options: { limit?: number } = {}) => {
-        return await request({
-          ...toPayload('search'),
-          search: { q: query, limit: options.limit },
-        })
+        if (!searchConvexUrl || !searchKey) {
+          throw new Error(
+            '[nuxt-ginko-cms] queryGinko().search() requires NUXT_PUBLIC_GINKO_CMS_CONVEX_URL and NUXT_PUBLIC_GINKO_CMS_SEARCH_KEY',
+          )
+        }
+
+        const collectionKeys = state.collectionKey ? [state.collectionKey] : Object.keys(site?.collections || {})
+        const sourceCollections = resolveSourceCollections(collectionKeys, site)
+        const locale = resolveLocale(state.locale) || ''
+
+        try {
+          const hits = await fetchConvexSearch({
+            convexUrl: searchConvexUrl,
+            searchKey,
+            query,
+            collections: sourceCollections,
+            locale: locale || undefined,
+            limit: options.limit,
+          })
+
+          return hits.map((hit: ConvexSearchHit): GinkoSearchHit => ({
+            title: hit.title || 'Untitled',
+            snippet: hit.snippet || '',
+            path: resolveHitPath(hit, searchSourceMap, locale, site),
+            collectionKey: searchSourceMap.get(hit.collectionSlug)?.key || hit.collectionSlug,
+            collectionSource: hit.collectionSlug,
+            slug: hit.slug,
+            updatedAt: hit.updatedAt,
+            raw: hit as any,
+          }))
+        }
+        catch (err) {
+          throw new Error(
+            `[nuxt-ginko-cms] Search failed: ${err instanceof Error ? err.message : String(err)}`,
+            { cause: err },
+          )
+        }
       },
       pathBy: async (input: { itemId?: string, contentId?: string, slug?: string }) => {
         return await request({

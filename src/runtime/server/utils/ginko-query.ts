@@ -16,7 +16,6 @@ import {
 import { isPopulateSupportedOperation, normalizePopulateFields } from '../../shared/query-populate.js'
 import { fetchGinkoCmsJson } from './ginko-cms.js'
 import { assertValidPublicItem } from './public-item.js'
-import { sanitizeSearchSnippet } from './search-snippet.js'
 
 function getHierarchyStore() {
   const globalScope = globalThis
@@ -389,14 +388,6 @@ async function fetchHierarchyItemFromResolved(args) {
   }
   return null
 }
-function collectionFromSource(site, source) {
-  const matched = Object.entries(site.collections || {}).find(([, collection2]) => collection2.source === source)
-  if (!matched) {
-    return void 0
-  }
-  const [key, collection] = matched
-  return { key, collection }
-}
 async function fetchItemByResolvedPath(args) {
   const { event, site, resolved, locale, defaultLocale, strategy, query } = args
   if (!resolved.matched || !resolved.collectionKey) {
@@ -469,81 +460,10 @@ export async function executeGinkoQuery(event, payload) {
     })
   }
   if (payload.op === 'search') {
-    const queryText = asString(payload.search?.q)
-    if (!queryText || queryText.length < 2) {
-      return { data: [] }
-    }
-    const selected = payload.collectionKey ? [getCollectionOrThrow(site, payload.collectionKey)] : Object.values(site.collections || {})
-    const sourceCollections = [...new Set(selected.flatMap((collection) => {
-      const configured = collection.search?.collections
-      return Array.isArray(configured) && configured.length > 0 ? [...configured] : [collection.source]
-    }))]
-    const limit = Math.max(1, Math.min(payload.search?.limit || site.search?.defaultLimit || 12, 100))
-    const upstream = await fetchGinkoCmsJson(event, '/api/v1/cms/search', {
-      q: queryText,
-      collections: sourceCollections.join(','),
-      limit,
-      locale,
+    throw createError({
+      statusCode: 410,
+      statusMessage: '[ginko-cms] Server-proxy search is removed. Use useGinkoSearch() or queryGinko().search() which call Convex directly.',
     })
-    const rows = Array.isArray(upstream.body?.data) ? upstream.body.data : []
-    const hits = []
-    for (const row of rows) {
-      const record = toRecord(row)
-      const source = asString(record.collectionSlug) || asString(record.collection) || ''
-      const entry = collectionFromSource(site, source)
-      const collection = entry?.collection
-      let path
-      if (collection && isFlatCollection(collection)) {
-        const slug = asString(record.slug)
-        if (slug) {
-          const canonicalPath = resolveFlatPathBySlug({
-            collection,
-            slug,
-            locale,
-          })
-          if (canonicalPath) {
-            path = localizeSitePath({
-              path: canonicalPath,
-              locale,
-              defaultLocale: localeState.defaultLocale,
-              localePrefixStrategy: localeState.localePrefixStrategy,
-            })
-          }
-        }
-      }
-      if (collection && isHierarchyCollection(collection)) {
-        const state = await getHierarchyState({
-          event,
-          collection,
-          locale,
-          defaultLocale: localeState.defaultLocale,
-          strategy: localeState.localePrefixStrategy,
-        })
-        const id = asString(record.id)
-        const contentId = asString(record.contentId) || asString(record[collection.contentIdField || 'colocationFolderId'])
-        const slug = asString(record.slug)
-        const resolvedPath = (id && state.pathByItemId[id]) || (contentId && state.pathByContentId[contentId]) || (slug && state.pathBySlug[slug])
-        path = resolvedPath ? canonicalizeGinkoHierarchyPath(state, resolvedPath) : void 0
-      }
-      hits.push({
-        id: asString(record.id),
-        collectionKey: entry?.key,
-        collectionSource: source || void 0,
-        slug: asString(record.slug),
-        title: asString(record.title),
-        snippet: sanitizeSearchSnippet(asString(record.snippet)),
-        path,
-        updatedAt: asNumber(record.updatedAt),
-        raw: record,
-      })
-    }
-    return {
-      data: hits,
-      meta: {
-        locale,
-        limit,
-      },
-    }
   }
   if (payload.op === 'first' || payload.op === 'find') {
     const query = normalizeListQuery(payload)
