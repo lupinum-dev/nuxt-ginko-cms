@@ -62,15 +62,21 @@ function extractHeadingsFromMarkdown(content: string): GinkoTocItem[] {
  * ```ts
  * const toc = useGinkoToc(computed(() => page.value?.content))
  * // toc.value = [{ id: 'intro', text: 'Introduction', depth: 2 }, ...]
+ *
+ * // With depth filtering (h2 + h3 only)
+ * const toc = useGinkoToc(computed(() => page.value?.content), { depth: 3 })
  * ```
  */
 export function useGinkoToc(
   content: Ref<string | null | undefined>,
+  options?: { depth?: number },
 ): Ref<GinkoTocItem[]> {
+  const maxDepth = options?.depth ?? 4
   return computed<GinkoTocItem[]>(() => {
     const raw = content.value
     if (!raw) return []
 
-    return extractHeadingsFromMarkdown(raw)
+    const items = extractHeadingsFromMarkdown(raw)
+    return maxDepth < 4 ? items.filter(item => item.depth <= maxDepth) : items
   })
 }

@@ -26,9 +26,6 @@ function normalizeRoutePath(path) {
 }
 function normalizePrefixPath(prefix) {
   const normalized = normalizeRoutePath(prefix);
-  if (normalized === "/") {
-    throw new Error("[ginko-cms] Invalid sitemap flat collection prefix");
-  }
   return normalized;
 }
 function localizeRoutePath(args) {
