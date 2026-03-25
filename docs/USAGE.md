@@ -2,7 +2,7 @@
 
 The current API is:
 
-- package: `@lupinum/ginko-nuxt`
+- package: `nuxt-ginko-cms`
 - config key: `ginkoCms`
 - site DSL: `ginkoCms.site`
 - composables: `useGinkoPage`, `useGinkoList`, `useGinkoNavigation`, `useGinkoNav`, `useGinkoSurround`, `useGinkoSearch`, `queryGinko`

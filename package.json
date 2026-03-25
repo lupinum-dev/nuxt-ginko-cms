@@ -1,5 +1,5 @@
 {
-  "name": "@lupinum/ginko-nuxt",
+  "name": "nuxt-ginko-cms",
   "version": "0.0.2",
   "description": "Nuxt integration for Ginko CMS (key-first, server-BFF default)",
   "repository": "lupinum-dev/ginko-nuxt",
@@ -36,6 +36,16 @@
       "types": "./dist/hierarchy.d.mts",
       "import": "./dist/hierarchy.mjs",
       "default": "./dist/hierarchy.mjs"
+    },
+    "./composables": {
+      "types": "./dist/runtime/app/composables/index.d.ts",
+      "import": "./dist/runtime/app/composables/index.js",
+      "default": "./dist/runtime/app/composables/index.js"
+    },
+    "./utils": {
+      "types": "./dist/runtime/app/utils/index.d.ts",
+      "import": "./dist/runtime/app/utils/index.js",
+      "default": "./dist/runtime/app/utils/index.js"
     },
     "./package.json": "./package.json"
   },
@@ -91,8 +101,6 @@
     "vue": "^3.5.0",
     "vue-tsc": "^3.2.5"
   },
-  "publishConfig": {
-    "access": "public"
-  },
+  "publishConfig": {},
   "packageManager": "pnpm@10.10.0"
 }

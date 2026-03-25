@@ -2,7 +2,7 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { dirname, resolve } from 'node:path'
 
-const MODULE_PACKAGE_NAME = '@lupinum/ginko-nuxt'
+const MODULE_PACKAGE_NAME = 'nuxt-ginko-cms'
 
 function printHelp() {
   console.log(`ginko CLI

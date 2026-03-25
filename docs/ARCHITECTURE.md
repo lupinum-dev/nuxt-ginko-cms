@@ -2,7 +2,7 @@
 
 Current architectural defaults:
 
-- package: `@lupinum/ginko-nuxt`
+- package: `nuxt-ginko-cms`
 - runtime config key: `ginkoCms`
 - site DSL: `ginkoCms.site`
 - server-BFF query flow through `/api/ginko/*`

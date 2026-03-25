@@ -2,14 +2,14 @@ import type { GinkoCmsSiteConfig } from './runtime/types/index'
 import { addComponentsDir, addImportsDir, addServerHandler, addServerPlugin, createResolver, defineNuxtModule, installModule } from '@nuxt/kit'
 
 /**
- * Module options for `@lupinum/ginko-nuxt`.
+ * Module options for `nuxt-ginko-cms`.
  *
  * Set in `nuxt.config.ts` under the `ginkoCms` key.
  *
  * @example
  * ```ts
  * export default defineNuxtConfig({
- *   modules: ['@lupinum/ginko-nuxt'],
+ *   modules: ['nuxt-ginko-cms'],
  *   ginkoCms: {
  *     routeBase: '/api/ginko',
  *     site: { ... },
@@ -154,7 +154,7 @@ export type { GinkoCollections } from './runtime/types/index'
 
 const module$1 = defineNuxtModule<GinkoCmsNuxtModuleOptions>({
   meta: {
-    name: "@lupinum/ginko-nuxt",
+    name: "nuxt-ginko-cms",
     configKey: "ginkoCms",
     compatibility: {
       nuxt: ">=4.0.0"

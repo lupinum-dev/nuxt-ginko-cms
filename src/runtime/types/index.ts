@@ -3,7 +3,7 @@
  *
  * Extend this interface in your project to get type-safe composables:
  * ```ts
- * declare module '@lupinum/ginko-nuxt/runtime/types' {
+ * declare module 'nuxt-ginko-cms/runtime/types' {
  *   interface GinkoCollections {
  *     blog: BlogPost
  *     wiki: WikiPage

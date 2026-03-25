@@ -1,7 +1,7 @@
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineNuxtConfig({
-  modules: ['@lupinum/ginko-nuxt'],
+  modules: ['nuxt-ginko-cms'],
   devtools: { enabled: true },
 
   css: ['~/assets/css/main.css'],

@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",
-    "@lupinum/ginko-nuxt": "file:..",
+    "nuxt-ginko-cms": "file:..",
     "tailwindcss": "^4.1.18"
   },
   "devDependencies": {

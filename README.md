@@ -1,4 +1,4 @@
-# @lupinum/ginko-nuxt
+# nuxt-ginko-cms
 
 Nuxt integration for Ginko CMS with the current composable-first API.
 
@@ -12,12 +12,12 @@ Nuxt integration for Ginko CMS with the current composable-first API.
 ## Install
 
 ```bash
-pnpm add @lupinum/ginko-nuxt
+pnpm add nuxt-ginko-cms
 ```
 
 ```ts
 export default defineNuxtConfig({
-  modules: ["@lupinum/ginko-nuxt"],
+  modules: ["nuxt-ginko-cms"],
 })
 ```
 
@@ -39,7 +39,7 @@ NUXT_GINKO_CMS_TIMEOUT_MS=8000
 
 ```ts
 export default defineNuxtConfig({
-  modules: ["@lupinum/ginko-nuxt"],
+  modules: ["nuxt-ginko-cms"],
   ginkoCms: {
     site: {
       defaultLocale: "en",
