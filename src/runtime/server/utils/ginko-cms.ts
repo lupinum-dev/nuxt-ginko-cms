@@ -112,6 +112,43 @@ interface FetchResult {
   body: Record<string, unknown>
 }
 
+export async function postGinkoCmsJson(event: H3Event, path: string, body: unknown): Promise<FetchResult> {
+  const config = getGinkoCmsConfig(event)
+  const url = buildUpstreamUrl(config.base, path, {})
+  const response = await fetchWithRetry(url, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${config.key}`,
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+    body: JSON.stringify(body),
+  }, config.timeoutMs)
+  const rawBody = await response.text()
+  if (!rawBody.trim()) {
+    throw createError({
+      statusCode: 502,
+      statusMessage: `[ginko-cms] Upstream returned empty response (${response.status}) for ${url.pathname}`,
+    })
+  }
+  let parsed: Record<string, unknown>
+  try {
+    parsed = JSON.parse(rawBody)
+  }
+  catch {
+    const snippet = rawBody.replace(/\s+/g, ' ').trim().slice(0, 160)
+    throw createError({
+      statusCode: 502,
+      statusMessage: `[ginko-cms] Upstream returned non-JSON (${response.status}) for ${url.pathname}. Body: ${snippet || '<empty>'}`,
+    })
+  }
+  return {
+    status: response.status,
+    headers: response.headers,
+    body: parsed,
+  }
+}
+
 export async function fetchGinkoCmsJson(event: H3Event, path: string, query: Record<string, unknown> = {}): Promise<FetchResult> {
   const config = getGinkoCmsConfig(event)
   const url = buildUpstreamUrl(config.base, path, query)

@@ -1,6 +1,7 @@
 import type { GinkoQueryOperation } from './api'
 
 export type { BannerBlock, BannerData, FileBlock, HoursBlock, HoursData, HoursDay, JsonBlock, SiteDataPublic, SiteDataPublicBlock, SiteDataPublicFileData } from './siteData.js'
+export type { GinkoFeedbackSubmitResult, GinkoFormSubmitResult, UseGinkoFeedbackOptions, UseGinkoFeedbackResult, UseGinkoFormOptions, UseGinkoFormResult } from './forms.js'
 
 /**
  * Augmentable interface mapping collection keys to their item types.

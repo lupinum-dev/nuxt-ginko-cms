@@ -30,3 +30,9 @@ export type { GinkoQueryBuilder } from './queryGinko'
 
 export { useSiteData } from './useSiteData'
 export type { UseSiteDataOptions, UseSiteDataResult } from './useSiteData'
+
+export { useGinkoForm } from './useGinkoForm'
+export type { UseGinkoFormOptions, UseGinkoFormResult } from '../../types/forms'
+
+export { useGinkoFeedback } from './useGinkoFeedback'
+export type { UseGinkoFeedbackOptions, UseGinkoFeedbackResult } from '../../types/forms'

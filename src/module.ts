@@ -196,6 +196,16 @@ const module$1 = defineNuxtModule<GinkoCmsNuxtModuleOptions>({
       route: `${routeBase}/resolve`,
       handler: resolver.resolve('./runtime/server/api/ginko/resolve'),
     })
+    addServerHandler({
+      route: `${routeBase}/forms/:formId`,
+      method: 'post',
+      handler: resolver.resolve('./runtime/server/api/ginko/forms.post'),
+    })
+    addServerHandler({
+      route: `${routeBase}/feedback/:collectionSlug/:itemSlug`,
+      method: 'post',
+      handler: resolver.resolve('./runtime/server/api/ginko/feedback.post'),
+    })
     if (normalizedSite?.sitemap?.enabled !== false) {
       const sitemapSourcePath = normalizedSite?.sitemap?.sourcePath || '/api/ginko/sitemap'
       addServerHandler({
