@@ -75,8 +75,12 @@ export function resolveHitPath(
   if (isHierarchyCollection(collection)) {
     const routing = collection.routing as Record<string, unknown> | undefined
     const baseSegment = routing?.baseSegment as string | undefined
+    const rootSlug = routing?.rootSlug as string | undefined
+    const rootSlugByLocale = (routing?.rootSlugByLocale || {}) as Record<string, string>
+    const effectiveRootSlug = rootSlugByLocale[locale] || rootSlug
     if (baseSegment && hit.slug) {
-      const path = `/${baseSegment}/${hit.slug}`
+      const isRoot = effectiveRootSlug && hit.slug === effectiveRootSlug
+      const path = isRoot ? `/${baseSegment}` : `/${baseSegment}/${hit.slug}`
       return localizeSitePath({ path, locale, defaultLocale, localePrefixStrategy })
     }
   }
