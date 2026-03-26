@@ -1,5 +1,7 @@
 import type { GinkoQueryOperation } from './api'
 
+export type { BannerBlock, BannerData, DatasetPublic, DatasetPublicBlock, DatasetPublicFileData, FileBlock, HoursBlock, HoursData, HoursDay, JsonBlock } from './dataset.js'
+
 /**
  * Augmentable interface mapping collection keys to their item types.
  *

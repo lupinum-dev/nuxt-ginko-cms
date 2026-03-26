@@ -27,3 +27,6 @@ export { useGinkoToc } from './useGinkoToc'
 
 export { queryGinko } from './queryGinko'
 export type { GinkoQueryBuilder } from './queryGinko'
+
+export { useLiveDataset } from './useLiveDataset'
+export type { UseLiveDatasetOptions, UseLiveDatasetResult } from './useLiveDataset'
