@@ -1,6 +1,6 @@
 import type { GinkoQueryOperation } from './api'
 
-export type { BannerBlock, BannerData, DatasetPublic, DatasetPublicBlock, DatasetPublicFileData, FileBlock, HoursBlock, HoursData, HoursDay, JsonBlock } from './dataset.js'
+export type { BannerBlock, BannerData, FileBlock, HoursBlock, HoursData, HoursDay, JsonBlock, SiteDataPublic, SiteDataPublicBlock, SiteDataPublicFileData } from './siteData.js'
 
 /**
  * Augmentable interface mapping collection keys to their item types.
@@ -204,6 +204,8 @@ export interface GinkoNavItem {
   title: string
   /** Resolved URL path. `undefined` = not routable. */
   path?: string
+  /** Item kind. 'folder' items are collapsible groups, not navigable links. */
+  kind?: 'page' | 'folder'
   /** Optional icon string. */
   icon?: string
   /** Optional badge text. */

@@ -1,4 +1,4 @@
-// ─── Dataset block types ──────────────────────────────────────────────────────
+// ─── SiteData block types ──────────────────────────────────────────────────────
 
 export interface HoursDay {
   open: string
@@ -23,7 +23,7 @@ export interface BannerData {
   cta?: { label: string; url: string }
 }
 
-export interface DatasetPublicFileData {
+export interface SiteDataPublicFileData {
   url: string
   filename: string
   mimeType: string
@@ -48,7 +48,7 @@ export interface FileBlock {
   type: 'file'
   key: string
   label: string
-  data: DatasetPublicFileData
+  data: SiteDataPublicFileData
 }
 
 export interface JsonBlock {
@@ -59,12 +59,12 @@ export interface JsonBlock {
 }
 
 /** Union of all public block shapes (file blocks expose `url` instead of `storageId`). */
-export type DatasetPublicBlock = HoursBlock | BannerBlock | FileBlock | JsonBlock
+export type SiteDataPublicBlock = HoursBlock | BannerBlock | FileBlock | JsonBlock
 
-/** Public shape returned from `GET /api/v1/datasets/{datasetId}` — safe to use at build time. */
-export interface DatasetPublic {
+/** Public shape returned from `GET /api/v1/site-data/{siteDataId}` — safe to use at build time. */
+export interface SiteDataPublic {
   _id: string
   name: string
-  blocks: DatasetPublicBlock[]
+  blocks: SiteDataPublicBlock[]
   updatedAt: number
 }

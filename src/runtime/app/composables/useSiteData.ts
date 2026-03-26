@@ -1,18 +1,18 @@
 import type { Ref } from 'vue'
-import type { DatasetPublic } from '../../types/dataset.js'
+import type { SiteDataPublic } from '../../types/siteData.js'
 import { useAsyncData, useRuntimeConfig } from '#imports'
 import { computed, isRef } from 'vue'
 
-/** Options for {@link useLiveDataset}. */
-export interface UseLiveDatasetOptions {
+/** Options for {@link useSiteData}. */
+export interface UseSiteDataOptions {
   /** Override the Convex URL. Falls back to `runtimeConfig.public.convexUrl`. */
   convexUrl?: string
 }
 
-/** Return shape of {@link useLiveDataset}. */
-export interface UseLiveDatasetResult {
-  /** The fetched dataset, or `null` if not found. */
-  data: Ref<DatasetPublic | null>
+/** Return shape of {@link useSiteData}. */
+export interface UseSiteDataResult {
+  /** The fetched site data, or `null` if not found. */
+  data: Ref<SiteDataPublic | null>
   /** Whether a fetch is currently in progress. */
   pending: Ref<boolean>
   /** Error from the last fetch attempt, if any. */
@@ -22,7 +22,7 @@ export interface UseLiveDatasetResult {
 }
 
 /**
- * Fetch a Dataset by ID at build time (`nuxt generate`).
+ * Fetch a SiteData container by ID at build time (`nuxt generate`).
  *
  * Data is baked into `_payload.json` during static generation — no runtime
  * client-side fetching occurs. The Convex URL is read from
@@ -30,27 +30,27 @@ export interface UseLiveDatasetResult {
  *
  * @example
  * ```ts
- * const { data: dataset } = await useLiveDataset('abc123def456')
- * const hours = dataset.value?.blocks.find(b => b.type === 'hours')
+ * const { data: siteData } = await useSiteData('abc123def456')
+ * const hours = siteData.value?.blocks.find(b => b.type === 'hours')
  * ```
  */
-export async function useLiveDataset(
-  datasetId: string | Ref<string>,
-  options: UseLiveDatasetOptions = {},
-): Promise<UseLiveDatasetResult> {
+export async function useSiteData(
+  siteDataId: string | Ref<string>,
+  options: UseSiteDataOptions = {},
+): Promise<UseSiteDataResult> {
   const runtimeConfig = useRuntimeConfig()
   const baseUrl = options.convexUrl ?? (runtimeConfig.public.convexUrl as string ?? '')
 
-  const id = computed(() => isRef(datasetId) ? datasetId.value : datasetId)
+  const id = computed(() => isRef(siteDataId) ? siteDataId.value : siteDataId)
 
   const { data, pending, error, refresh } = await useAsyncData(
-    () => `ginko-dataset:${id.value}`,
-    () => $fetch<DatasetPublic>(`${baseUrl}/api/v1/datasets/${id.value}`).catch(() => null),
+    `ginko-site-data:${id.value}`,
+    () => $fetch<SiteDataPublic>(`${baseUrl}/api/v1/site-data/${id.value}`).catch(() => null),
     { watch: [id] },
   )
 
   return {
-    data: data as Ref<DatasetPublic | null>,
+    data: data as Ref<SiteDataPublic | null>,
     pending,
     error: error as Ref<Error | null>,
     refresh,

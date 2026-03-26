@@ -29,6 +29,7 @@ function mapNavItem(node: RawNavNode): GinkoNavItem {
   return {
     title: node.title || 'Untitled',
     path: node.path,
+    kind: node.kind === 'folder' ? 'folder' : 'page',
     icon: node.icon,
     badge: node.badge,
     children: (node.children ?? [])
