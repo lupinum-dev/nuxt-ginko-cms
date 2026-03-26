@@ -1,13 +1,7 @@
 import type { Ref } from 'vue'
 import { computed, isRef } from 'vue'
+import { asString } from '../../../type-guards'
 
-function asString(value: unknown): string | undefined {
-  if (typeof value !== 'string') {
-    return void 0
-  }
-  const normalized = value.trim()
-  return normalized.length > 0 ? normalized : void 0
-}
 function unrefValue(value: unknown): unknown {
   if (!value || typeof value !== 'object') {
     return value

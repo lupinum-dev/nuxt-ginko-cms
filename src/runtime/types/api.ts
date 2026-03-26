@@ -3,6 +3,9 @@
  * @module api
  */
 
+/** Supported query operations for the Ginko CMS query builder. */
+export type GinkoQueryOperation = 'find' | 'first' | 'navigation' | 'surround' | 'search' | 'pathBy' | 'page'
+
 /** A single content item from the CMS API. */
 export interface CmsItem {
   /** Unique item identifier. */

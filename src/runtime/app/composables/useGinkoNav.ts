@@ -159,9 +159,9 @@ export interface UseGinkoNavOptions {
 /** Return shape of {@link useGinkoNav}. */
 export interface UseGinkoNavResult {
   /** All navigation sections (pre-grouped from CMS tree). */
-  sections: Ref<GinkoNavSection[]>
+  sections: ComputedRef<GinkoNavSection[]>
   /** Active section id. Writable — auto-tracks route, clears override on navigation. */
-  activeSection: Ref<string>
+  activeSection: ComputedRef<string>
   /** Groups for the currently active section. */
   groups: ComputedRef<GinkoNavGroup[]>
   /** All items flattened (for search, breadcrumbs). */
@@ -251,12 +251,12 @@ export function useGinkoNav<K extends keyof GinkoCollections | (string & {})>(
   )
 
   return {
-    sections: sections as unknown as Ref<GinkoNavSection[]>,
-    activeSection: activeSection as unknown as Ref<string>,
+    sections,
+    activeSection,
     groups,
     flat,
     pending,
-    error: typedError as Ref<GinkoError | null>,
+    error: typedError,
     refresh,
   }
 }

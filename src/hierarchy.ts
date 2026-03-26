@@ -1,3 +1,5 @@
+import { asBoolean as _asBoolean, asChildren, asNumber, asRecord, asString } from './type-guards'
+
 interface HierarchyEntry {
   id: string
   itemId: string | undefined
@@ -44,31 +46,6 @@ interface WalkContext {
   depth: number
 }
 
-function asString(value: unknown): string | undefined {
-  if (typeof value !== 'string') {
-    return void 0
-  }
-  const normalized = value.trim()
-  return normalized.length > 0 ? normalized : void 0
-}
-function asNumber(value: unknown): number | undefined {
-  return typeof value === 'number' && Number.isFinite(value) ? value : void 0
-}
-function _asBoolean(value: unknown): boolean {
-  return value === true
-}
-function asRecord(value: unknown): Record<string, unknown> {
-  if (!value || typeof value !== 'object' || Array.isArray(value)) {
-    return {}
-  }
-  return value as Record<string, unknown>
-}
-function asChildren(value: unknown): Record<string, unknown>[] {
-  if (!Array.isArray(value)) {
-    return []
-  }
-  return value.filter((entry: unknown) => !!entry && typeof entry === 'object') as Record<string, unknown>[]
-}
 function toIsoOrder(raw: Record<string, unknown>, content: Record<string, unknown>, contentOrderField: string): number {
   return asNumber(content[contentOrderField]) ?? asNumber(raw.order) ?? Number.MAX_SAFE_INTEGER
 }
@@ -213,7 +190,11 @@ function buildGinkoHierarchyState(rawNodes: Record<string, unknown>[], options: 
       state.nodeByContentId[entry.contentId] = entry
     }
   }
+  const maxRecursionDepth = 20
   const walk = (nodes: Record<string, unknown>[], context: WalkContext): HierarchyEntry[] => {
+    if (context.depth >= maxRecursionDepth) {
+      return []
+    }
     const output: HierarchyEntry[] = []
     const sorted = sortRawNodes(nodes, contentOrderField, contentTitleField)
     for (const raw of sorted) {

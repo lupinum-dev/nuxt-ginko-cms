@@ -1,4 +1,4 @@
-import type { Ref } from 'vue'
+import type { ComputedRef } from 'vue'
 import { useRoute, useRouter, useState } from '#imports'
 import { computed } from 'vue'
 
@@ -20,7 +20,7 @@ import { computed } from 'vue'
  */
 export function useGinkoPreview(): {
   /** Whether preview mode is active. */
-  isPreview: Ref<boolean>
+  isPreview: ComputedRef<boolean>
   /** Exit preview mode and redirect to clean URL. */
   exitPreview: () => Promise<void>
 } {
@@ -45,7 +45,7 @@ export function useGinkoPreview(): {
   }
 
   return {
-    isPreview: isPreview as unknown as Ref<boolean>,
+    isPreview,
     exitPreview,
   }
 }

@@ -1,5 +1,6 @@
 import type { GinkoCmsSiteConfig } from './runtime/types/index'
 import { addComponentsDir, addImportsDir, addServerHandler, addServerPlugin, createResolver, defineNuxtModule, installModule } from '@nuxt/kit'
+import { asString } from './type-guards'
 
 /**
  * Module options for `nuxt-ginko-cms`.
@@ -26,13 +27,6 @@ export interface GinkoCmsNuxtModuleOptions {
 
 export type * from './runtime/types/api'
 
-function asString(value: unknown) {
-  if (typeof value !== 'string') {
-    return void 0
-  }
-  const normalized = value.trim()
-  return normalized.length > 0 ? normalized : void 0
-}
 function normalizeLocale(locale: { code: string, hreflang: string, isDefault?: boolean }) {
   const code = asString(locale.code)
   const hreflang = asString(locale.hreflang)

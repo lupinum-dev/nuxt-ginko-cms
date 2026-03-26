@@ -5,5 +5,6 @@ export default defineBuildConfig({
     './src/module',
     './src/hierarchy',
     './src/sitemap',
+    './src/type-guards',
   ],
 })

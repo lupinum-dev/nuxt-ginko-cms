@@ -1,5 +1,6 @@
 import type { H3Event } from 'h3'
 import type { GinkoHierarchyState, HierarchyEntry } from '../../../hierarchy'
+import type { GinkoQueryOperation } from '../../types/api'
 import { useRuntimeConfig } from '#imports'
 import { createError } from 'h3'
 import { buildGinkoHierarchyState, canonicalizeGinkoHierarchyPath, getGinkoHierarchyEntryPath, getGinkoHierarchySurroundEntries, resolveGinkoHierarchyPath } from '../../../hierarchy'
@@ -16,6 +17,7 @@ import {
   stripLocalePrefix,
 } from '../../shared/site.js'
 import { isPopulateSupportedOperation, normalizePopulateFields } from '../../shared/query-populate.js'
+import { asString } from '../../../type-guards'
 import { fetchGinkoCmsJson } from './ginko-cms.js'
 import { assertValidPublicItem } from './public-item.js'
 
@@ -45,22 +47,6 @@ function getSiteConfig(event: H3Event): Record<string, unknown> {
     throw createError({ statusCode: 500, statusMessage: '[ginko-cms] Missing ginkoCms.site configuration' })
   }
   return site as unknown as Record<string, unknown>
-}
-function asString(value: unknown): string | undefined {
-  if (typeof value !== 'string') {
-    return void 0
-  }
-  const normalized = value.trim()
-  return normalized.length > 0 ? normalized : void 0
-}
-function _asNumber(value: unknown): number | undefined {
-  return typeof value === 'number' && Number.isFinite(value) ? value : void 0
-}
-function _toRecord(value: unknown): Record<string, unknown> {
-  if (!value || typeof value !== 'object' || Array.isArray(value)) {
-    return {}
-  }
-  return value as Record<string, unknown>
 }
 function toHierarchyDefaultLocale(args: { strategy: string, locale: string, defaultLocale: string }): string {
   if (args.strategy === 'none') {
@@ -480,6 +466,7 @@ async function fetchItemByResolvedPath(args: Record<string, unknown>): Promise<R
 export async function executeGinkoQuery(event: H3Event, payload: Record<string, unknown>): Promise<Record<string, unknown>> {
   const site = getSiteConfig(event)
   const localeState = resolveSiteLocales(site)
+  const op = payload.op as GinkoQueryOperation
   const localeInfo = getLocaleForRequest({
     explicitLocale: payload.locale as string | undefined,
     path: payload.path as string | undefined,
@@ -487,19 +474,19 @@ export async function executeGinkoQuery(event: H3Event, payload: Record<string, 
   })
   const locale = localeInfo.locale
   const populate = normalizePopulateFields(payload.populate)
-  if (populate.length > 0 && !isPopulateSupportedOperation(payload.op as string)) {
+  if (populate.length > 0 && !isPopulateSupportedOperation(op)) {
     throw createError({
       statusCode: 400,
-      statusMessage: `[ginko-cms] populate() is not supported for ${payload.op}()`,
+      statusMessage: `[ginko-cms] populate() is not supported for ${op}()`,
     })
   }
-  if (payload.op === 'search') {
+  if (op === 'search') {
     throw createError({
       statusCode: 410,
       statusMessage: '[ginko-cms] Server-proxy search is removed. Use useGinkoSearch() or queryGinko().search() which call Convex directly.',
     })
   }
-  if (payload.op === 'first' || payload.op === 'find') {
+  if (op === 'first' || op === 'find') {
     const query = normalizeListQuery(payload)
     if (payload.path) {
       const resolved = await resolveSitePath(event, {
@@ -507,7 +494,7 @@ export async function executeGinkoQuery(event: H3Event, payload: Record<string, 
         locale: payload.locale as string | undefined,
       })
       if (!resolved.matched || !resolved.collectionKey) {
-        return { data: payload.op === 'first' ? null : [] }
+        return { data: op === 'first' ? null : [] }
       }
       const row = await fetchItemByResolvedPath({
         event,
@@ -519,17 +506,17 @@ export async function executeGinkoQuery(event: H3Event, payload: Record<string, 
         query,
       })
       if (!row) {
-        return { data: payload.op === 'first' ? null : [] }
+        return { data: op === 'first' ? null : [] }
       }
       return {
-        data: payload.op === 'first' ? row : [row],
+        data: op === 'first' ? row : [row],
         meta: { resolved },
       }
     }
     const collection = getCollectionOrThrow(site, payload.collectionKey as string | undefined)
     const effectiveQuery: Record<string, unknown> = {
       ...query,
-      ...payload.op === 'first' ? { limit: 1 } : {},
+      ...op === 'first' ? { limit: 1 } : {},
       locale: collection.localized === false ? void 0 : locale,
     }
     const upstream = await fetchGinkoCmsJson(
@@ -540,7 +527,7 @@ export async function executeGinkoQuery(event: H3Event, payload: Record<string, 
     const rows = Array.isArray(upstream.body?.data)
       ? upstream.body.data.map((row: unknown) => assertValidPublicItem(row, {
           collectionSource: collection.source as string,
-          op: payload.op as 'find' | 'first' | 'page',
+          op: op as 'find' | 'first' | 'page',
           includeBody: payload.includeBody === true,
         }))
       : []
@@ -553,7 +540,7 @@ export async function executeGinkoQuery(event: H3Event, payload: Record<string, 
         strategy: localeState.localePrefixStrategy,
       }))
       return {
-        data: payload.op === 'first' ? mapped2[0] || null : mapped2,
+        data: op === 'first' ? mapped2[0] || null : mapped2,
         meta: upstream.body?.meta,
       }
     }
@@ -572,11 +559,11 @@ export async function executeGinkoQuery(event: H3Event, payload: Record<string, 
       }
     }))
     return {
-      data: payload.op === 'first' ? mapped[0] || null : mapped,
+      data: op === 'first' ? mapped[0] || null : mapped,
       meta: upstream.body?.meta,
     }
   }
-  if (payload.op === 'navigation') {
+  if (op === 'navigation') {
     const collection = getCollectionOrThrow(site, payload.collectionKey as string | undefined)
     if (!isHierarchyCollection(collection)) {
       throw createError({ statusCode: 400, statusMessage: '[ginko-cms] navigation() is only valid for hierarchy collections' })
@@ -593,7 +580,7 @@ export async function executeGinkoQuery(event: H3Event, payload: Record<string, 
       meta: { locale },
     }
   }
-  if (payload.op === 'surround') {
+  if (op === 'surround') {
     const collection = getCollectionOrThrow(site, payload.collectionKey as string | undefined)
     if (!isHierarchyCollection(collection)) {
       throw createError({ statusCode: 400, statusMessage: '[ginko-cms] surround() is only valid for hierarchy collections' })
@@ -637,7 +624,7 @@ export async function executeGinkoQuery(event: H3Event, payload: Record<string, 
       meta: { locale },
     }
   }
-  if (payload.op === 'pathBy') {
+  if (op === 'pathBy') {
     const collection = getCollectionOrThrow(site, payload.collectionKey as string | undefined)
     const input = (payload.pathBy || {}) as Record<string, unknown>
     if (isFlatCollection(collection)) {
@@ -675,7 +662,7 @@ export async function executeGinkoQuery(event: H3Event, payload: Record<string, 
       meta: { locale },
     }
   }
-  if (payload.op === 'page') {
+  if (op === 'page') {
     if (!payload.path) {
       throw createError({ statusCode: 400, statusMessage: '[ginko-cms] page() requires a path' })
     }
@@ -722,5 +709,5 @@ export async function executeGinkoQuery(event: H3Event, payload: Record<string, 
       },
     }
   }
-  throw createError({ statusCode: 400, statusMessage: `[ginko-cms] Unsupported query operation: ${payload.op}` })
+  throw createError({ statusCode: 400, statusMessage: `[ginko-cms] Unsupported query operation: ${op}` })
 }

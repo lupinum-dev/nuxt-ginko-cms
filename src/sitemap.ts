@@ -1,4 +1,5 @@
 import { buildGinkoHierarchyState } from './hierarchy'
+import { asNumber, asString } from './type-guards'
 
 interface SitemapLocale {
   code: string
@@ -35,16 +36,6 @@ interface SitemapSource {
   [key: string]: unknown
 }
 
-function asString(value: unknown): string | undefined {
-  if (typeof value !== 'string') {
-    return void 0
-  }
-  const normalized = value.trim()
-  return normalized.length > 0 ? normalized : void 0
-}
-function asNumber(value: unknown): number | undefined {
-  return typeof value === 'number' && Number.isFinite(value) ? value : void 0
-}
 function normalizeBase(base: string): string {
   const parsed = new URL(base)
   parsed.pathname = '/'
@@ -163,10 +154,15 @@ function addGroupedRoute(args: { grouped: Map<string, GroupedRoute>, routeKey: s
   }
   args.grouped.set(args.routeKey, current)
 }
-async function fetchCollectionRows(args: { base: string, key: string, localeCode: string, collection: string, pageSize: number }): Promise<Record<string, unknown>[]> {
+const SITEMAP_MAX_ITEMS = 50_000
+const SITEMAP_MAX_PAGES = 500
+
+async function fetchCollectionRows(args: { base: string, key: string, localeCode: string, collection: string, pageSize: number, maxItems?: number }): Promise<Record<string, unknown>[]> {
   const rows: Record<string, unknown>[] = []
+  const maxItems = args.maxItems ?? SITEMAP_MAX_ITEMS
   let offset = 0
-  while (true) {
+  let page = 0
+  while (page < SITEMAP_MAX_PAGES) {
     const url = new URL(`/api/v1/cms/${args.collection}`, args.base)
     url.searchParams.set('locale', args.localeCode)
     url.searchParams.set('limit', String(args.pageSize))
@@ -176,10 +172,18 @@ async function fetchCollectionRows(args: { base: string, key: string, localeCode
     const response = await fetchJson(url, args.key)
     const pageRows = Array.isArray(response.data) ? response.data as Record<string, unknown>[] : []
     rows.push(...pageRows)
+    if (rows.length >= maxItems) {
+      console.warn(`[ginko-cms] Sitemap: truncated ${args.collection} at ${rows.length} items (limit: ${maxItems})`)
+      return rows.slice(0, maxItems)
+    }
     if (pageRows.length < args.pageSize) {
       break
     }
     offset += args.pageSize
+    page += 1
+  }
+  if (page >= SITEMAP_MAX_PAGES) {
+    console.warn(`[ginko-cms] Sitemap: reached max page limit (${SITEMAP_MAX_PAGES}) for ${args.collection}`)
   }
   return rows
 }

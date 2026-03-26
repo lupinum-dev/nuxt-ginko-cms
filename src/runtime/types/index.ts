@@ -1,3 +1,5 @@
+import type { GinkoQueryOperation } from './api'
+
 /**
  * Augmentable interface mapping collection keys to their item types.
  *
@@ -283,7 +285,7 @@ export interface GinkoQueryOperationPathBy {
  */
 export interface GinkoQueryPayload {
   /** The query operation to execute. */
-  op: 'find' | 'first' | 'navigation' | 'surround' | 'search' | 'pathBy' | 'page'
+  op: GinkoQueryOperation
   /** Target collection key. Required for most operations; omit for cross-collection search. */
   collectionKey?: string
   /** Content path for path-based operations (`page`, `find`, `first`, `surround`). */

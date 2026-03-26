@@ -1,3 +1,5 @@
+export type { GinkoError, GinkoErrorCode } from '../../types/error'
+
 export { useGinkoCopyPage } from './useGinkoCopyPage'
 export type { UseGinkoCopyPageOptions, UseGinkoCopyPageResult } from './useGinkoCopyPage'
 

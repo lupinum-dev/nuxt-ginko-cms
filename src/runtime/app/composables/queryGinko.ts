@@ -1,7 +1,10 @@
 import type { Ref } from 'vue'
 import type { GinkoSearchHit } from '../../types/index.js'
 import type { ConvexSearchHit } from '../utils/convexSearch.js'
+import type { GinkoNavigationItem } from './useGinkoNavigation.js'
+import type { SurroundItem } from './useGinkoSurround.js'
 import { useNuxtApp, useRequestFetch, useRoute, useRuntimeConfig } from '#imports'
+import { asString } from '../../../type-guards'
 import { isPopulateSupportedOperation, normalizePopulateFields } from '../../shared/query-populate.js'
 import { fetchConvexSearch } from '../utils/convexSearch.js'
 import { buildSourceMap, resolveHitPath, resolveSourceCollections } from '../utils/searchHelpers.js'
@@ -29,21 +32,13 @@ export interface GinkoQueryBuilder<T = Record<string, unknown>> {
   /** Execute a `first` query returning a single item or `null`. */
   first: () => Promise<T | null>
   /** Fetch the hierarchy navigation tree. Only valid for hierarchy collections. */
-  navigation: () => Promise<Record<string, unknown>[]>
+  navigation: () => Promise<GinkoNavigationItem[]>
   /** Fetch the previous/next surround items for a hierarchy path. Pass `scope: 'section'` to stay within the active section. */
-  surround: (path?: string, options?: { scope?: 'collection' | 'section' }) => Promise<[Record<string, unknown> | null, Record<string, unknown> | null]>
+  surround: (path?: string, options?: { scope?: 'collection' | 'section' }) => Promise<[SurroundItem | null, SurroundItem | null]>
   /** Execute a full-text search query. */
   search: (query: string, options?: { limit?: number }) => Promise<GinkoSearchHit[]>
   /** Resolve a content path by item ID, content ID, or slug. */
   pathBy: (input: { itemId?: string, contentId?: string, slug?: string }) => Promise<string | null>
-}
-
-function asString(value: unknown): string | undefined {
-  if (typeof value !== 'string') {
-    return undefined
-  }
-  const normalized = value.trim()
-  return normalized.length > 0 ? normalized : undefined
 }
 
 function unrefValue(value: unknown): unknown {

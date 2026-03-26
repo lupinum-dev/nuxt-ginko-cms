@@ -1,17 +1,4 @@
-function asString(value: unknown) {
-  if (typeof value !== 'string') {
-    return void 0
-  }
-  const normalized = value.trim()
-  return normalized.length > 0 ? normalized : void 0
-}
-
-function toRecord(value: unknown): Record<string, unknown> {
-  if (!value || typeof value !== 'object' || Array.isArray(value)) {
-    return {}
-  }
-  return value as Record<string, unknown>
-}
+import { asRecord as toRecord, asString } from '../../../type-guards'
 
 export function normalizePublicItem(raw: unknown) {
   const record = toRecord(raw)

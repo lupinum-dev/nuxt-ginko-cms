@@ -98,10 +98,11 @@ async function fetchWithRetry(url: URL, init: RequestInit, timeoutMs: number): P
       await new Promise(resolve => setTimeout(resolve, 150 * (attempt + 1)))
     }
   }
-  const message = lastError instanceof Error ? lastError.message : String(lastError || 'unknown')
+  const rawMessage = lastError instanceof Error ? lastError.message : String(lastError || 'unknown')
+  const safeMessage = rawMessage.replace(/https?:\/\/[^\s)]+/g, '<redacted-url>')
   throw createError({
     statusCode: 502,
-    statusMessage: `[ginko-cms] Upstream request failed: ${message}`,
+    statusMessage: `[ginko-cms] Upstream request failed: ${safeMessage}`,
   })
 }
 
@@ -145,9 +146,17 @@ export async function fetchGinkoCmsJson(event: H3Event, path: string, query: Rec
     body: parsed,
   }
 }
+function hashKey(value: string): string {
+  let hash = 0
+  for (let i = 0; i < value.length; i++) {
+    hash = ((hash << 5) - hash + value.charCodeAt(i)) | 0
+  }
+  return (hash >>> 0).toString(36)
+}
+
 export async function getCachedGinkoCmsContext(event: H3Event): Promise<unknown> {
   const config = getGinkoCmsConfig(event)
-  const cacheKey = `${config.base}::${config.key}`
+  const cacheKey = `${config.base}::${hashKey(config.key)}`
   const now = Date.now()
   const store = getGlobalStore()
   const cached = store.contextCache.get(cacheKey)

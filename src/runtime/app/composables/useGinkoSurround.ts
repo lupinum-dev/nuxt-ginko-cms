@@ -1,7 +1,9 @@
 import type { Ref } from 'vue'
 import type { GinkoCollections } from '../../types/index.js'
+import type { GinkoError } from '../../types/error.js'
 import { useAsyncData, useNuxtApp, useRequestFetch, useRoute, useRuntimeConfig } from '#imports'
 import { computed, isRef } from 'vue'
+import { toGinkoError } from '../../types/error.js'
 import { resolveGinkoLocale } from './_ginkoUtils.js'
 
 /** A previous or next page link in a hierarchy. */
@@ -35,7 +37,7 @@ export interface UseGinkoSurroundResult {
   /** Whether a fetch is currently in progress. */
   pending: Ref<boolean>
   /** Error from the last fetch attempt, if any. */
-  error: Ref<unknown>
+  error: Ref<GinkoError | null>
   /** Manually trigger a refetch. */
   refresh: () => Promise<void>
 }
@@ -100,11 +102,15 @@ export async function useGinkoSurround<K extends keyof GinkoCollections | (strin
       watch: enableWatch ? [resolvedPath, resolvedLocale, resolvedScope] : [],
     },
   )
+  const typedError = computed<GinkoError | null>(() =>
+    error.value ? toGinkoError(error.value) : null,
+  )
+
   return {
     prev: computed(() => data.value?.prev ?? null),
     next: computed(() => data.value?.next ?? null),
     pending,
-    error,
+    error: typedError,
     refresh,
   }
 }
