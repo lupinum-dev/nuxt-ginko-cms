@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v0.0.4
+
+[compare changes](https://github.com/lupinum-dev/nuxt-ginko-cms/compare/v0.0.3...v0.0.4)
+
+### 🚀 Enhancements
+
+- Integrate Convex search functionality into Ginko CMS ([0c8e193](https://github.com/lupinum-dev/nuxt-ginko-cms/commit/0c8e193))
+- Enhance type safety and structure in hierarchy and sitemap modules ([eb41a19](https://github.com/lupinum-dev/nuxt-ginko-cms/commit/eb41a19))
+- Add environment configuration and enhance type safety in Ginko CMS ([2927df3](https://github.com/lupinum-dev/nuxt-ginko-cms/commit/2927df3))
+
+### 🏡 Chore
+
+- **release:** V0.0.3 ([6a86db8](https://github.com/lupinum-dev/nuxt-ginko-cms/commit/6a86db8))
+
+### ❤️ Contributors
+
+- Mat4m0 <matthias.amon@me.com>
+
 ## v0.0.3
 
 [compare changes](https://github.com/lupinum-dev/nuxt-ginko-cms/compare/v0.0.2...v0.0.3)
