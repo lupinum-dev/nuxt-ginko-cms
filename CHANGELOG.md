@@ -1,6 +1,27 @@
 # Changelog
 
 
+## v0.0.5
+
+[compare changes](https://github.com/lupinum-dev/nuxt-ginko-cms/compare/v0.0.4...v0.0.5)
+
+### 🚀 Enhancements
+
+- Enhance hit path resolution in searchHelpers ([1cca833](https://github.com/lupinum-dev/nuxt-ginko-cms/commit/1cca833))
+- Add useLiveDataset composable and dataset types ([329cf5e](https://github.com/lupinum-dev/nuxt-ginko-cms/commit/329cf5e))
+- Introduce useSiteData composable and site data types ([e08eba7](https://github.com/lupinum-dev/nuxt-ginko-cms/commit/e08eba7))
+- Add feedback and form submission composables with API integration ([d0632fa](https://github.com/lupinum-dev/nuxt-ginko-cms/commit/d0632fa))
+- Optimize folder segment handling in buildGinkoHierarchyState function ([0b9ff78](https://github.com/lupinum-dev/nuxt-ginko-cms/commit/0b9ff78))
+- Update hierarchy state handling and improve form composable variable naming ([073b149](https://github.com/lupinum-dev/nuxt-ginko-cms/commit/073b149))
+
+### 🏡 Chore
+
+- **release:** V0.0.4 ([e0d14e3](https://github.com/lupinum-dev/nuxt-ginko-cms/commit/e0d14e3))
+
+### ❤️ Contributors
+
+- Mat4m0 <matthias.amon@me.com>
+
 ## v0.0.4
 
 [compare changes](https://github.com/lupinum-dev/nuxt-ginko-cms/compare/v0.0.3...v0.0.4)
