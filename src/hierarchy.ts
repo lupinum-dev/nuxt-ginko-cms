@@ -206,9 +206,11 @@ function buildGinkoHierarchyState(rawNodes: Record<string, unknown>[], options: 
       const rawSlug = isGroup ? void 0 : normalizeSlugSegment(content[contentSlugField]) || normalizeSlugSegment(raw.slug)
       const title = asString(content[contentTitleField]) || asString(raw.title) || rawSlug || 'Untitled'
       const order = toIsoOrder(raw, content, contentOrderField)
-      const nextFolderSegments = isFolder && rawSlug ? [...context.folderSegments, rawSlug] : context.folderSegments
-      const nextFolderTitles = isFolder ? [...context.folderTitles, title] : context.folderTitles
-      const nextFolderItemIds = isFolder && itemId ? [...context.folderItemIds, itemId] : context.folderItemIds
+      const childNodes = asChildren(raw.children)
+      const carriesChildPathSegments = isFolder || (!isGroup && childNodes.length > 0)
+      const nextFolderSegments = carriesChildPathSegments && rawSlug ? [...context.folderSegments, rawSlug] : context.folderSegments
+      const nextFolderTitles = carriesChildPathSegments ? [...context.folderTitles, title] : context.folderTitles
+      const nextFolderItemIds = carriesChildPathSegments && itemId ? [...context.folderItemIds, itemId] : context.folderItemIds
       const segments = isFolder ? nextFolderSegments : !isGroup && rawSlug ? [...context.folderSegments, rawSlug] : []
       const path = buildPath({
         baseSegment,
@@ -220,7 +222,7 @@ function buildGinkoHierarchyState(rawNodes: Record<string, unknown>[], options: 
       const contentId = contentIdFromField || (rawSlug ? extractContentIdFromSlug(rawSlug) : void 0)
       const shouldInclude = isGroup ? Boolean(title) : isFolder ? includeFolders && Boolean(path) : Boolean(path)
       if (!shouldInclude) {
-        const children = walk(asChildren(raw.children), {
+        const children = walk(childNodes, {
           folderSegments: nextFolderSegments,
           folderTitles: nextFolderTitles,
           folderItemIds: nextFolderItemIds,
@@ -252,7 +254,7 @@ function buildGinkoHierarchyState(rawNodes: Record<string, unknown>[], options: 
         children: [],
       }
       register(entry)
-      const children = walk(asChildren(raw.children), {
+      const children = walk(childNodes, {
         folderSegments: nextFolderSegments,
         folderTitles: nextFolderTitles,
         folderItemIds: nextFolderItemIds,
