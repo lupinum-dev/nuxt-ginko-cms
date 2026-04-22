@@ -27,7 +27,7 @@ export function useGinkoForm(formId: string, options: UseGinkoFormOptions = {}):
   const isSubmitted: Ref<boolean> = ref(false)
   const errorMessage: Ref<string | null> = ref(null)
 
-  let renderedAt: number | null = null
+  let _renderedAt: number | null = null
 
   function getSessionId(): string {
     if (typeof sessionStorage === 'undefined')
@@ -44,7 +44,7 @@ export function useGinkoForm(formId: string, options: UseGinkoFormOptions = {}):
   }
 
   function startTimer(): void {
-    renderedAt = Date.now()
+    _renderedAt = Date.now()
   }
 
   function reset(): void {

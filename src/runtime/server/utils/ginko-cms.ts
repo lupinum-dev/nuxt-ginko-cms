@@ -118,9 +118,9 @@ export async function postGinkoCmsJson(event: H3Event, path: string, body: unkno
   const response = await fetchWithRetry(url, {
     method: 'POST',
     headers: {
-      Authorization: `Bearer ${config.key}`,
+      'Authorization': `Bearer ${config.key}`,
       'Content-Type': 'application/json',
-      Accept: 'application/json',
+      'accept': 'application/json',
     },
     body: JSON.stringify(body),
   }, config.timeoutMs)
@@ -156,7 +156,7 @@ export async function fetchGinkoCmsJson(event: H3Event, path: string, query: Rec
     method: 'GET',
     headers: {
       Authorization: `Bearer ${config.key}`,
-      Accept: 'application/json',
+      accept: 'application/json',
     },
   }, config.timeoutMs)
   const rawBody = await response.text()

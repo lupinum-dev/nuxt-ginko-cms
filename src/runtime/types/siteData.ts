@@ -20,7 +20,7 @@ export interface BannerData {
   active: boolean
   activeFrom?: number
   activeTo?: number
-  cta?: { label: string; url: string }
+  cta?: { label: string, url: string }
 }
 
 export interface SiteDataPublicFileData {

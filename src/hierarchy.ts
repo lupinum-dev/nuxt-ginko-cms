@@ -202,12 +202,13 @@ function buildGinkoHierarchyState(rawNodes: Record<string, unknown>[], options: 
       const nodeKind = getNodeKind(raw)
       const isFolder = nodeKind === 'folder'
       const isGroup = nodeKind === 'group'
+      const isPage = nodeKind === 'page'
       const itemId = asString(raw.id)
       const rawSlug = isGroup ? void 0 : normalizeSlugSegment(content[contentSlugField]) || normalizeSlugSegment(raw.slug)
       const title = asString(content[contentTitleField]) || asString(raw.title) || rawSlug || 'Untitled'
       const order = toIsoOrder(raw, content, contentOrderField)
       const childNodes = asChildren(raw.children)
-      const carriesChildPathSegments = isFolder || (!isGroup && childNodes.length > 0)
+      const carriesChildPathSegments = isFolder || (isPage && childNodes.length > 0)
       const nextFolderSegments = carriesChildPathSegments && rawSlug ? [...context.folderSegments, rawSlug] : context.folderSegments
       const nextFolderTitles = carriesChildPathSegments ? [...context.folderTitles, title] : context.folderTitles
       const nextFolderItemIds = carriesChildPathSegments && itemId ? [...context.folderItemIds, itemId] : context.folderItemIds
