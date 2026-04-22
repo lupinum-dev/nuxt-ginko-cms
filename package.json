@@ -64,6 +64,7 @@
   },
   "scripts": {
     "prepack": "nuxt-module-build build",
+    "prepare": "pnpm run prepack",
     "dev": "pnpm run dev:prepare && pnpm --dir playground dev",
     "dev:build": "pnpm --dir playground build",
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && pnpm --dir playground exec nuxi prepare",
