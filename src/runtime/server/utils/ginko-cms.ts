@@ -205,7 +205,7 @@ export async function getCachedGinkoCmsContext(event: H3Event): Promise<unknown>
     return inflight
   }
   const request = (async () => {
-    const result = await fetchGinkoCmsJson(event, '/api/v1/cms/context')
+    const result = await fetchGinkoCmsJson(event, '/api/v2/cms/context')
     if (result.status !== 200) {
       throw createError({
         statusCode: result.status,

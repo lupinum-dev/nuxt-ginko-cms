@@ -18,6 +18,16 @@ export function normalizePublicItem(raw: unknown) {
     normalized.content = nestedBody
   }
 
+  const topLevelBody = asString(normalized.body)
+  if (topLevelBody && !asString(normalized.content)) {
+    normalized.content = topLevelBody
+  }
+
+  const nestedBodyField = asString(nestedContent.body)
+  if (nestedBodyField && !asString(normalized.content)) {
+    normalized.content = nestedBodyField
+  }
+
   return normalized
 }
 
@@ -33,7 +43,7 @@ export function assertValidPublicItem(raw: unknown, options: {
     )
   }
 
-  if (options.includeBody === true && !asString(item.content)) {
+  if (options.includeBody === true && options.op !== 'page' && !asString(item.content)) {
     throw new Error(
       `[ginko-cms] Invalid public item payload for ${options.collectionSource} ${options.op}(): includeBody requested but top-level content is missing. Check NUXT_GINKO_CMS_BASE and the public delivery deployment.`,
     )

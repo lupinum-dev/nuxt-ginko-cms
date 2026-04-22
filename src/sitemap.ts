@@ -119,7 +119,7 @@ async function resolveNormalizedLocales(args: { key: string, base: string, local
   })
   let defaultLocale = localeConfig.defaultLocale
   if (!args.defaultLocale) {
-    const contextUrl = new URL('/api/v1/cms/context', args.base)
+    const contextUrl = new URL('/api/v2/cms/context', args.base)
     const context = await fetchJson(contextUrl, args.key)
     defaultLocale = asString(((context.data as Record<string, unknown>)?.locale as Record<string, unknown>)?.default) || defaultLocale
   }
@@ -163,7 +163,7 @@ async function fetchCollectionRows(args: { base: string, key: string, localeCode
   let offset = 0
   let page = 0
   while (page < SITEMAP_MAX_PAGES) {
-    const url = new URL(`/api/v1/cms/${args.collection}`, args.base)
+    const url = new URL(`/api/v2/cms/${args.collection}`, args.base)
     url.searchParams.set('locale', args.localeCode)
     url.searchParams.set('limit', String(args.pageSize))
     url.searchParams.set('offset', String(offset))
@@ -269,7 +269,7 @@ async function resolveFlatCollectionPathMap(args: { base: string, key: string, l
 }
 async function collectHierarchyRoutes(args: { base: string, key: string, locale: SitemapLocale, defaultLocale: string, localePrefixStrategy: string, source: SitemapSource & { collection: string, maxDepth?: number, baseSegment?: string, baseSegmentByLocale?: Record<string, string>, includeFolders?: boolean, contentSlugField?: string, contentTitleField?: string, contentOrderField?: string, contentIdField?: string }, grouped: Map<string, GroupedRoute> }): Promise<void> {
   const maxDepth = Math.max(1, Math.min((args.source.maxDepth as number) || 5, 20))
-  const url = new URL(`/api/v1/cms/${args.source.collection}`, args.base)
+  const url = new URL(`/api/v2/cms/${args.source.collection}`, args.base)
   url.searchParams.set('view', 'tree')
   url.searchParams.set('include', 'content')
   url.searchParams.set('maxDepth', String(maxDepth))

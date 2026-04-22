@@ -134,7 +134,7 @@ async function getHierarchyState(args: Record<string, unknown>): Promise<unknown
     return inflight
   }
   const request = (async () => {
-    const upstream = await fetchGinkoCmsJson(args.event as H3Event, `/api/v1/cms/${collection.source}`, {
+    const upstream = await fetchGinkoCmsJson(args.event as H3Event, `/api/v2/cms/${collection.source}`, {
       locale: collection.localized === false ? void 0 : args.locale,
       view: 'tree',
       include: 'content',
@@ -384,7 +384,7 @@ async function fetchHierarchyItemFromResolved(args: Record<string, unknown>): Pr
   }
   const getResponse = await fetchGinkoCmsJson(
     args.event as H3Event,
-    `/api/v1/cms/${collection.source}/${resolved.slug}`,
+    `/api/v2/cms/${collection.source}/${resolved.slug}`,
     {
       ...query,
       locale: collection.localized === false ? void 0 : args.locale,
@@ -421,7 +421,7 @@ async function fetchItemByResolvedPath(args: Record<string, unknown>): Promise<R
     if (!resolved.slug) {
       return null
     }
-    const upstream = await fetchGinkoCmsJson(event, `/api/v1/cms/${collection.source}/${resolved.slug}`, {
+    const upstream = await fetchGinkoCmsJson(event, `/api/v2/cms/${collection.source}/${resolved.slug}`, {
       ...query,
       locale: collection.localized === false ? void 0 : locale,
     })
@@ -521,7 +521,7 @@ export async function executeGinkoQuery(event: H3Event, payload: Record<string, 
     }
     const upstream = await fetchGinkoCmsJson(
       event,
-      `/api/v1/cms/${collection.source}`,
+      `/api/v2/cms/${collection.source}`,
       effectiveQuery,
     )
     const rows = Array.isArray(upstream.body?.data)

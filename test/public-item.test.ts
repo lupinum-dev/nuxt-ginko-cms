@@ -63,4 +63,66 @@ describe('public item normalization', () => {
       content: '## Hello',
     })
   })
+
+  it('accepts v2 item payloads with top-level body', () => {
+    expect(
+      assertValidPublicItem(
+        {
+          id: 'item_1',
+          slug: 'quick-start',
+          status: 'published',
+          title: 'Quick Start',
+          body: '## Hello',
+        },
+        {
+          collectionSource: 'docs',
+          op: 'page',
+          includeBody: true,
+        },
+      ),
+    ).toMatchObject({
+      title: 'Quick Start',
+      body: '## Hello',
+      content: '## Hello',
+    })
+  })
+
+  it('accepts body-less page payloads for hierarchy section pages', () => {
+    expect(
+      assertValidPublicItem(
+        {
+          id: 'item_1',
+          slug: 'about-us',
+          status: 'published',
+          title: 'About Us',
+        },
+        {
+          collectionSource: 'docs',
+          op: 'page',
+          includeBody: true,
+        },
+      ),
+    ).toMatchObject({
+      title: 'About Us',
+      slug: 'about-us',
+    })
+  })
+
+  it('still rejects body-less list payloads when body was requested', () => {
+    expect(() =>
+      assertValidPublicItem(
+        {
+          id: 'item_1',
+          slug: 'about-us',
+          status: 'published',
+          title: 'About Us',
+        },
+        {
+          collectionSource: 'docs',
+          op: 'find',
+          includeBody: true,
+        },
+      ),
+    ).toThrow(/top-level content is missing/)
+  })
 })

@@ -55,10 +55,10 @@ export interface UseGinkoNavigationResult {
  * const { data: navigation } = await useGinkoNavigation('docs')
  * ```
  */
-export async function useGinkoNavigation<K extends keyof GinkoCollections | (string & {})>(
+export function useGinkoNavigation<K extends keyof GinkoCollections | (string & {})>(
   collectionKey: K,
   options: UseGinkoNavigationOptions = {},
-): Promise<UseGinkoNavigationResult> {
+): UseGinkoNavigationResult {
   const { watch: enableWatch = true } = options
   const nuxtApp = useNuxtApp()
   const route = useRoute()
@@ -69,7 +69,7 @@ export async function useGinkoNavigation<K extends keyof GinkoCollections | (str
 
   const cacheKey = () => `ginko-navigation:${String(collectionKey)}:${resolvedLocale.value}`
 
-  const { data, pending, error: rawError, refresh } = await useAsyncData(
+  const { data, pending, error: rawError, refresh } = useAsyncData(
     cacheKey,
     async () => {
       const response = await requestFetch(`${routeBase}/query`, {
